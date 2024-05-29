@@ -1,0 +1,22 @@
+@startuml
+participant Main
+participant UsuarioAdmin
+participant Banco
+participant PersonaDetenida
+participant Sucursal
+participant Juicio
+participant Juez
+participant Banda
+Main -> UsuarioAdmin: NewUsuarioAdmin()
+UsuarioAdmin->Banco: CrearSucursal()
+UsuarioAdmin->Banda: CargarBanda()
+UsuarioAdmin->PersonaDetenida : CargarPersonDetenida(Banda)
+UsuarioAdmin->Sucursal:CrearDelito(PersonaDetenida)
+UsuarioAdmin->PersonaDetenida: CargarDelito()
+UsuarioAdmin->Juicio:CargarJuicio(Delito)
+Juicio->Juez: NewJuez()
+Banco-> Sucursal: CargarSucursal()
+Sucursal -> Contrato:  CargarContrato()
+Sucursal ->Vigilante :CargarVigilante(Contrato)
+@enduml
+
