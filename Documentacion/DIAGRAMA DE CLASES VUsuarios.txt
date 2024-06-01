@@ -1,0 +1,64 @@
+@startuml
+
+
+class UsuarioAdmin{
+- DB: BancoDB
++GetInstanciaDB()
++ConsultaGeneral() : String
++Serializar()
++DesSerializar()
++CargarBanco()
++CargarSucursal()
++CargarJuicio()
++CargarBanda()
++CargarDelincuente()
++CargarVigilante()
++CargarDelito()
++CargarContrato()
++CargarJuez() 
+}
+
+class UsuarioInv{
++ConsultaGeneral(): String
+}
+
+class UsuarioVigilante{
+- Vigilante : Vigilante
+- consultaContra: IConsultaContrato
++SetConsulta()
++ConsultaGeneral() : String
++ConsultarContrato(Vigilante): Contrato
+}
+
+
+class Main{
+
+  Main();
+  CrearUsuario();
+}
+
+Main --> Usuario
+abstract class Usuario{
+-UserName: String
+-Password: String
++Login()
++CrearUsuario()
++{abstract}ConsultaGeneral() : String
++Deslogiarse()
+}
+
+class DB{
+  -banco : Banco
+  -sucursales : List<Sucursales>
+  -Serializar(Path:string)
+  -Deserializar(Path: string)
+}
+
+
+DB <-- UsuarioAdmin
+Usuario <|-- UsuarioAdmin
+Usuario <|-- UsuarioInv
+Usuario <|-- UsuarioVigilante
+IUsuarioConsultante <|.. UsuarioVigilante
+IUsuarioConsultante <|.. UsuarioAdmin
+@enduml

@@ -1,0 +1,212 @@
+@startuml
+
+together {
+  interface IConsultaBanco{
+  -codigoBanco: String
+  +GetBanco()
+  }
+  
+  class ConsultarBancoPorCodigo
+  {
+  +ConsultarBancoPorCodigo(String)
+     +GetBanco()
+  }
+  
+  class ConsultarBancoDomicilio
+  {
+  + ConsultarBancoDomicilio()
+    +GetBanco()
+  }
+}
+IConsultaBanco<|..ConsultarBancoDomicilio
+
+IConsultaBanco<|..ConsultarBancoPorCodigo
+
+IConsultaBanco..o  IUsuarioConsultante
+
+
+
+together {
+interface IConsultaSucursal{
+-codigoSucursal: String
+-banco : Banco
++GetSucursal()
+}
+
+class ConsultarSucursalxBco
+{
+  + ConsultarSucursalxBco(Banco)
+   +GetBanco()
+}
+
+class ConsultarSucursalxCodigo
+{
++  ConsultarSucursalxCodigo(String)
+  +GetBanco()
+}
+}
+ConsultarSucursalxBco ..|> IConsultaSucursal
+
+ConsultarSucursalxCodigo..|> IConsultaSucursal
+
+IConsultaSucursal ..o  IUsuarioConsultante
+
+together{
+interface IConsultaDelincuente{
+-codigo: String
+-sucursal: Sucursal
+-NombreCompleto : String
++GetDelincuente()
+}
+
+class ConsultarDelincuenteSucursal
+{
+   + ConsultarDelincuenteSucursal(Sucursal)
+   +GetDelincuente()
+}
+
+class ConsultarDelincuentexCodigo
+{
+   +  ConsultarDelincuentexCodigo(String)
+   +GetDelincuente()
+}
+
+class ConsultarDelincuentexNombre
+{
+  + ConsultarDelincuentexNombre(String)
+  +GetDelincuente()
+}
+}
+IConsultaDelincuente<|..ConsultarDelincuentexNombre
+
+IConsultaDelincuente <|..ConsultarDelincuentexCodigo
+
+IConsultaDelincuente <|..ConsultarDelincuenteSucursal
+IUsuarioConsultante o.. IConsultaDelincuente
+
+
+together{
+interface IConsultaJuicio{
+-Juez: IJuez
+-FechaDesde: Date
+-FechaHasta: Date
+-Delito : IDelito
++getJuicio()  : Juicio
+}
+
+class ConsultarJuicioPorDelito
+{
+   + ConsultarJuicioPorDelito(Delito,date,date)
+   +getJuicio() : Juicio
+}
+
+class ConsultarJuicioPorJuez
+{
+   + ConsultarJuicioPorDelito(IJuez,date,date)
+   +getJuicio()  : Juicio
+}
+}
+
+IConsultaJuicio<|.right.ConsultarJuicioPorDelito
+
+ConsultarJuicioPorJuez ..|>IConsultaJuicio
+
+IUsuarioConsultante o... IConsultaJuicio
+
+
+interface IUsuarioConsultante
+{
+ -ConsultaBanco IConsultaBanco
+-ConsultaSucursal IConsultaSucursal
+-ConsultaDelincuente IConsultaDelincuente
+-ConsultaJuicio IConsultaJuicio
+-ConsultaDelitos IConsultaDelitos
+-ConsultaContratos IConsultaContratos
++setConsultaBanco()
++setConsultaSucursal()
++setConsultaDelincuente()
++setConsultaJuicio()
++setConsultaDelitos()
++setConsultaContratos()
++getBanco()
++getSucursal()
++getDelincuente()
++getJuicio()
++getDelitos()
++getContratos()
+}
+
+together{
+interface IConsultaDelitos{
+-personaDetenida: PersonaDetenida
+-banda: Banda
+-conCondena : bool
++getDelitos(): List<Delito>
+}
+
+
+class ConsultarDelitosPorDelincuente
+{
+   ConsultarDelitosPorDelincuente(PersonaDetenida)
+   +getDelitos()
+}
+
+class ConsultarDelitosPorBanda
+{
+   +  ConsultarDelitosPorBanda(Banda, PersonaDetenida)
+   +getDelitos()
+}
+
+class ConsultarDelitosConCondena
+{
+     + ConsultarDelitosConCondena(bool,PersonaDetenida)
+     +getDelitos()
+}
+}
+IConsultaDelitos<|..ConsultarDelitosPorDelincuente
+
+IConsultaDelitos<|.up.ConsultarDelitosPorBanda
+
+IConsultaDelitos<|..ConsultarDelitosConCondena
+
+IConsultaDelitos ..o  IUsuarioConsultante
+
+together{
+interface IConsultaContratos{
+-vigilante: Vigilante
+-sucursal: Sucursal
+-banco : Banco
++getContratos(): List<Contrato>
+}
+
+
+class ConsultarContratoVigilante
+{
+     + ConsultarContratos(Vigilante)
+     +getContratos()
+}
+
+class ConsultarContratosSucursal
+{
+     + ConsultarContratos(Sucursal)
+     +getContratos()
+}
+
+class ConsultarContratoBanco
+{
+     + ConsultarContratos(Banco)
+     +getContratos()
+}
+}
+
+
+IConsultaContratos <|.. ConsultarContratoVigilante
+
+ConsultarContratosSucursal..|> IConsultaContratos
+
+ConsultarContratoBanco .right.|> IConsultaContratos
+
+IUsuarioConsultante o-- IConsultaContratos
+
+
+@enduml

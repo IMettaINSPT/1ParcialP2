@@ -1,0 +1,127 @@
+@startuml
+ class Banco{
+ -Condigo : string
+ -DomicilioCentral : string
+ +SetCodigo()
+ +SetDomicilioCentral()
+ +AddSucursal()
+}
+
+class Sucursal{
+ -Condigo : string
+ -Domicilio : string
+ -NroEmpleados : int
+ +CargarContrato()
+ +SetCodigo()
+ +SetDomicilio()
+ +SetNroEmpleados()
+ +AddContrato()
+ +AddDelito()
+}
+
+class Vigilante{
+ -Codigo: String
+ -Edad : int
+ -UsaArma: Bool
+ -contrato : Contrato
++SetCodigo()
++SetEdad()
++SetUsaArma()
++SetContrato()
+}
+
+class Contrato{
+ -FechaContrato: Date
+ -ConArma: Bool
+ +SetFechaContrato()
+ +SetConArma()
+}
+
+interface IDelito{
+ -Fecha: Date
+ -Delincuente: PersonDetenida
+ +SetFecha()
+ +SetDelincuente()
+ +GetDelincuente
+ +GetFechaDelito()
+}
+
+class Delito{
+  Delito(PersonaDetenida)
+}
+
+class PersonaDetenida{
+ -Codigo: String
+ -NombreCompleto: String
+ -EstaCondenada : Bool 
+ +SetDelito()
+ +GetDelitos()
+ +SetNombreCompleto()
+ +SetCondenada()
+}
+
+class Banda{
+ -NroBanda: int
+ +GetNroBanda()
+ +SetNroBanda()
+ +SetMiembro()
+ +GetMiembros()
+}
+
+interface  IJuez{
+-claveJuzgado: String
+-NombreCompleto : String
+-AñosServicios
++SetClave()
++SerNombreCompleto()
++SetAñosServicio()
+}
+
+class Juez{
+ + Juez()
+}
+class Juicio{
+-JuezActuante : IJuez
+-FechaJuicio: Date
+-delito: IDelito
+-FechaInicioCondena : Date
+-FechaFinCondena: Date
++Juicio()
++setDelito()
++SetJuez()
++SetFechaJuicio()
+}
+
+abstract class Usuario{
+-UserName: String
+-Password: String
++Login()
++CrearUsuario()
++{abstract}ConsultaGeneral() : String
++Deslogiarse()
+}
+
+interface Iconsultante{}
+
+class Main{
+}
+
+class DB{}
+DB  <-- UsuarioAdmin
+Delito ..|> IDelito
+Sucursal "1" o-- "many" IDelito : delitos
+Sucursal "1" o-- "many" Contrato : Contratos
+PersonaDetenida "many" <-- "1" Banda : Delincuentes
+PersonaDetenida "1" o-- "many" IDelito : delitos
+Contrato o.. Vigilante
+Juez ..|>IJuez
+Juicio o... IJuez
+Juicio o-- IDelito
+Banco "1" o-- "many" Sucursal: Sucursales 
+Usuario <|-- UsuarioAdmin
+Usuario <|-- UsuarioInv
+Usuario <|-- UsuarioVigilante
+Iconsultante <.. UsuarioAdmin
+Iconsultante <.. UsuarioInv
+Main --> Usuario
+@enduml
