@@ -1,6 +1,0 @@
-Usar patron singleton para conexion entre clase Admin y BancoDB
-
-Usar strategy para extraer los metodos getters que hace el administrador y el investigador.
-
-Sacar dependencias entre clases e Interfaces.
-
