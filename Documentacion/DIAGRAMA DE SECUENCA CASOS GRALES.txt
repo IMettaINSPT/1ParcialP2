@@ -1,0 +1,17 @@
+@startuml
+participant Main
+participant UsuarioAdmin
+participant Banco
+participant Sucursal
+participant Banda
+Main -> UsuarioAdmin: NewUsuarioAdmin()
+UsuarioAdmin->Banco: CrearSucursal()
+Banco -> Sucursal : new Sucursal()
+Main->UsuarioAdmin: CargarBanda()
+UsuarioAdmin-> Banda : new Banda()
+Main->UsuarioAdmin: CargarSucursal()
+Banco-> Sucursal: new Sucursal()
+Main-> UsuarioAdmin: CargarContrato()
+Sucursal -> Contrato:  new Contrato()
+@enduml
+

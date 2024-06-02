@@ -1,0 +1,16 @@
+@startuml
+participant Main
+participant UsuarioAdmin
+participant Sucursal
+participant Banda
+participant PersonaDetenida
+participant Delito
+
+Main->UsuarioAdmin:CrearBanda()
+UsuarioAdmin->Banda**: new Banda()
+Main->UsuarioAdmin : CargarDelito(Banda)
+UsuarioAdmin->PersonaDetenida **: new PersonaDetenida()
+UsuarioAdmin->PersonaDetenida:  CargarDelito()
+PersonaDetenida->Banda: cargarIntegrante()
+PersonaDetenida->Delito** : new Delito()
+@enduml

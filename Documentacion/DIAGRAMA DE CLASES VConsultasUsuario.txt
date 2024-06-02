@@ -22,7 +22,7 @@ IConsultaBanco<|..ConsultarBancoDomicilio
 
 IConsultaBanco<|..ConsultarBancoPorCodigo
 
-IConsultaBanco..o  IUsuarioConsultante
+IConsultaBanco "1" --o "1"  IUsuarioConsultante : "Banco"
 
 
 
@@ -30,26 +30,26 @@ together {
 interface IConsultaSucursal{
 -codigoSucursal: String
 -banco : Banco
-+GetSucursal()
++GetSucursales()
 }
 
 class ConsultarSucursalxBco
 {
-  + ConsultarSucursalxBco(Banco)
-   +GetBanco()
+  ConsultarSucursalxBco(String)
+  +GetSucursales()
 }
 
 class ConsultarSucursalxCodigo
 {
-+  ConsultarSucursalxCodigo(String)
-  +GetBanco()
+   ConsultarSucursalxCodigo(Banco)
+   +GetSucursales()
 }
 }
 ConsultarSucursalxBco ..|> IConsultaSucursal
 
 ConsultarSucursalxCodigo..|> IConsultaSucursal
 
-IConsultaSucursal ..o  IUsuarioConsultante
+IConsultaSucursal "many"--o "1" IUsuarioConsultante : Sucursal
 
 together{
 interface IConsultaDelincuente{
@@ -82,7 +82,7 @@ IConsultaDelincuente<|..ConsultarDelincuentexNombre
 IConsultaDelincuente <|..ConsultarDelincuentexCodigo
 
 IConsultaDelincuente <|..ConsultarDelincuenteSucursal
-IUsuarioConsultante o.. IConsultaDelincuente
+IUsuarioConsultante "1" o-- "1" IConsultaDelincuente : "PersonaDetenida"
 
 
 together{
@@ -111,7 +111,7 @@ IConsultaJuicio<|.right.ConsultarJuicioPorDelito
 
 ConsultarJuicioPorJuez ..|>IConsultaJuicio
 
-IUsuarioConsultante o... IConsultaJuicio
+IUsuarioConsultante "1" o--- "1" IConsultaJuicio : "Juicio"
 
 
 interface IUsuarioConsultante
@@ -122,14 +122,14 @@ interface IUsuarioConsultante
 -ConsultaJuicio IConsultaJuicio
 -ConsultaDelitos IConsultaDelitos
 -ConsultaContratos IConsultaContratos
-+setConsultaBanco()
-+setConsultaSucursal()
-+setConsultaDelincuente()
-+setConsultaJuicio()
-+setConsultaDelitos()
-+setConsultaContratos()
++setConsultaBanco(IConsultaBanco)
++setConsultaSucursales(IConsultaSucursal)
++setConsultaDelincuente(IConsultaDelincuente)
++setConsultaJuicio(IConsultaJuicio)
++setConsultaDelitos(IConsultaDelitos)
++setConsultaContratos(IConsultaContratos)
 +getBanco()
-+getSucursal()
++getSucursales()
 +getDelincuente()
 +getJuicio()
 +getDelitos()
@@ -141,7 +141,7 @@ interface IConsultaDelitos{
 -personaDetenida: PersonaDetenida
 -banda: Banda
 -conCondena : bool
-+getDelitos(): List<Delito>
++getDelitos()
 }
 
 
@@ -169,7 +169,7 @@ IConsultaDelitos<|.up.ConsultarDelitosPorBanda
 
 IConsultaDelitos<|..ConsultarDelitosConCondena
 
-IConsultaDelitos ..o  IUsuarioConsultante
+IConsultaDelitos "many" --o "1"  IUsuarioConsultante : delitos
 
 together{
 interface IConsultaContratos{
@@ -206,7 +206,7 @@ ConsultarContratosSucursal..|> IConsultaContratos
 
 ConsultarContratoBanco .right.|> IConsultaContratos
 
-IUsuarioConsultante o-- IConsultaContratos
+IUsuarioConsultante "1" o-- "many" IConsultaContratos: "Contratos"
 
 
 @enduml
