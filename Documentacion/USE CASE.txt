@@ -1,9 +1,9 @@
 @startuml
 left to right direction
 actor Usuario as user
-actor UsuarioAdmin as userAdm
 actor UsuarioVigilante as userVig
 actor UsuarioInvestigador as userInv
+actor UsuarioAdmin as userAdm
 
 
 rectangle  SistemaPoliciaFederal {
@@ -12,26 +12,14 @@ usecase "Crear Usuario Vigilante" as UC24
 usecase "Inicio Sesion" as UC1
 usecase "Cerrar sesion" as UC2
 usecase "ConsultaGeneral" as UC3
-usecase "Serializar" as UC4
-usecase "DesSerializar" as UC5
-usecase "CargarBanco" as UC6
-usecase "CargarSucursal" as UC7
-usecase "CargarJuicio" as UC8
-usecase "CargarBanda" as UC9
-usecase "CargarDelincuente" as UC10
-usecase "CargarVigilante" as UC11
-usecase "CargarDelito" as UC12
-usecase "CargarContrato" as UC13
-usecase "CargarJuez" as UC14
-usecase "ConsultarBanco" as UC15
-usecase "ConsultarSucursal" as UC16
-usecase "ConsultarJuicio" as UC17
-usecase "ConsultarBanda" as UC18
-usecase "ConsultarDelincuente" as UC19
-usecase "ConsultarVigilante" as UC20
-usecase "ConsultarDelitos" as UC21 
-usecase "ConsultarContratos" as UC22
-usecase "ConsultarJuez" as UC23
+usecase "getBanco" as UC15
+usecase "getSucursales" as UC16
+usecase "getDelincuente" as UC17
+usecase "getJuicio" as UC18
+usecase "getDelitos" as UC19
+usecase "getContratos" as UC20
+usecase "ConsultarVigilante" as UC24
+
   
 
 user --> UC0
@@ -49,33 +37,28 @@ userInv--> UC17
 userInv--> UC18
 userInv--> UC19
 userInv--> UC20
-userInv--> UC21
-userInv--> UC22
-userInv--> UC23
+
 
 userVig-->UC20
 userVig-->UC24
 
-userAdm -->UC4
-userAdm -->UC5
-userAdm -->UC6
-userAdm -->UC7
-userAdm -->UC8
-userAdm -->UC9
-userAdm -->UC10
-userAdm -->UC11
-userAdm -->UC12
-userAdm -->UC13
-userAdm -->UC14
+
 userAdm --> UC15
 userAdm --> UC16
 userAdm --> UC17
 userAdm --> UC18
 userAdm --> UC19
 userAdm --> UC20
-userAdm --> UC21
-userAdm --> UC22
-userAdm --> UC23
-
+userAdm -left-> (Serializar)
+userAdm  -left- (DesSerializar)
+userAdm  -left->(CargarBanco)
+userAdm  -left->(CargarSucursal)
+userAdm  -left->(CargarJuicio)
+userAdm  -right->(CargarBanda)
+userAdm  -right->(CargarDelincuente)
+userAdm  -right->(CargarVigilante)
+userAdm  -right->(CargarDelito)
+userAdm  -down->(CargarContrato)
+userAdm  -down->(CargarJuez)
 }
 @enduml

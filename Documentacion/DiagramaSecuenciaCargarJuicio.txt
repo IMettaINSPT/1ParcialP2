@@ -1,0 +1,12 @@
+@startuml
+participant Main
+participant UsuarioAdmin
+participant Juez
+participant Juicio
+
+Main->UsuarioAdmin:CargaJuez()
+UsuarioAdmin->Juez **: new Juez()
+Main->UsuarioAdmin: CargarJuicio()
+UsuarioAdmin-> Juicio **: Juicio(Delito, Juez)
+
+@enduml
