@@ -1,104 +1,109 @@
 @startuml
+
+hide circle
+skinparam classAttributeIconSize 0
+
+
  class Banco{
- -Condigo : string
- -DomicilioCentral : string
- +SetCodigo()
- +SetDomicilioCentral()
- +AddSucursal()
+ -condigo : string
+ -domicilioCentral : string
+ +setCodigo()
+ +setDomicilioCentral()
+ +addSucursal()
 }
 
 class Sucursal{
- -Condigo : string
- -Domicilio : string
- -NroEmpleados : int
- +CargarContrato()
- +SetCodigo()
- +SetDomicilio()
- +SetNroEmpleados()
- +AddContrato()
- +AddDelito()
+ -condigo : string
+ -domicilio : string
+ -nroEmpleados : int
+ +cargarContrato()
+ +setCodigo()
+ +setDomicilio()
+ +setNroEmpleados()
+ +addContrato()
+ +addDelito()
 }
 
 class Vigilante{
- -Codigo: String
- -Edad : int
- -UsaArma: Bool
+ -codigo: String
+ -edad : int
+ -usaArma: Bool
  -contrato : Contrato
-+SetCodigo()
-+SetEdad()
-+SetUsaArma()
-+SetContrato()
++setCodigo()
++setEdad()
++setUsaArma()
++setContrato()
 }
 
 class Contrato{
- -FechaContrato: Date
- -ConArma: Bool
- +SetFechaContrato()
- +SetConArma()
+ -fechaContrato: Date
+ -conArma: Bool
+ +setFechaContrato()
+ +setConArma()
 }
 
 interface IDelito{
- -Fecha: Date
- -Delincuente: PersonDetenida
- +SetFecha()
- +SetDelincuente()
- +GetDelincuente
- +GetFechaDelito()
+ -fecha: Date
+ -delincuente: PersonDetenida
+ +setFecha()
+ +setDelincuente()
+ +getDelincuente
+ +getFechaDelito()
 }
 
 class Delito{
-  Delito(PersonaDetenida)
+  delito(PersonaDetenida)
 }
 
 class PersonaDetenida{
- -Codigo: String
- -NombreCompleto: String
- -EstaCondenada : Bool 
- +SetDelito()
- +GetDelitos()
- +SetNombreCompleto()
- +SetCondenada()
+ -codigo: String
+ -nombreCompleto: String
+ -estaCondenada : Bool 
+ +setDelito()
+ +getDelitos()
+ +setNombreCompleto()
+ +setCondenada()
 }
 
 class Banda{
  -NroBanda: int
- +GetNroBanda()
- +SetNroBanda()
- +SetMiembro()
- +GetMiembros()
+ +getNroBanda()
+ +setNroBanda()
+ +setMiembro()
+ +getMiembros()
 }
 
 interface  IJuez{
 -claveJuzgado: String
--NombreCompleto : String
--AñosServicios
-+SetClave()
-+SerNombreCompleto()
-+SetAñosServicio()
+-nombreCompleto : String
+-añosServicios
++setClave()
++serNombreCompleto()
++setAñosServicio()
 }
 
 class Juez{
  + Juez()
 }
 class Juicio{
--JuezActuante : IJuez
--FechaJuicio: Date
+-juezActuante : IJuez
+-fechaJuicio: Date
 -delito: IDelito
--FechaInicioCondena : Date
--FechaFinCondena: Date
+-fechaInicioCondena : Date
+-fechaFinCondena: Date
 +Juicio()
 +setDelito()
-+SetJuez()
-+SetFechaJuicio()
++setJuez()
++setFechaJuicio()
 }
 
 abstract class Usuario{
--UserName: String
--Password: String
-+Login()
-+CrearUsuario()
-+{abstract}ConsultaGeneral() : String
-+Deslogiarse()
+-userName: String
+-password: String
++login()
++crearUsuario()
++{abstract}consultaGeneral() : String
++deslogiarse()
 }
 
 interface Iconsultante{}
@@ -109,15 +114,16 @@ class Main{
 class DB{}
 DB  <-- UsuarioAdmin
 Delito ..|> IDelito
-Sucursal "1" o-- "many" IDelito : delitos
-Sucursal "1" o-- "many" Contrato : Contratos
-PersonaDetenida "many" <-- "1" Banda : Delincuentes
-PersonaDetenida "1" o-- "many" IDelito : delitos
-Contrato o.. Vigilante
+Sucursal "1" o--> "*" IDelito : delitos
+Sucursal "1" o--> "*" Contrato : contratos
+PersonaDetenida "*" <-- "1" Banda : delincuentes
+PersonaDetenida "1" o--> "*" IDelito : delitos
+Contrato "1" o--> "1" Vigilante : contrato
 Juez ..|>IJuez
-Juicio o... IJuez
-Juicio o-- IDelito
-Banco "1" o-- "many" Sucursal: Sucursales 
+Juicio "1" o---> "1" IJuez : juez
+Juicio "1" *--> "1" IDelito : delito
+Juicio "*" <-- "1" UsuarioAdmin :juicios
+Banco "1" *-- "*" Sucursal: sucursales 
 Usuario <|-- UsuarioAdmin
 Usuario <|-- UsuarioInv
 Usuario <|-- UsuarioVigilante

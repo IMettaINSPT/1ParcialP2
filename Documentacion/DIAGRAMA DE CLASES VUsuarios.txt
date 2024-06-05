@@ -1,7 +1,16 @@
 @startuml
 
+hide circle
+skinparam classAttributeIconSize 0
+
 
 class UsuarioAdmin{
+-juicios:List<Juicio>
+-vigilantes:List<Vigilante>
+-banco:List<Banco>
+-jueces:List<Juez>
+-delincuentes:List<PersonaDetenida>
+-bandas: List<Banda>
 - DB: BancoDB
 +GetInstanciaDB()
 +ConsultaGeneral() : String
@@ -48,10 +57,14 @@ abstract class Usuario{
 }
 
 class DB{
-  -banco : Banco
-  -sucursales : List<Sucursales>
-  -Serializar(Path:string)
-  -Deserializar(Path: string)
+  -juicios:List<Juicio>
+  -vigilantes:List<Vigilante>
+  -banco:List<Banco>
+  -jueces:List<Juez>
+  -delincuentes:List<PersonaDetenida>
+  -bandas: List<Banda>
+  +Serializar(Path:string)
+  +Deserializar(Path: string)
 }
 
 
