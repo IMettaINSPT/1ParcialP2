@@ -3,19 +3,19 @@
 together {
   interface IConsultaBanco{
   -codigoBanco: String
-  +GetBanco()
+  +getBanco()
   }
   
   class ConsultarBancoPorCodigo
   {
   +ConsultarBancoPorCodigo(String)
-     +GetBanco()
+     +getBanco()
   }
   
   class ConsultarBancoDomicilio
   {
   + ConsultarBancoDomicilio()
-    +GetBanco()
+    +getBanco()
   }
 }
 IConsultaBanco<|..ConsultarBancoDomicilio
@@ -30,19 +30,19 @@ together {
 interface IConsultaSucursal{
 -codigoSucursal: String
 -banco : Banco
-+GetSucursales()
++getSucursales()
 }
 
 class ConsultarSucursalxBco
 {
   ConsultarSucursalxBco(String)
-  +GetSucursales()
+  +getSucursales()
 }
 
 class ConsultarSucursalxCodigo
 {
    ConsultarSucursalxCodigo(Banco)
-   +GetSucursales()
+   +getSucursales()
 }
 }
 ConsultarSucursalxBco ..|> IConsultaSucursal
@@ -56,25 +56,25 @@ interface IConsultaDelincuente{
 -codigo: String
 -sucursal: Sucursal
 -NombreCompleto : String
-+GetDelincuente()
++getDelincuente()
 }
 
 class ConsultarDelincuenteSucursal
 {
    + ConsultarDelincuenteSucursal(Sucursal)
-   +GetDelincuente()
+   +getDelincuente()
 }
 
 class ConsultarDelincuentexCodigo
 {
    +  ConsultarDelincuentexCodigo(String)
-   +GetDelincuente()
+   +getDelincuente()
 }
 
 class ConsultarDelincuentexNombre
 {
   + ConsultarDelincuentexNombre(String)
-  +GetDelincuente()
+  +getDelincuente()
 }
 }
 IConsultaDelincuente<|..ConsultarDelincuentexNombre
@@ -116,12 +116,12 @@ IUsuarioConsultante "1" o--- "1" IConsultaJuicio : "Juicio"
 
 interface IUsuarioConsultante
 {
- -ConsultaBanco IConsultaBanco
--ConsultaSucursal IConsultaSucursal
--ConsultaDelincuente IConsultaDelincuente
--ConsultaJuicio IConsultaJuicio
--ConsultaDelitos IConsultaDelitos
--ConsultaContratos IConsultaContratos
+ -consultaBanco IConsultaBanco
+-consultaSucursal IConsultaSucursal
+-consultaDelincuente IConsultaDelincuente
+-consultaJuicio IConsultaJuicio
+-consultaDelitos IConsultaDelitos
+-consultaContratos IConsultaContratos
 +setConsultaBanco(IConsultaBanco)
 +setConsultaSucursales(IConsultaSucursal)
 +setConsultaDelincuente(IConsultaDelincuente)

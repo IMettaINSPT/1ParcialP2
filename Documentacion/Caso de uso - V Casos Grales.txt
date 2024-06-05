@@ -1,0 +1,49 @@
+@startuml
+left to right direction
+actor UsuarioVigilante as userVig
+actor UsuarioInvestigador as userInv
+actor UsuarioAdmin as userAdm
+
+rectangle  SistemaPoliciaFederal {
+
+usecase "getBanco" as UC15
+usecase "getSucursales" as UC16
+usecase "getDelincuente" as UC17
+usecase "getJuicio" as UC18
+usecase "getDelitos" as UC19
+usecase "getContratos" as UC20
+usecase "ConsultarVigilante" as UC24
+
+UC15 <-- userInv
+UC16 <-- userInv
+UC17 <-- userInv
+UC18 <-- userInv
+UC19 <-- userInv
+UC20 <-- userInv
+
+
+
+
+UC20 <-- userVig
+UC24 <-- userVig
+
+
+userAdm --> UC15
+userAdm --> UC16
+userAdm --> UC17
+userAdm --> UC18
+userAdm --> UC19
+userAdm --> UC20
+userAdm -left-> (Serializar)
+userAdm  -left- (DesSerializar)
+userAdm  -left->(CargarBanco)
+userAdm  -left->(CargarSucursal)
+userAdm  -left->(CargarJuicio)
+userAdm  -right->(CargarBanda)
+userAdm  -right->(CargarDelincuente)
+userAdm  -right->(CargarVigilante)
+userAdm  -right->(CargarDelito)
+userAdm  -down->(CargarContrato)
+userAdm  -down->(CargarJuez)
+}
+@enduml

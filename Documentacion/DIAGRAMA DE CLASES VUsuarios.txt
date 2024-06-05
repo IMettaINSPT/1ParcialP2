@@ -11,64 +11,65 @@ class UsuarioAdmin{
 -jueces:List<Juez>
 -delincuentes:List<PersonaDetenida>
 -bandas: List<Banda>
-- DB: BancoDB
-+GetInstanciaDB()
-+ConsultaGeneral() : String
-+Serializar()
-+DesSerializar()
-+CargarBanco()
-+CargarSucursal()
-+CargarJuicio()
-+CargarBanda()
-+CargarDelincuente()
-+CargarVigilante()
-+CargarDelito()
-+CargarContrato()
-+CargarJuez() 
+-db: DB
++getInstanciaDB()
++consultaGeneral() : String
++serializar()
++desSerializar()
++cargarBanco()
++cargarSucursal()
++cargarJuicio()
++cargarBanda()
++cargarDelincuente()
++cargarVigilante()
++cargarDelito()
++cargarContrato()
++cargarJuez() 
 }
 
 class UsuarioInv{
-+ConsultaGeneral(): String
++consultaGeneral(): String
 }
 
 class UsuarioVigilante{
 - Vigilante : Vigilante
 - consultaContra: IConsultaContrato
-+SetConsulta()
-+ConsultaGeneral() : String
-+ConsultarContrato(Vigilante): Contrato
++setConsulta()
++consultaGeneral() : String
++consultarContrato(Vigilante): Contrato
 }
 
 
 class Main{
 
-  Main();
-  CrearUsuario();
+  +main();
+  +crearUsuario()
 }
 
-Main --> Usuario
-abstract class Usuario{
--UserName: String
--Password: String
-+Login()
-+CrearUsuario()
-+{abstract}ConsultaGeneral() : String
-+Deslogiarse()
+Main "1" --> "1" Usuario : usuario
+abstract class Usuario <<abstract>>{
+-userName: String
+-password: String
++login()
++crearUsuario()
++{abstract}consultaGeneral() : String
++deslogiarse()
 }
 
-class DB{
+class DB <<Serializable>>{
   -juicios:List<Juicio>
   -vigilantes:List<Vigilante>
   -banco:List<Banco>
   -jueces:List<Juez>
   -delincuentes:List<PersonaDetenida>
   -bandas: List<Banda>
-  +Serializar(Path:string)
-  +Deserializar(Path: string)
+  +serializar(Path:string)
+  +deserializar(Path: string)
 }
 
+interface IUsuarioConsultante {}
 
-DB <-- UsuarioAdmin
+DB "1"<-- "1" UsuarioAdmin :db
 Usuario <|-- UsuarioAdmin
 Usuario <|-- UsuarioInv
 Usuario <|-- UsuarioVigilante

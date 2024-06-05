@@ -6,11 +6,11 @@ participant Banda
 participant PersonaDetenida
 participant Delito
 
-Main->UsuarioAdmin:CrearBanda()
+Main->UsuarioAdmin:crearBanda()
 UsuarioAdmin->Banda**: new Banda()
-Main->UsuarioAdmin : CargarDelito(Banda)
+Main->UsuarioAdmin : cargarDelito(Banda)
 UsuarioAdmin->PersonaDetenida **: new PersonaDetenida()
-UsuarioAdmin->PersonaDetenida:  CargarDelito()
+UsuarioAdmin->PersonaDetenida:  cargarDelito()
 PersonaDetenida->Banda: cargarIntegrante()
 PersonaDetenida->Delito** : new Delito()
 @enduml

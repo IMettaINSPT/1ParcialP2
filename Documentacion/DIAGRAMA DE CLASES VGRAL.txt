@@ -66,7 +66,7 @@ class PersonaDetenida{
 }
 
 class Banda{
- -NroBanda: int
+ -nroBanda: int
  +getNroBanda()
  +setNroBanda()
  +setMiembro()
@@ -97,7 +97,7 @@ class Juicio{
 +setFechaJuicio()
 }
 
-abstract class Usuario{
+abstract class Usuario <<abstract>>{
 -userName: String
 -password: String
 +login()
@@ -111,8 +111,8 @@ interface Iconsultante{}
 class Main{
 }
 
-class DB{}
-DB  <-- UsuarioAdmin
+class DB <<Serializable>>{}
+DB "1" <-- "1" UsuarioAdmin: db
 Delito ..|> IDelito
 Sucursal "1" o--> "*" IDelito : delitos
 Sucursal "1" o--> "*" Contrato : contratos
@@ -127,7 +127,7 @@ Banco "1" *-- "*" Sucursal: sucursales
 Usuario <|-- UsuarioAdmin
 Usuario <|-- UsuarioInv
 Usuario <|-- UsuarioVigilante
-Iconsultante <.. UsuarioAdmin
-Iconsultante <.. UsuarioInv
+Iconsultante <|.. UsuarioAdmin
+Iconsultante <|.. UsuarioInv
 Main --> Usuario
 @enduml

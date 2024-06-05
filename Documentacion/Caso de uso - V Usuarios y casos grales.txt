@@ -1,0 +1,25 @@
+@startuml
+left to right direction
+actor Usuario as user #white;line:black;line.bold;text:black
+actor UsuarioVigilante as userVig
+actor UsuarioInvestigador as userInv
+actor UsuarioAdmin as userAdm
+
+
+rectangle  SistemaPoliciaFederal {
+usecase "Crear Usuario" as UC0
+usecase "Inicio Sesion" as UC1
+usecase "Cerrar sesion" as UC2
+usecase "ConsultaGeneral" as UC3
+  
+user --> UC0
+user --> UC1
+user --> UC2
+user --> UC3
+
+user  <|- userAdm
+userInv  --|> user
+userVig  --|> user
+
+}
+@enduml

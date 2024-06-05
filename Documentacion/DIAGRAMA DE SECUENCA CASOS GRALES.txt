@@ -4,14 +4,13 @@ participant UsuarioAdmin
 participant Banco
 participant Sucursal
 participant Banda
-Main -> UsuarioAdmin: NewUsuarioAdmin()
-UsuarioAdmin->Banco: CrearSucursal()
-Banco -> Sucursal : new Sucursal()
-Main->UsuarioAdmin: CargarBanda()
-UsuarioAdmin-> Banda : new Banda()
-Main->UsuarioAdmin: CargarSucursal()
+Main -> UsuarioAdmin: new UsuarioAdmin()
+Main->UsuarioAdmin: crearBanco()
+UsuarioAdmin->Banco:new Banco()
+Main->UsuarioAdmin: cargarSucursal()
+UsuarioAdmin->Banco: cargarSucursal()
 Banco-> Sucursal: new Sucursal()
-Main-> UsuarioAdmin: CargarContrato()
+Main-> UsuarioAdmin: cargarContrato()
 Sucursal -> Contrato:  new Contrato()
 @enduml
 
