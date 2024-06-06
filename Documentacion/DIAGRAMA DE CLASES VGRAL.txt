@@ -123,7 +123,7 @@ Juez ..|>IJuez
 Juicio "1" o---> "1" IJuez : juez
 Juicio "1" *--> "1" IDelito : delito
 Juicio "*" <-- "1" UsuarioAdmin :juicios
-Banco "1" *-- "*" Sucursal: sucursales 
+Banco "1" *--> "*" Sucursal: sucursales 
 Usuario <|-- UsuarioAdmin
 Usuario <|-- UsuarioInv
 Usuario <|-- UsuarioVigilante

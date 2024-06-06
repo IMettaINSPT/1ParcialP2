@@ -5,9 +5,9 @@ participant Sucursal
 participant Vigilante
 participant Contrato
 
-Main->UsuarioAdmin:CargarVigilante()
+Main->UsuarioAdmin:cargarVigilante()
 UsuarioAdmin->Vigilante **:new Vigilante()
-Main->UsuarioAdmin:CargarContrato()
-UsuarioAdmin->Sucursal: CargarContrato(Vigilante)
+Main->UsuarioAdmin:cargarContrato()
+UsuarioAdmin->Sucursal: cargarContrato(Vigilante)
 Sucursal->Contrato **: new Contrato()
 @enduml

@@ -8,13 +8,13 @@ together {
   
   class ConsultarBancoPorCodigo
   {
-  +ConsultarBancoPorCodigo(String)
+     +consultarBancoPorCodigo(String)
      +getBanco()
   }
   
   class ConsultarBancoDomicilio
   {
-  + ConsultarBancoDomicilio()
+    +consultarBancoDomicilio()
     +getBanco()
   }
 }
@@ -35,13 +35,13 @@ interface IConsultaSucursal{
 
 class ConsultarSucursalxBco
 {
-  ConsultarSucursalxBco(String)
+  +consultarSucursalxBco(String)
   +getSucursales()
 }
 
 class ConsultarSucursalxCodigo
 {
-   ConsultarSucursalxCodigo(Banco)
+   +consultarSucursalxCodigo(Banco)
    +getSucursales()
 }
 }
@@ -61,19 +61,19 @@ interface IConsultaDelincuente{
 
 class ConsultarDelincuenteSucursal
 {
-   + ConsultarDelincuenteSucursal(Sucursal)
+   +consultarDelincuenteSucursal(Sucursal)
    +getDelincuente()
 }
 
 class ConsultarDelincuentexCodigo
 {
-   +  ConsultarDelincuentexCodigo(String)
+   +consultarDelincuentexCodigo(String)
    +getDelincuente()
 }
 
 class ConsultarDelincuentexNombre
 {
-  + ConsultarDelincuentexNombre(String)
+  +consultarDelincuentexNombre(String)
   +getDelincuente()
 }
 }
@@ -96,13 +96,13 @@ interface IConsultaJuicio{
 
 class ConsultarJuicioPorDelito
 {
-   + ConsultarJuicioPorDelito(Delito,date,date)
+   + consultarJuicioPorDelito(Delito,date,date)
    +getJuicio() : Juicio
 }
 
 class ConsultarJuicioPorJuez
 {
-   + ConsultarJuicioPorDelito(IJuez,date,date)
+   + consultarJuicioPorDelito(IJuez,date,date)
    +getJuicio()  : Juicio
 }
 }
@@ -147,19 +147,19 @@ interface IConsultaDelitos{
 
 class ConsultarDelitosPorDelincuente
 {
-   ConsultarDelitosPorDelincuente(PersonaDetenida)
+   +consultarDelitosPorDelincuente(PersonaDetenida)
    +getDelitos()
 }
 
 class ConsultarDelitosPorBanda
 {
-   +  ConsultarDelitosPorBanda(Banda, PersonaDetenida)
+   +consultarDelitosPorBanda(Banda, PersonaDetenida)
    +getDelitos()
 }
 
 class ConsultarDelitosConCondena
 {
-     + ConsultarDelitosConCondena(bool,PersonaDetenida)
+     + consultarDelitosConCondena(bool,PersonaDetenida)
      +getDelitos()
 }
 }
@@ -182,19 +182,19 @@ interface IConsultaContratos{
 
 class ConsultarContratoVigilante
 {
-     + ConsultarContratos(Vigilante)
+     + consultarContratos(Vigilante)
      +getContratos()
 }
 
 class ConsultarContratosSucursal
 {
-     + ConsultarContratos(Sucursal)
+     + consultarContratos(Sucursal)
      +getContratos()
 }
 
 class ConsultarContratoBanco
 {
-     + ConsultarContratos(Banco)
+     + consultarContratos(Banco)
      +getContratos()
 }
 }

@@ -4,7 +4,7 @@ participant UsuarioAdmin
 participant Juez
 participant Juicio
 
-Main->UsuarioAdmin:cargaJuez()
+Main->UsuarioAdmin:cargarJuez()
 UsuarioAdmin->Juez **: new Juez()
 Main->UsuarioAdmin: cargarJuicio()
 UsuarioAdmin-> Juicio **: new Juicio(Delito, Juez)
