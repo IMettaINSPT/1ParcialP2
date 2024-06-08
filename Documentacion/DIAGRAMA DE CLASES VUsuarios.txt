@@ -73,6 +73,6 @@ DB "1"<-- "1" UsuarioAdmin :db
 Usuario <|-- UsuarioAdmin
 Usuario <|-- UsuarioInv
 Usuario <|-- UsuarioVigilante
-IUsuarioConsultante <|.. UsuarioVigilante
+IUsuarioConsultante <|.. UsuarioInv
 IUsuarioConsultante <|.. UsuarioAdmin
 @enduml
