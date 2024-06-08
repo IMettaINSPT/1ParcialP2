@@ -12,13 +12,10 @@ import java.util.Scanner;
  */
 public class Menu {
 
-    private final Scanner scanner;
-    private int menuOp = -1;
+    public static int mostrar(String menusMsj, String errorMenuMsj, int cantMinMenu,int cantMaxMenu, int cantReintentos) {
+     Scanner scanner = new Scanner(System.in);
+     int menuOp = -1;
 
-    public Menu() {
-        scanner = new Scanner(System.in);
-    }
-    public int mostrar(String menusMsj, String errorMenuMsj, int cantMinMenu,int cantMaxMenu, int cantReintentos) {
         if (!menusMsj.isEmpty() && !errorMenuMsj.isEmpty() && cantMinMenu <= cantMaxMenu && cantReintentos >= 0) {
             do {
                 System.out.println(menusMsj);
@@ -28,7 +25,7 @@ public class Menu {
                   return menuOp;
                 }
                 cantReintentos --;
-                System.out.println("Error ingresando menu. Reintente");
+                System.out.println(errorMenuMsj);
             } while (cantReintentos >= 0);
         }
         return menuOp;

@@ -11,8 +11,16 @@ package sistemapoliciafederal;
 public class UsuarioVigilante extends Usuario {
 
     @Override
-    public void ConsultaGeneral() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public int GetMenu() {
+        return menu.mostrar("1-MostrarContrato", "Error.Reintente", 1, 1, 3);
+
     }
     
+    public static Usuario crearUsuario(String u, String p) {
+       Usuario user = new UsuarioVigilante();
+       user.setPass(p);
+       user.setUser(u);
+       return user;
+    }
+
 }

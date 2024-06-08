@@ -9,5 +9,5 @@ package sistemapoliciafederal;
  * @author IMetta
  */
 public class Contrato {
-    
+
 }
