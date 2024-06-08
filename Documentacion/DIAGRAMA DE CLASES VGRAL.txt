@@ -111,6 +111,11 @@ interface Iconsultante{}
 class Main{
 }
 
+class Menu{
+ +mostrarMenu()
+}
+
+Menu "   1 " <. "     1" Main: menu
 class DB <<Serializable>>{}
 DB "1" <-- "1" UsuarioAdmin: db
 Delito ..|> IDelito
