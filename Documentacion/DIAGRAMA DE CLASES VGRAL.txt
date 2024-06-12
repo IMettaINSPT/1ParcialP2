@@ -98,12 +98,7 @@ class Juicio{
 }
 
 abstract class Usuario <<abstract>>{
--userName: String
--password: String
-+login()
-+crearUsuario()
-+{abstract}consultaGeneral() : String
-+deslogiarse()
+
 }
 
 interface Iconsultante{}
@@ -115,9 +110,31 @@ class Menu{
  +mostrarMenu()
 }
 
-Menu "   1 " <. "     1" Main: menu
-class DB <<Serializable>>{}
-DB "1" <-- "1" UsuarioAdmin: db
+
+class SistemaState <<Serializable>>{}
+static class EntradaSalida{
+ 
+ + {static} leerChar()
+ + {static} leerString()
+ + {static} leerBoolean()
+ + {static} mostrarString()
+ + {static} leerPassword()
+
+}
+class Control{
+    
+   +crearUsuario();
+   +restaurarSistema();
+   
+}
+Control "1" -> "1" Usuario : usuario
+Control <--Main
+Menu "   1 " <- "     1" Control: menu
+EntradaSalida <-Menu
+EntradaSalida <-Control
+Control --> SistemaState
+SistemaState "1"<-- "1" UsuarioAdmin :sistemaState
+SistemaState "1"<-- "1" UsuarioInv:sistemaState
 Delito ..|> IDelito
 Sucursal "1" o--> "*" IDelito : delitos
 Sucursal "1" o--> "*" Contrato : contratos
@@ -134,5 +151,4 @@ Usuario <|-- UsuarioInv
 Usuario <|-- UsuarioVigilante
 Iconsultante <|.. UsuarioAdmin
 Iconsultante <|.. UsuarioInv
-Main --> Usuario
 @enduml

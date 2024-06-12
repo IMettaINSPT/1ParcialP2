@@ -1,13 +1,23 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package sistemapoliciafederal;
 
-/**
- *
- * @author IMetta
- */
-public class Banda {
+import java.io.Serializable;
+import java.util.List;
 
+public class Banda implements Serializable  {
+
+    private int nroBanda;
+    private List<PersonaDetenida> delincuentes;
+
+    public int getNroBanda() {
+        return nroBanda;
+    }
+    public void setNroBanda(int nroBanda) {
+        this.nroBanda = nroBanda;
+    }
+    public List<PersonaDetenida> getMiembros() {
+        return delincuentes;
+    }
+    public void addMiembro(PersonaDetenida delincuente) {
+        this.delincuentes.add(delincuente);
+    }
 }

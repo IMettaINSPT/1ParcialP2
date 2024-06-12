@@ -1,78 +1,84 @@
 @startuml
 
-hide circle
-skinparam classAttributeIconSize 0
-
 
 class UsuarioAdmin{
--juicios:List<Juicio>
--vigilantes:List<Vigilante>
--banco:List<Banco>
--jueces:List<Juez>
--delincuentes:List<PersonaDetenida>
--bandas: List<Banda>
--db: DB
-+getInstanciaDB()
-+consultaGeneral() : String
-+serializar()
-+desSerializar()
-+cargarBanco()
-+cargarSucursal()
-+cargarJuicio()
-+cargarBanda()
-+cargarDelincuente()
-+cargarVigilante()
-+cargarDelito()
-+cargarContrato()
-+cargarJuez() 
++ConsultaGeneral() : String
++Serializar()
++DesSerializar()
++CargarBanco()
++CargarSucursal()
++CargarJuicio()
++CargarBanda()
++CargarDelincuente()
++CargarVigilante()
++CargarDelito()
++CargarContrato()
++CargarJuez() 
 }
 
 class UsuarioInv{
-+consultaGeneral(): String
++ConsultaGeneral(): String
 }
 
 class UsuarioVigilante{
 - Vigilante : Vigilante
 - consultaContra: IConsultaContrato
-+setConsulta()
-+consultaGeneral() : String
-+consultarContrato(Vigilante): Contrato
++SetConsulta()
++ConsultaGeneral() : String
++ConsultarContrato(Vigilante): Contrato
 }
 
 
 class Main{
 
-  +main();
-  +crearUsuario()
+  Main();
+  CrearUsuario();
 }
 
-Main "1" --> "1" Usuario : usuario
-abstract class Usuario <<abstract>>{
--userName: String
--password: String
-+login()
-+crearUsuario()
-+{abstract}consultaGeneral() : String
-+deslogiarse()
+abstract class Usuario{
+-UserName: String
+-Password: String
++Login()
++CrearUsuario()
++{abstract}ConsultaGeneral() : String
++Deslogiarse()
 }
 
-class DB <<Serializable>>{
-  -juicios:List<Juicio>
-  -vigilantes:List<Vigilante>
-  -banco:List<Banco>
-  -jueces:List<Juez>
-  -delincuentes:List<PersonaDetenida>
-  -bandas: List<Banda>
-  +serializar(Path:string)
-  +deserializar(Path: string)
+
+class Menu{
+ +mostrarMenu()
 }
 
-interface IUsuarioConsultante {}
 
-DB "1"<-- "1" UsuarioAdmin :db
+class SistemaState <<Serializable>>{}
+static class EntradaSalida{
+ 
+ + {static} leerChar()
+ + {static} leerString()
+ + {static} leerBoolean()
+ + {static} mostrarString()
+ + {static} leerPassword()
+
+}
+class Control{
+    
+   +crearUsuario();
+   +restaurarSistema();
+   
+}
+
+
+SistemaState "1"<-- "1" UsuarioAdmin :sistemaState
+SistemaState "1"<-- "1" UsuarioInv:sistemaState
+Control "1" -> "1" Usuario : usuario
+Control <-Main
+Menu "   1 " <- "     1" Control: menu
+EntradaSalida <-Menu
+EntradaSalida <-Control
+Control --> SistemaState
 Usuario <|-- UsuarioAdmin
 Usuario <|-- UsuarioInv
 Usuario <|-- UsuarioVigilante
-IUsuarioConsultante <|.. UsuarioInv
+IUsuarioConsultante <|.. UsuarioVigilante
 IUsuarioConsultante <|.. UsuarioAdmin
 @enduml

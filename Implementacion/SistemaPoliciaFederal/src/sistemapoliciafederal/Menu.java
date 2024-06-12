@@ -18,14 +18,14 @@ public class Menu {
 
         if (!menusMsj.isEmpty() && !errorMenuMsj.isEmpty() && cantMinMenu <= cantMaxMenu && cantReintentos >= 0) {
             do {
-                System.out.println(menusMsj);
+                EntradaSalida.mostrarString(menusMsj);
                 menuOp = scanner.nextInt();
                 if(menuOp >= cantMinMenu && menuOp <= cantMaxMenu) 
                 {
                   return menuOp;
                 }
                 cantReintentos --;
-                System.out.println(errorMenuMsj);
+                 EntradaSalida.mostrarString(errorMenuMsj);
             } while (cantReintentos >= 0);
         }
         return menuOp;

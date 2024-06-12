@@ -10,15 +10,19 @@ package sistemapoliciafederal;
  */
 public class UsuarioInvestigador extends Usuario implements IUsuarioConsultante {
 
-    public UsuarioInvestigador() {
+    SistemaState sistemaState ;
+
+    public UsuarioInvestigador(SistemaState sistemaState)
+    {
+        this.sistemaState = sistemaState;
     }
 
      @Override
     public int GetMenu() {
         return menu.mostrar("1-MostrarBanco 2-MostrarSucursales 3-MostrarDelincuentes 4-MostrarJuicios 5-MostrarDelitos 6-MostrarContrato", "Error.Reintente", 1, 6, 3);
    }   
-      public static Usuario crearUsuario(String u, String p) {
-       Usuario user = new UsuarioInvestigador();
+      public static Usuario crearUsuario(String u, String p, SistemaState sist) {
+       Usuario user = new UsuarioInvestigador(sist);
        user.setPass(p);
        user.setUser(u);
        return user;

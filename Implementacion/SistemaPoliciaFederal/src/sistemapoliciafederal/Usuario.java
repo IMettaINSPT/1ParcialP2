@@ -4,11 +4,9 @@
  */
 package sistemapoliciafederal;
 
-/**
- *
- * @author IMetta
- */
-public abstract class Usuario {
+import java.io.Serializable;
+
+public abstract class Usuario implements Serializable  {
 
     private String user, pass;         
 

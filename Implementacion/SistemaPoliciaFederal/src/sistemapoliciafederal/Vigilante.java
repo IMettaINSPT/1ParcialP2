@@ -1,13 +1,60 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package sistemapoliciafederal;
 
-/**
- *
- * @author IMetta
- */
 public class Vigilante {
+
+    private String codigo;
+    private int edad;
+    private boolean usaArna;
+    private Contrato contrato;
+
+    public Vigilante(String codigo, int edad, boolean usaArma, Contrato contrato) {
+        this.codigo = codigo;
+        this.edad = edad;
+        this.usaArna = usaArma;
+        this.contrato = contrato;
+    }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
+    public int getEdad() {
+        return edad;
+    }
+
+    public void setEdad(int edad) {
+        this.edad = edad;
+    }
+
+    public boolean isUsaArna() {
+        return usaArna;
+    }
+
+    public void setUsaArna(boolean usaArna) {
+        this.usaArna = usaArna;
+    }
+
+    public Contrato getContrato() {
+        return contrato;
+    }
+
+    public void setContrato(Contrato contrato) {
+        this.contrato = contrato;
+    }
+    
+    public String informacionVigilante(){
+      StringBuilder sb = new StringBuilder();
+      sb.append("Codigo vigilante ").append(this.codigo);
+      sb.append("Edad").append(this.edad);
+      sb.append("Usa arma: ").append(this.usaArna);
+      sb.append("Datos del contrato;").append(this.contrato.detalleContrato());
+      
+      return sb.toString();
+    }
+    
 
 }

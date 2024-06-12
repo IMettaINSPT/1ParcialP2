@@ -1,16 +1,16 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package sistemapoliciafederal;
 
-/**
- *
- * @author IMetta
- */
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class UsuarioAdmin extends Usuario implements IUsuarioConsultante {
-   private static DB DB ;
-    
+    SistemaState sistemaState ;
+
+    public UsuarioAdmin(SistemaState sistemaState)
+    {
+        this.sistemaState = sistemaState;
+    }
     @Override
     public int GetMenu() {
         return Menu.mostrar("1-MostrarBanco 2-MostrarSucursales 3-MostrarDelincuentes 4-MostrarJuicios 5-MostrarDelitos 6-MostrarContrato 7-CargarBanco 8-CargarSucursal 9-CargarJuici 10-CargaBanda 11-CargarDelincuente 12-CargarVigilante 13-CargarDelito 14-CargarContrato 15-CargarJuez", "Error.Reintente", 1, 15, 3);
@@ -18,17 +18,25 @@ public class UsuarioAdmin extends Usuario implements IUsuarioConsultante {
 
     public void serializar()
     {
-      DB.serializar();
+       try {
+           sistemaState.serializar("");
+       } catch (IOException ex) {
+           Logger.getLogger(UsuarioAdmin.class.getName()).log(Level.SEVERE, null, ex);
+       }
     }
     
     public void deSerializar()
     {
-      DB.serializar();
+       try {
+           sistemaState.deSerializar("");
+       } catch (IOException | ClassNotFoundException ex) {
+           Logger.getLogger(UsuarioAdmin.class.getName()).log(Level.SEVERE, null, ex);
+       }
+      
     }
     
-    public static Usuario crearUsuario(String u, String p) {
-       DB= new DB();
-       Usuario user = new UsuarioAdmin();
+    public static Usuario crearUsuario(String u, String p, SistemaState sist) {
+       Usuario user = new UsuarioAdmin(sist);
        user.setPass(p);
        user.setUser(u);
        return user;

@@ -1,13 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
- */
 package sistemapoliciafederal;
 
-/**
- *
- * @author IMetta
- */
 public interface IJuez {
+
+public void setClaveJuzgado(String clave);
+public void setNombreCompleto(String nom);
+public void setAñosServicio(int años);
+public String getDatosJuez();
 
 }

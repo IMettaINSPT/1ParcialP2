@@ -4,10 +4,44 @@
  */
 package sistemapoliciafederal;
 
-/**
- *
- * @author IMetta
- */
-public class Contrato {
+import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class Contrato implements Serializable {
+
+    private Date fechaContrato;
+    private boolean conArma;
+
+    public Contrato(Date fechaContrato, boolean conArma) {
+        this.fechaContrato = fechaContrato;
+        this.conArma = conArma;
+    }
+
+    public Date getFechaContrato() {
+        return fechaContrato;
+    }
+
+    public void setFechaContrato(Date fechaContrato) {
+        this.fechaContrato = fechaContrato;
+    }
+
+    public void setConArma(boolean conArma) {
+        this.conArma = conArma;
+    }
+
+    public boolean isConArma() {
+        return conArma;
+    }
+
+    public String detalleContrato() {
+        StringBuilder sb = new StringBuilder();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
+
+        sb.append("Fecha contrato: ").append(dateFormat.format(this.fechaContrato));
+        sb.append("¿El contrato es con arma?: ").append(this.conArma);
+        return sb.toString();
+    }
 
 }
