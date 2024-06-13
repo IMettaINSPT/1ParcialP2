@@ -9,5 +9,6 @@ package sistemapoliciafederal;
  * @author IMetta
  */
 public interface IJuez {
-
+    void juzgarCaso();
 }
+

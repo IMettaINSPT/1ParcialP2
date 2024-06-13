@@ -9,5 +9,28 @@ package sistemapoliciafederal;
  * @author IMetta
  */
 public class Contrato {
-
+    private String detalles;
+    private String fecha;
+    
+    public Contrato(String detalles, String fecha) {
+        this.detalles = detalles;
+        this.fecha = fecha;
+    }
+    
+    public String getDetalles() {
+        return detalles;
+    }
+    
+    public void setDetalles(String detalles) {
+        this.detalles = detalles;
+    }
+    
+    public String getFecha() {
+        return fecha;
+    }
+    
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
 }
+

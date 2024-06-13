@@ -3,10 +3,29 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/InvitadoTeatro/1ParcialP2/Implementacion/SistemaPoliciaFederal/src/sistemapoliciafederal/UsuarioAdmin.java</file>
-            <file>file:/C:/Users/InvitadoTeatro/1ParcialP2/Implementacion/SistemaPoliciaFederal/src/sistemapoliciafederal/Menu.java</file>
-            <file>file:/C:/Users/InvitadoTeatro/1ParcialP2/Implementacion/SistemaPoliciaFederal/src/sistemapoliciafederal/Usuario.java</file>
-            <file>file:/C:/Users/InvitadoTeatro/1ParcialP2/Implementacion/SistemaPoliciaFederal/src/sistemapoliciafederal/UsuarioInvestigador.java</file>
+            <file>file:/C:/Users/supervisor/Desktop/SistemaPoliciaFederal/src/sistemapoliciafederal/IConsultarDelitos.java</file>
+            <file>file:/C:/Users/supervisor/Desktop/SistemaPoliciaFederal/src/sistemapoliciafederal/Main.java</file>
+            <file>file:/C:/Users/supervisor/Desktop/SistemaPoliciaFederal/src/sistemapoliciafederal/UsuarioAdmin.java</file>
+            <file>file:/C:/Users/supervisor/Desktop/SistemaPoliciaFederal/src/sistemapoliciafederal/PersonaDetenida.java</file>
+            <file>file:/C:/Users/supervisor/Desktop/SistemaPoliciaFederal/src/sistemapoliciafederal/UsuarioInvestigador.java</file>
+            <file>file:/C:/Users/supervisor/Desktop/SistemaPoliciaFederal/src/sistemapoliciafederal/Contrato.java</file>
+            <file>file:/C:/Users/supervisor/Desktop/SistemaPoliciaFederal/src/sistemapoliciafederal/IJuez.java</file>
+            <file>file:/C:/Users/supervisor/Desktop/SistemaPoliciaFederal/src/sistemapoliciafederal/IDelito.java</file>
+            <file>file:/C:/Users/supervisor/Desktop/SistemaPoliciaFederal/src/sistemapoliciafederal/Menu.java</file>
+            <file>file:/C:/Users/supervisor/Desktop/SistemaPoliciaFederal/src/sistemapoliciafederal/IUsuarioConsultante.java</file>
+            <file>file:/C:/Users/supervisor/Desktop/SistemaPoliciaFederal/src/sistemapoliciafederal/Usuario.java</file>
+            <file>file:/C:/Users/supervisor/Desktop/SistemaPoliciaFederal/src/sistemapoliciafederal/UsuarioVigilante.java</file>
+            <file>file:/C:/Users/supervisor/Desktop/SistemaPoliciaFederal/src/sistemapoliciafederal/Delito.java</file>
+            <file>file:/C:/Users/supervisor/Desktop/SistemaPoliciaFederal/src/sistemapoliciafederal/Sucursal.java</file>
+            <file>file:/C:/Users/supervisor/Desktop/SistemaPoliciaFederal/src/sistemapoliciafederal/Vigilante.java</file>
+            <file>file:/C:/Users/supervisor/Desktop/SistemaPoliciaFederal/src/sistemapoliciafederal/Banco.java</file>
+            <file>file:/C:/Users/supervisor/Desktop/SistemaPoliciaFederal/src/sistemapoliciafederal/ConsultarDelitosConCondena.java</file>
+            <file>file:/C:/Users/supervisor/Desktop/SistemaPoliciaFederal/src/sistemapoliciafederal/Juez.java</file>
+            <file>file:/C:/Users/supervisor/Desktop/SistemaPoliciaFederal/src/sistemapoliciafederal/Banda.java</file>
+            <file>file:/C:/Users/supervisor/Desktop/SistemaPoliciaFederal/src/sistemapoliciafederal/DB.java</file>
+            <file>file:/C:/Users/supervisor/Desktop/SistemaPoliciaFederal/src/sistemapoliciafederal/ConsultarDelitosPorBanda.java</file>
+            <file>file:/C:/Users/supervisor/Desktop/SistemaPoliciaFederal/src/sistemapoliciafederal/Juicio.java</file>
+            <file>file:/C:/Users/supervisor/Desktop/SistemaPoliciaFederal/src/sistemapoliciafederal/ConsultarDelitosPorDelincuente.java</file>
         </group>
     </open-files>
 </project-private>

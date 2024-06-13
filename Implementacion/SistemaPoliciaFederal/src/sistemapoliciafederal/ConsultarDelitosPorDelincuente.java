@@ -10,4 +10,8 @@ package sistemapoliciafederal;
  */
 public class ConsultarDelitosPorDelincuente implements IConsultarDelitos {
 
+    @Override
+    public void consultarDelitos() {
+        System.out.println("Consultando delitos por delincuente...");
+    }
 }

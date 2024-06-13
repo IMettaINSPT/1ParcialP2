@@ -9,5 +9,6 @@ package sistemapoliciafederal;
  * @author IMetta
  */
 public interface IDelito {
-
+    String getDescripcion();
+    String getCondena();
 }
