@@ -35,7 +35,7 @@ public class Contrato implements Serializable {
         return conArma;
     }
 
-    public String detalleContrato() {
+    public String getInfoContrato() {
         StringBuilder sb = new StringBuilder();
         DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
 
@@ -43,5 +43,7 @@ public class Contrato implements Serializable {
         sb.append("¿El contrato es con arma?: ").append(this.conArma);
         return sb.toString();
     }
+
+
 
 }

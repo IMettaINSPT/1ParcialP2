@@ -12,8 +12,8 @@ public class SistemaState implements Serializable {
     private List<Juicio> juicios;
     private List<Juez> jueces;
     private List<Vigilante> vigilantes;
-    private Banco banco;
-    private List<PersonaDetenida> delincuentes;
+    private List<Banco> bancos;
+    private List<Delito> delitos;
     private List<Banda> bandas;
     private List<Usuario> usuarios;
 
@@ -45,13 +45,11 @@ public class SistemaState implements Serializable {
         return vigilantes;
     }
 
-    public Banco getBanco() {
-        return banco;
+    public List<Banco> getBancos() {
+        return bancos;
     }
 
-    public List<PersonaDetenida> getDelincuentes() {
-        return delincuentes;
-    }
+
 
     public List<Usuario> getUsuarios() {
         return usuarios;
@@ -78,12 +76,18 @@ public class SistemaState implements Serializable {
     }
 
     public void addBanco(Banco j) {
-        this.banco = j;
+        this.bancos.add(j);
     }
 
-    public void addPersonaDetenida(PersonaDetenida j) {
-        this.delincuentes.add(j);
+    public List<Delito> getDelitos() {
+        return delitos;
     }
+
+
+    public void addDelito(Delito delito) {
+        this.delitos.add(delito);
+    }
+
 
     public void addBanda(Banda j) {
         this.bandas.add(j);

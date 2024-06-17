@@ -24,7 +24,7 @@ public class Juez implements IJuez, Serializable{
     }
 
     @Override
-    public String getDatosJuez() {
+    public String getInfoJuez() {
 
      StringBuilder datos = new StringBuilder();
      datos.append("Clave interna juzgado:").append(this.claveInternaJuzgado);

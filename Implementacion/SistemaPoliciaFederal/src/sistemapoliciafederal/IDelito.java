@@ -16,7 +16,8 @@ public interface IDelito {
     public void setFechaDelito(Date fechaDelito);
     public PersonaDetenida getDelincuente();
     public void setDelincuente(PersonaDetenida delincuente);
-    public String getInfoDelito();
+    public String getInfoBasicaDelito();
+    public String getInfoCompletaDelito();
     public void setConCondenado(boolean condena);
     public boolean getConCondena();
 }

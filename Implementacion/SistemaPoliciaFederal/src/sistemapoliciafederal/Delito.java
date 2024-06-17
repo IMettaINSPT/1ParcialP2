@@ -1,4 +1,3 @@
-
 package sistemapoliciafederal;
 
 import java.io.Serializable;
@@ -6,7 +5,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Delito implements IDelito , Serializable{
+public class Delito implements IDelito, Serializable {
 
     private Date fechaDelito;
     private PersonaDetenida delincuente;
@@ -49,13 +48,24 @@ public class Delito implements IDelito , Serializable{
     }
 
     @Override
-    public String getInfoDelito() {
+    public String getInfoBasicaDelito() {
+        StringBuilder sb = new StringBuilder();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
+
+        sb.append("Fecha del delito:").append(dateFormat.format(fechaDelito));
+        sb.append("Con Condena:").append(this.condenado);
+        return sb.toString();
+    }
+
+    @Override
+    public String getInfoCompletaDelito() {
         StringBuilder sb = new StringBuilder();
         DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
 
         sb.append("Fecha del delito:").append(dateFormat.format(fechaDelito));
         sb.append("Persona detenida:").append(delincuente.toString());
+        sb.append("Con Condena:").append(this.condenado);
+
         return sb.toString();
     }
-
 }

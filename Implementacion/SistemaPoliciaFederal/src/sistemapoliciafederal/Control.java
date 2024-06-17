@@ -1,11 +1,12 @@
 package sistemapoliciafederal;
 
 import java.io.IOException;
+import java.util.List;
 
 public class Control {
-
-    private  SistemaState sistemaState = new SistemaState();
-
+// ver si puede quedar final
+    private  final SistemaState sistemaState = new SistemaState();
+  
     public void RestaurarEstadoSistema()
     {
         try {
@@ -15,6 +16,21 @@ public class Control {
         }
     
     }
+    
+    public List<Usuario> GetUsuariosSistema()
+    {
+        return this.sistemaState.getUsuarios();
+    }
+    
+    public void RelizarConsultasInvestigador(UsuarioInvestigador user)
+    {
+
+       IConsultaBanco consultaBanco = new ConsultarBancoPorCodigo(this.sistemaState.getBancos(),"1");
+       user.setConsultaBanco(consultaBanco);
+       //SEGUIRR Y PROBAR 
+
+    }
+    
     public void crearUsuario() {
         Usuario user = null;
         int tipoUsuario = Menu.mostrar("1- ADMIN 2-INVESTIGADOR 3-VIGILANTE 4-SALIR", "Opcion incorrecta", 1, 4, 3);
@@ -35,9 +51,7 @@ public class Control {
                 case 4:
                     System.out.println("Adios");
                     break;
-            }
-            
-            sistemaState.addUsuario(user);
+            }        
             
         }
     }

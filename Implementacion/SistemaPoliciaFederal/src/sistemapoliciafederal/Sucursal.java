@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public class Sucursal implements Serializable  {
+public class Sucursal implements Serializable {
 
     private String codigo;
     private String domicilio;
@@ -16,6 +16,21 @@ public class Sucursal implements Serializable  {
         this.codigo = codigo;
         this.domicilio = domicilio;
         this.nroEmpleados = nroEmpleados;
+    }
+
+    public String getInfoSucursal() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Codigo sucursal : ").append(this.codigo);
+        sb.append("\n Domicilio : ").append(this.domicilio);
+        sb.append("\n Cantidad de empleados : ").append(this.nroEmpleados);
+        sb.append("Delitos :");
+        for (Delito del : this.delitos) {
+            sb.append("\n delito: ").append(del.getInfoCompletaDelito());
+        }
+        for (Contrato con : this.contratos) {
+            sb.append("\n contrato: ").append(con.getInfoContrato());
+        }
+        return sb.toString();
     }
 
     public String getCodigo() {

@@ -56,4 +56,6 @@ public abstract class Usuario implements Serializable  {
     public void setPass(String pass) {
         this.pass = pass;
     }
+    
+     public abstract void getInfoGeneral();
 }

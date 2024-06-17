@@ -46,12 +46,13 @@ public class Vigilante {
         this.contrato = contrato;
     }
     
-    public String informacionVigilante(){
+
+    public String getInfoVigilante() {
       StringBuilder sb = new StringBuilder();
       sb.append("Codigo vigilante ").append(this.codigo);
       sb.append("Edad").append(this.edad);
       sb.append("Usa arma: ").append(this.usaArna);
-      sb.append("Datos del contrato;").append(this.contrato.detalleContrato());
+      sb.append("Datos del contrato;").append(this.contrato.getInfoContrato());
       
       return sb.toString();
     }

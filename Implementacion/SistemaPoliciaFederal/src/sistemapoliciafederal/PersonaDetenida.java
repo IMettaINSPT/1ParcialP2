@@ -1,6 +1,7 @@
 package sistemapoliciafederal;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class PersonaDetenida implements Serializable {
 
@@ -23,11 +24,33 @@ public class PersonaDetenida implements Serializable {
         this.nombreCompleto = nombreCompleto;
     }
 
-    @Override
-    public String toString() {
+    public String getInfoPersonaDetenida() {
         StringBuilder sb = new StringBuilder();
         sb.append("Nombre compleo: ").append(this.nombreCompleto);
         sb.append("Codigo: ").append(this.codigo);
         return sb.toString();
     }
+
+    @Override
+    public boolean equals (Object obj) {
+
+        if (obj instanceof PersonaDetenida) {
+           PersonaDetenida p = (PersonaDetenida) obj;
+           return p.getCodigo().equals(this.getCodigo());
+        }
+        else{
+            return false;
+        }
+    }
+
+    //Necesario para el tener un codigo unico de cada clase
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 79 * hash + Objects.hashCode(this.codigo);
+        hash = 79 * hash + Objects.hashCode(this.nombreCompleto);
+        return hash;
+    }
+
+
 }

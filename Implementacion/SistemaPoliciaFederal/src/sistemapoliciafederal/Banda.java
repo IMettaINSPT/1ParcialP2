@@ -20,4 +20,13 @@ public class Banda implements Serializable  {
     public void addMiembro(PersonaDetenida delincuente) {
         this.delincuentes.add(delincuente);
     }
+    public String getInfoBanda(){
+        StringBuilder sb = new StringBuilder();
+        sb.append("Nro Banda ").append(this.nroBanda);
+        for(PersonaDetenida delincuente : this.delincuentes)
+        {
+            sb.append("Delincuente miembro :").append(delincuente.getInfoPersonaDetenida());
+        }
+        return sb.toString();
+    }
 }

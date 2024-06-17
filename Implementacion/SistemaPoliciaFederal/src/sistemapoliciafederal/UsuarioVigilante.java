@@ -1,19 +1,15 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package sistemapoliciafederal;
 
-/**
- *
- * @author IMetta
- */
-public class UsuarioVigilante extends Usuario {
+import java.util.List;
 
+
+public class UsuarioVigilante extends Usuario {
+   private Vigilante vigilante ;
+    private IConsultaContrato consultaContrato;
     @Override
     public int GetMenu() {
-        return menu.mostrar("1-MostrarContrato", "Error.Reintente", 1, 1, 3);
-
+        return Menu.mostrar("1-MostrarContrato", "Error.Reintente", 1, 1, 3);
     }
     
     public static Usuario crearUsuario(String u, String p) {
@@ -22,5 +18,34 @@ public class UsuarioVigilante extends Usuario {
        user.setUser(u);
        return user;
     }
+
+    /**
+     * @return the vigilante
+     */
+    public Vigilante getVigilante() {
+        return vigilante;
+    }
+
+    /**
+     * @param vigilante the vigilante to set
+     */
+    public void setVigilante(Vigilante vigilante) {
+        this.vigilante = vigilante;
+    }
+    
+        @Override
+    public void getInfoGeneral() {
+        System.out.println("\nVigilante:");
+            System.out.println(vigilante.getInfoVigilante());        
+    }
+
+    public void setConsultaContrato(IConsultaContrato con) {
+        this.consultaContrato = con;
+    }
+
+    public List<Contrato> getContratos() {
+        return this.consultaContrato.getContratos();
+    }
+
 
 }

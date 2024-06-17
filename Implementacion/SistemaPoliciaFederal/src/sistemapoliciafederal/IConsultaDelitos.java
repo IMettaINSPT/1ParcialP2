@@ -4,10 +4,9 @@
  */
 package sistemapoliciafederal;
 
-/**
- *
- * @author IMetta
- */
-public interface IConsultarDelitos {
+import java.util.*;
 
+
+public interface IConsultaDelitos {
+    public List<IDelito> getDelitos();     
 }
