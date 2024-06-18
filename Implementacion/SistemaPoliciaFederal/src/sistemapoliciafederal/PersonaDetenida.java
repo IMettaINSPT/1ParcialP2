@@ -8,6 +8,17 @@ public class PersonaDetenida implements Serializable {
     private String codigo;
     private String nombreCompleto;
 
+    
+    public PersonaDetenida()
+    {
+    }
+    
+    public PersonaDetenida(String codigo, String nombre)
+    {
+        this.codigo = codigo;
+        this.nombreCompleto = nombre;
+    }
+    
     public String getCodigo() {
         return codigo;
     }

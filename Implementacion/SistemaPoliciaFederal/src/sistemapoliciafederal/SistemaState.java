@@ -13,7 +13,7 @@ public class SistemaState implements Serializable {
     private List<Juez> jueces;
     private List<Vigilante> vigilantes;
     private List<Banco> bancos;
-    private List<Delito> delitos;
+    private List<IDelito> delitos;
     private List<Banda> bandas;
     private List<Usuario> usuarios;
 
@@ -79,7 +79,7 @@ public class SistemaState implements Serializable {
         this.bancos.add(j);
     }
 
-    public List<Delito> getDelitos() {
+    public List<IDelito> getDelitos() {
         return delitos;
     }
 
@@ -91,5 +91,54 @@ public class SistemaState implements Serializable {
 
     public void addBanda(Banda j) {
         this.bandas.add(j);
+    }
+
+    /**
+     * @param juicios the juicios to set
+     */
+    public void setJuicios(List<Juicio> juicios) {
+        this.juicios = juicios;
+    }
+
+    /**
+     * @param jueces the jueces to set
+     */
+    public void setJueces(List<Juez> jueces) {
+        this.jueces = jueces;
+    }
+
+    /**
+     * @param vigilantes the vigilantes to set
+     */
+    public void setVigilantes(List<Vigilante> vigilantes) {
+        this.vigilantes = vigilantes;
+    }
+
+    /**
+     * @param bancos the bancos to set
+     */
+    public void setBancos(List<Banco> bancos) {
+        this.bancos = bancos;
+    }
+
+    /**
+     * @param delitos the delitos to set
+     */
+    public void setDelitos(List<IDelito> delitos) {
+        this.delitos = delitos;
+    }
+
+    /**
+     * @param bandas the bandas to set
+     */
+    public void setBandas(List<Banda> bandas) {
+        this.bandas = bandas;
+    }
+
+    /**
+     * @param usuarios the usuarios to set
+     */
+    public void setUsuarios(List<Usuario> usuarios) {
+        this.usuarios = usuarios;
     }
 }

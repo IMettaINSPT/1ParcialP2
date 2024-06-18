@@ -4,13 +4,14 @@
  */
 package sistemapoliciafederal;
 
+import java.io.Serializable;
 import java.util.Scanner;
 
 /**
  *
  * @author IMetta
  */
-public class Menu {
+public class Menu implements Serializable {
 
     public static int mostrar(String menusMsj, String errorMenuMsj, int cantMinMenu,int cantMaxMenu, int cantReintentos) {
      Scanner scanner = new Scanner(System.in);

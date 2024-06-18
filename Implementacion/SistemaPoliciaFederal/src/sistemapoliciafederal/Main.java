@@ -1,5 +1,6 @@
 package sistemapoliciafederal;
 
+import java.io.IOException;
 import java.util.*;
 
 public class Main {
@@ -8,8 +9,10 @@ public class Main {
         Control c = new Control();
         try {
             //ACA VA EL LLAMADO A CADA METODO DEL CONTROL PARA HACER ITERATIVO EL SISTEMA
-            c.crearUsuario();
-        } catch (NullPointerException e) {
+            c.dummyTest();
+            
+            c.dummyDeserializar();
+        } catch (IOException| ClassNotFoundException  e) {
             EntradaSalida.mostrarString(e.getMessage());
         }
     }

@@ -1,7 +1,7 @@
 package sistemapoliciafederal;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.*;
 
 public class Banco implements Serializable {
 
@@ -12,6 +12,7 @@ public class Banco implements Serializable {
     public Banco(String codigo, String domicilio) {
         this.codigoBanco = codigo;
         this.domicilioCentral = domicilio;
+        sucursales = new ArrayList<>();
     }
 
     public void AddSucursal(Sucursal suc) {

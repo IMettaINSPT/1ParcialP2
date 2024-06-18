@@ -1,21 +1,22 @@
 package sistemapoliciafederal;
 
 import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class Sucursal implements Serializable {
 
     private String codigo;
     private String domicilio;
     private int nroEmpleados;
-    private List<Delito> delitos;
+    private List<Delito> delitos ;
     private List<Contrato> contratos;
 
     public Sucursal(String codigo, String domicilio, int nroEmpleados) {
         this.codigo = codigo;
         this.domicilio = domicilio;
         this.nroEmpleados = nroEmpleados;
+        delitos = new ArrayList<>();
+        contratos = new ArrayList<>();
     }
 
     public String getInfoSucursal() {

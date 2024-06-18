@@ -1,6 +1,8 @@
 package sistemapoliciafederal;
 
-public class Vigilante {
+import java.io.Serializable;
+
+public class Vigilante implements Serializable {
 
     private String codigo;
     private int edad;
@@ -12,6 +14,12 @@ public class Vigilante {
         this.edad = edad;
         this.usaArna = usaArma;
         this.contrato = contrato;
+    }
+    
+    public Vigilante(String codigo, int edad, boolean usaArma) {
+        this.codigo = codigo;
+        this.edad = edad;
+        this.usaArna = usaArma;
     }
 
     public String getCodigo() {
