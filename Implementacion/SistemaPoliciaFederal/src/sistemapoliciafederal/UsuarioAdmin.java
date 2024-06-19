@@ -2,6 +2,7 @@ package sistemapoliciafederal;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,6 +22,52 @@ public class UsuarioAdmin extends Usuario implements IUsuarioConsultante {
     @Override
     public int GetMenu() {
         return Menu.mostrar("1-MostrarBanco 2-MostrarSucursales 3-MostrarDelincuentes 4-MostrarJuicios 5-MostrarDelitos 6-MostrarContrato 7-CargarBanco 8-CargarSucursal 9-CargarJuici 10-CargaBanda 11-CargarDelincuente 12-CargarVigilante 13-CargarDelito 14-CargarContrato 15-CargarJuez", "Error.Reintente", 1, 15, 3);
+    }
+
+    public void Accionar(int menu) {
+        int subMenu;
+        if (Objects.isNull(sistemaState)) {
+            EntradaSalida.mostrarError("No existe informacion en el sistema");
+        }
+
+        switch (this.GetMenu()) {
+            case 1:
+                String domicilio;
+                String codigo;
+                if (this.sistemaState.getBancos().size() <= 0) {
+                    EntradaSalida.mostrarError("Debe existir al menos un banco");
+                }
+                subMenu = Menu.mostrar("1-Mostrar banco por codigo 2-Mostrar banco por domicilio", "Error.Reintente", 1, 2, 3);
+
+                if (subMenu == -1) {
+                    EntradaSalida.mostrarError("Ingreso una opcion invalida");
+
+                } else {
+                    if (subMenu == 1) {
+                        codigo = EntradaSalida.leerString("Ingrese el codigo del banco a buscar");
+                        if (codigo.isEmpty()) {
+                            EntradaSalida.mostrarError("Debe ingresar un codigo valido");
+                        }
+                        this.setConsultaBanco(new ConsultarBancoPorCodigo(this.sistemaState.getBancos(), codigo));
+
+                    } else {
+                        domicilio = EntradaSalida.leerString("Ingrese el domicilio del banco a buscar");
+                        if (domicilio.isEmpty()) {
+                            EntradaSalida.mostrarError("Debe ingresar un domicilio valido");
+                        }
+                        this.setConsultaBanco(new ConsultarBancoPorDomicilio(this.sistemaState.getBancos(), domicilio));
+                    }
+
+                    Banco bco = this.getBanco();
+                    if (Objects.isNull(bco)) {
+                        EntradaSalida.mostrarError("No existe el banco con los parametros seleccionados");
+                    } else {
+                        EntradaSalida.mostrarString(bco.getInfoBanco());
+                    }
+                }
+            default:
+                EntradaSalida.mostrarError("La opcion ingresada es incorrecta");
+        }
     }
 
     public void serializar() {
@@ -47,7 +94,6 @@ public class UsuarioAdmin extends Usuario implements IUsuarioConsultante {
         return user;
     }
 
-    // OMG FIX: todos los gets de los objetos deberian utilizar 
     @Override
     public void getInfoGeneral() {
         // Imprimir la información de todas las listas en la base de datos.

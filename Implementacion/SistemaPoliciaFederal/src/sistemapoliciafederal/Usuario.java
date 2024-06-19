@@ -6,28 +6,18 @@ package sistemapoliciafederal;
 
 import java.io.Serializable;
 
-public abstract class Usuario implements Serializable  {
+public abstract class Usuario implements Serializable {
 
-    private String user, pass;         
+    private String user, pass;
 
-    protected Menu menu = new Menu() ;
+    protected Menu menu = new Menu();
 
     public abstract int GetMenu();
-    
-    public boolean Login(String usuario, String contraseña)
-    {
-       if(!(user.equals(usuario) || pass.equals(contraseña)) )
-       {
-           System.out.println("Algunos de los datos nos incorrectos.Vuelva a ingresarlos");
-           return false;
-       }
-       return true;
+
+    public boolean validarUsuarioContraseña(String usuario, String contraseña) {
+        return ((this.user.equals(usuario) && this.pass.equals(contraseña)));
     }
-    
-     public void Desloguearse()
-    {
-        System.out.println("Gracias por haber utilizado el sistema de la policia Federal");
-    }
+
 
     /**
      * @return the user
@@ -56,6 +46,6 @@ public abstract class Usuario implements Serializable  {
     public void setPass(String pass) {
         this.pass = pass;
     }
-    
-     public abstract void getInfoGeneral();
+
+    public abstract void getInfoGeneral();
 }

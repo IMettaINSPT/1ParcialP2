@@ -28,6 +28,9 @@ public class EntradaSalida {
         return msj.toUpperCase().equals("YES");    
     }
 
+    public static void mostrarError(String s) {       
+         System.out.println("Error: " +s);
+    }
     public static void mostrarString(String s) {       
          System.out.println(s);
     }
