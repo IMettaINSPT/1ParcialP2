@@ -7,6 +7,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class SistemaState implements Serializable { 
     private List<Juicio> juicios;
@@ -49,8 +50,6 @@ public class SistemaState implements Serializable {
         return bancos;
     }
 
-
-
     public List<Usuario> getUsuarios() {
         return usuarios;
     }
@@ -67,6 +66,18 @@ public class SistemaState implements Serializable {
         this.usuarios.add(u);
     }
 
+    public void addUsuario(List<Usuario> users) {
+      //Filtro los usuario de la lista que me llega que no existan ya.
+        List<Usuario> usuariosNuevos = this.usuarios.stream().filter(u -> users.contains(u)).collect(Collectors.toList());
+        
+        for(Usuario u : usuariosNuevos)
+        {
+            
+             this.usuarios.add(u);        
+        }
+       
+    }
+    
     public void addJuez(Juez j) {
         this.jueces.add(j);
     }

@@ -1,10 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package sistemapoliciafederal;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public abstract class Usuario implements Serializable {
 
@@ -18,33 +15,39 @@ public abstract class Usuario implements Serializable {
         return ((this.user.equals(usuario) && this.pass.equals(contraseña)));
     }
 
-
-    /**
-     * @return the user
-     */
     public String getUser() {
         return user;
     }
 
-    /**
-     * @param user the user to set
-     */
     public void setUser(String user) {
         this.user = user;
     }
 
-    /**
-     * @return the pass
-     */
     public String getPass() {
         return pass;
     }
 
-    /**
-     * @param pass the pass to set
-     */
     public void setPass(String pass) {
         this.pass = pass;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+
+        if (obj instanceof Usuario) {
+            Usuario u = (Usuario) obj;
+            return u.getPass().equals(this.getPass()) && u.getUser().equals(this.getUser());
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 31 * hash + Objects.hashCode(this.user);
+        hash = 31 * hash + Objects.hashCode(this.pass);
+        return hash;
     }
 
     public abstract void getInfoGeneral();

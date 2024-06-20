@@ -13,7 +13,7 @@ public class Control {
         usurioActual = null;
         sistemaState = new SistemaState();
     }
-
+    
     public void InitSistema() {
         try {
             sistemaState = sistemaState.deSerializar("UsuarioAdmin.bin");
@@ -24,9 +24,15 @@ public class Control {
 
     public void RestaurarEstadoSistema() {
         try {
-            sistemaState.deSerializar("PoliciaFederal.txt");
+           SistemaState sistAux = sistemaState.deSerializar("PoliciaFederal.bin");
+
+            if(Objects.nonNull(this.sistemaState))
+            {
+               sistAux.addUsuario(this.sistemaState.getUsuarios());
+            }            
+            this.sistemaState = sistAux;
         } catch (IOException | ClassNotFoundException ex) {
-            System.out.println(ex.getMessage());
+            // que no haga nada
         }
     }
 
@@ -55,8 +61,6 @@ public class Control {
 
         IConsultaBanco consultaBanco = new ConsultarBancoPorCodigo(this.sistemaState.getBancos(), "1");
         user.setConsultaBanco(consultaBanco);
-        //SEGUIRR Y PROBAR 
-
     }
 
     public void Desloguearse() {
@@ -231,7 +235,7 @@ public class Control {
 //        sistemaState.setBandas(bandas);
         sistemaState.setUsuarios(usuarios);
 
-        sistemaState.serializar("UsuarioAdmin.txt");
+        sistemaState.serializar("UsuarioAdmin.bin");
 
     }
 
