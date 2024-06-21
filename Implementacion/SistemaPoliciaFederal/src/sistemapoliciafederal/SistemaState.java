@@ -6,10 +6,11 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
-public class SistemaState implements Serializable { 
+public class SistemaState implements Serializable {
+
     private List<Juicio> juicios;
     private List<Juez> jueces;
     private List<Vigilante> vigilantes;
@@ -17,8 +18,20 @@ public class SistemaState implements Serializable {
     private List<IDelito> delitos;
     private List<Banda> bandas;
     private List<Usuario> usuarios;
+    private List<PersonaDetenida> delincuentes;
 
-     public SistemaState deSerializar(String a) throws IOException, ClassNotFoundException {
+    public SistemaState() {
+        juicios = new ArrayList<>();
+        jueces = new ArrayList<>();
+        vigilantes = new ArrayList<>();
+        bancos = new ArrayList<>();
+        delitos = new ArrayList<>();
+        bandas = new ArrayList<>();
+        usuarios = new ArrayList<>();
+        delincuentes = new ArrayList<>();
+    }
+
+    public SistemaState deSerializar(String a) throws IOException, ClassNotFoundException {
         FileInputStream f = new FileInputStream(a);
         ObjectInputStream o = new ObjectInputStream(f);
         SistemaState s = (SistemaState) o.readObject();
@@ -26,6 +39,7 @@ public class SistemaState implements Serializable {
         f.close();
         return s;
     }
+
     public void serializar(String a) throws IOException {
         FileOutputStream f = new FileOutputStream(a);
         ObjectOutputStream o = new ObjectOutputStream(f);
@@ -44,6 +58,21 @@ public class SistemaState implements Serializable {
 
     public List<Vigilante> getVigilantes() {
         return vigilantes;
+    }
+
+    public List<Vigilante> getVigilantesSinContrato() {
+        Set<Vigilante> vigilantesOcupados = new HashSet<>();
+        for (Banco bco : this.getBancos()) {
+            for(Sucursal s: bco.getSucursales())
+            {
+            vigilantesOcupados.addAll((Set)s.getContratos());
+            }
+        }
+        
+        List<Vigilante> vigilantesLibres = this.getVigilantes();
+        vigilantesLibres.removeAll(vigilantesOcupados);
+        return vigilantesLibres;
+
     }
 
     public List<Banco> getBancos() {
@@ -67,17 +96,16 @@ public class SistemaState implements Serializable {
     }
 
     public void addUsuario(List<Usuario> users) {
-      //Filtro los usuario de la lista que me llega que no existan ya.
+        //Filtro los usuario de la lista que me llega que no existan ya.
         List<Usuario> usuariosNuevos = this.usuarios.stream().filter(u -> users.contains(u)).collect(Collectors.toList());
-        
-        for(Usuario u : usuariosNuevos)
-        {
-            
-             this.usuarios.add(u);        
+
+        for (Usuario u : usuariosNuevos) {
+
+            this.usuarios.add(u);
         }
-       
+
     }
-    
+
     public void addJuez(Juez j) {
         this.jueces.add(j);
     }
@@ -90,66 +118,84 @@ public class SistemaState implements Serializable {
         this.bancos.add(j);
     }
 
+    public Banco getBanco(Sucursal suc) {
+        for (Banco b : this.getBancos()) {
+            for (Sucursal s : b.getSucursales()) {
+                if (s.equals(suc)) {
+                    return b;
+                }
+            }
+        }
+        EntradaSalida.mostrarError("Banco no encontraod");
+        return null;
+    }
+
+    public void actualizarBanco(Sucursal s) {
+        Banco b = this.getBanco(s);
+        this.actualizarBanco(b);
+    }
+
+    public void actualizarBanco(Banco b) {
+        this.bancos.remove(b);
+        this.bancos.add(b);
+    }
+
     public List<IDelito> getDelitos() {
         return delitos;
     }
-
 
     public void addDelito(Delito delito) {
         this.delitos.add(delito);
     }
 
+    public void actualizarBanda(Banda b) {
+        this.bandas.remove(b);
+        this.bandas.add(b);
+
+    }
 
     public void addBanda(Banda j) {
         this.bandas.add(j);
     }
 
-    /**
-     * @param juicios the juicios to set
-     */
     public void setJuicios(List<Juicio> juicios) {
         this.juicios = juicios;
     }
 
-    /**
-     * @param jueces the jueces to set
-     */
     public void setJueces(List<Juez> jueces) {
         this.jueces = jueces;
     }
 
-    /**
-     * @param vigilantes the vigilantes to set
-     */
     public void setVigilantes(List<Vigilante> vigilantes) {
         this.vigilantes = vigilantes;
     }
 
-    /**
-     * @param bancos the bancos to set
-     */
     public void setBancos(List<Banco> bancos) {
         this.bancos = bancos;
     }
 
-    /**
-     * @param delitos the delitos to set
-     */
     public void setDelitos(List<IDelito> delitos) {
         this.delitos = delitos;
     }
 
-    /**
-     * @param bandas the bandas to set
-     */
     public void setBandas(List<Banda> bandas) {
         this.bandas = bandas;
     }
 
-    /**
-     * @param usuarios the usuarios to set
-     */
     public void setUsuarios(List<Usuario> usuarios) {
         this.usuarios = usuarios;
     }
+
+    public List<PersonaDetenida> getDelincuentes() {
+        return delincuentes;
+    }
+
+    public void setDelincuentes(List<PersonaDetenida> delincuentes) {
+        this.delincuentes = delincuentes;
+    }
+
+    public void addDelincuente(PersonaDetenida delincuente) {
+        this.delincuentes.add(delincuente);
+    }
+
 }

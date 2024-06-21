@@ -7,13 +7,13 @@ import java.util.*;
 public class Control {
 
     private SistemaState sistemaState;
-    private final Usuario usurioActual;
+    private Usuario usurioActual;
 
     public Control() {
         usurioActual = null;
         sistemaState = new SistemaState();
     }
-    
+
     public void InitSistema() {
         try {
             sistemaState = sistemaState.deSerializar("UsuarioAdmin.bin");
@@ -24,91 +24,45 @@ public class Control {
 
     public void RestaurarEstadoSistema() {
         try {
-           SistemaState sistAux = sistemaState.deSerializar("PoliciaFederal.bin");
-
-            if(Objects.nonNull(this.sistemaState))
-            {
-               sistAux.addUsuario(this.sistemaState.getUsuarios());
-            }            
+            SistemaState sistAux = sistemaState.deSerializar("PoliciaFederal.bin");
+            if (Objects.nonNull(this.sistemaState)) {
+                sistAux.addUsuario(this.sistemaState.getUsuarios());
+            }
             this.sistemaState = sistAux;
-        } catch (IOException | ClassNotFoundException ex) {
-            // que no haga nada
+        } catch (IOException |ClassNotFoundException ex) {
+            EntradaSalida.mostrarError("No hay datos para restaurar");
         }
     }
 
     public boolean Login() {
-
         String user = EntradaSalida.leerString("Ingrese su usuario");
         String pass = EntradaSalida.leerPassword("Ingrese su contraseña");
-
         for (Usuario u : sistemaState.getUsuarios()) {
-
             if (u.validarUsuarioContraseña(user, pass)) {
                 EntradaSalida.mostrarString("Bienvenido al sistema de policia federal : " + user);
+                this.usurioActual = u;
                 return true;
             }
             EntradaSalida.mostrarString("Alguno de los datos ingresados son incorrectos");
-
         }
         return false;
+    }
+
+    public void realizarAccionUsuario() {
+        this.usurioActual.accionar();
     }
 
     public List<Usuario> GetUsuariosSistema() {
         return this.sistemaState.getUsuarios();
     }
 
-    public void RelizarConsultasInvestigador(UsuarioInvestigador user) {
-
-        IConsultaBanco consultaBanco = new ConsultarBancoPorCodigo(this.sistemaState.getBancos(), "1");
-        user.setConsultaBanco(consultaBanco);
-    }
-
     public void Desloguearse() {
         EntradaSalida.mostrarString("Gracias por haber utilizado el sistema de la policia Federal");
-    }
-
-    /// Verifica si un usuario es administrador
-    private boolean isUserAdmin(Usuario user) {
-        try {
-            UsuarioAdmin u = (UsuarioAdmin) user;
-        } catch (ClassCastException ex) {
-            EntradaSalida.mostrarString("El usuario no es administrador");
+        //cuando me deslogeo guardo el estado del sistema
+        if (this.usurioActual instanceof UsuarioAdmin) {
+            ((UsuarioAdmin) this.usurioActual).serializar("UsuarioAdmin.bin");
         }
-        return false;
-    }
-
-    public void crearUsuario() {
-        if(!isUserAdmin(this.usurioActual))
-        {
-          EntradaSalida.mostrarError("Debe ser un usuario administrador");
-        }
-        else{
-        Usuario user = null;
-        int tipoUsuario = Menu.mostrar("1- ADMIN 2-INVESTIGADOR 3-VIGILANTE 4-SALIR", "Opcion incorrecta", 1, 4, 3);
-
-        if (tipoUsuario == -1) {
-           EntradaSalida.mostrarError("Ingreso una opcion invalida");
-        
-        }else{
-            String usuario = "";
-            String pass = "";
-            switch (tipoUsuario) {
-                case 1:
-                    user = UsuarioAdmin.crearUsuario(usuario, pass, sistemaState);
-                    break;
-                case 2:
-                    user = UsuarioInvestigador.crearUsuario(usuario, pass, sistemaState);
-                    break;
-                case 3:
-                    user = UsuarioVigilante.crearUsuario(usuario, pass);
-                    break;
-                case 4:
-                    System.out.println("Adios");
-                    break;
-            }
-            sistemaState.addUsuario(user);
-        }
-        }
+        this.usurioActual = null;
     }
 
     public void dummyDeserializar() throws IOException, ClassNotFoundException {
@@ -194,7 +148,7 @@ public class Control {
 //        b1.addMiembro(d3);
 //        Banda b2 = new Banda(345);
 //        b2.addMiembro(d4);
-        usuarios.add(UsuarioAdmin.crearUsuario("ADMIN", "ADMIN", sistemaState));
+        usuarios.add(UsuarioAdmin.nuevoUsuario("ADMIN", "ADMIN", sistemaState));
 //        usuarios.add(UsuarioAdmin.crearUsuario("bb", "bb", sistemaState));
 //        usuarios.add(UsuarioInvestigador.crearUsuario("cc", "cc", sistemaState));
 //        usuarios.add(UsuarioVigilante.crearUsuario("dd", "dd"));

@@ -17,6 +17,13 @@ public class Delito implements IDelito, Serializable {
         this.condenado = condena;
     }
 
+    public boolean soyElDelito(Date fechaDelito, PersonaDetenida delincuente, boolean condena) {
+        
+        return ((this.getConCondena() == condena) 
+                && this.getDelincuente().soyElDelincuente(delincuente) 
+                && this.getFechaDelito().equals(fechaDelito));
+    }
+
     @Override
     public Date getFechaDelito() {
         return fechaDelito;

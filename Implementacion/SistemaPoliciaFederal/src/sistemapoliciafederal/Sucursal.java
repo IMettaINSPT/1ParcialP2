@@ -8,7 +8,7 @@ public class Sucursal implements Serializable {
     private String codigo;
     private String domicilio;
     private int nroEmpleados;
-    private List<Delito> delitos ;
+    private List<Delito> delitos;
     private List<Contrato> contratos;
 
     public Sucursal(String codigo, String domicilio, int nroEmpleados) {
@@ -17,6 +17,14 @@ public class Sucursal implements Serializable {
         this.nroEmpleados = nroEmpleados;
         delitos = new ArrayList<>();
         contratos = new ArrayList<>();
+    }
+
+    public boolean soyLaSucursal(String codigo) {
+        return this.getCodigo().equals(codigo);
+    }
+
+    public void cargarDelito(Delito d) {
+        this.delitos.add(d);
     }
 
     public String getInfoSucursal() {

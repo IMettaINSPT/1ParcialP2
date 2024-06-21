@@ -137,7 +137,7 @@ SistemaState "1"<-- "1" UsuarioAdmin :sistemaState
 SistemaState "1"<-- "1" UsuarioInv:sistemaState
 Delito ..|> IDelito
 Sucursal "1" o--> "*" IDelito : delitos
-Sucursal "1" o--> "*" Contrato : contratos
+Sucursal "1" *--> "*" Contrato : contratos
 PersonaDetenida "*" <-- "1" Banda : delincuentes
 PersonaDetenida "1" o--> "*" IDelito : delitos
 Contrato "1" o--> "1" Vigilante : contrato

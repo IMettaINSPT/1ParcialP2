@@ -19,6 +19,10 @@ public class Contrato implements Serializable {
         this.conArma = conArma;
     }
 
+    public boolean soyElContrato(Date fecha, boolean conArma)
+    {
+        return ((this.isConArma() == conArma) && (this.getFechaContrato().equals(fecha)));
+    }
     public Date getFechaContrato() {
         return fechaContrato;
     }

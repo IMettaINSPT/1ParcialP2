@@ -1,7 +1,0 @@
-validar que si usa arma el contrato asignado sea con arma. Al crear un vigilante. Deberia lanzar una excepcion loca.
-(GenerarContrato)
-
-Al agregar sucursal en banco (add sucursal) validiar que no exista ya en esa sucursal  o para otro banco
-
-Al asignar delito a sucursal validar que no exista el delito en base al codigo para la sucursal o para otra.
-

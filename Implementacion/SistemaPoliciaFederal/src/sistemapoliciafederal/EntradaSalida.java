@@ -1,10 +1,7 @@
 package sistemapoliciafederal;
 
-/*import javax.swing.JOptionPane;
-import javax.swing.JPasswordField;
-import javax.swing.Timer;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;*/
+import java.text.*;
+import java.util.Date;
 import java.util.Scanner;
 
 public class EntradaSalida {
@@ -21,21 +18,43 @@ public class EntradaSalida {
         return msj;
     }
 
+    public static Date leerDate(String texto) {
+        try {
+            mostrarString(texto);
+            Scanner stringScanner = new Scanner(System.in);
+            String fechaComoTexto = stringScanner.nextLine();
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            Date fecha = sdf.parse(fechaComoTexto);
+            return fecha;
+        } catch (ParseException ex) {
+            EntradaSalida.mostrarString("Error obteniendo la fecha");
+            return null;
+        }
+    }
+
+    public static int leerEntero(String texto) {
+        mostrarString(texto);
+        Scanner stringScanner = new Scanner(System.in);
+        int msj = stringScanner.nextInt();
+        return msj;
+    }
+
     public static boolean leerBoolean(String texto) {
         mostrarString(texto);
         Scanner stringScanner = new Scanner(System.in);
-        String msj = stringScanner.nextLine();        
-        return msj.toUpperCase().equals("YES");    
+        String msj = stringScanner.nextLine();
+        return msj.toUpperCase().equals("YES");
     }
 
-    public static void mostrarError(String s) {       
-         System.out.println("Error: " +s);
+    public static void mostrarError(String s) {
+        System.out.println("Error: " + s);
     }
-    public static void mostrarString(String s) {       
-         System.out.println(s);
+
+    public static void mostrarString(String s) {
+        System.out.println(s);
     }
 
     public static String leerPassword(String texto) {
-         return leerString(texto);
+        return leerString(texto);
     }
 }

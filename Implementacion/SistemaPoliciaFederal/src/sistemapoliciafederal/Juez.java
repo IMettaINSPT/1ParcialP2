@@ -18,6 +18,14 @@ public class Juez implements IJuez, Serializable {
 
     }
 
+    public boolean soyElJuez(String claveJuzgado) {
+        return (this.getClaveJuzgado().equals(claveJuzgado));
+    }
+
+    public String getClaveJuzgado() {
+        return this.claveInternaJuzgado;
+    }
+
     @Override
     public void setClaveJuzgado(String clave) {
         this.claveInternaJuzgado = clave;

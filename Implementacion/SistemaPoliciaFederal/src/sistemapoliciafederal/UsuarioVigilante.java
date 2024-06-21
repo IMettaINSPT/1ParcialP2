@@ -1,42 +1,48 @@
-
 package sistemapoliciafederal;
 
 import java.util.List;
 
-
 public class UsuarioVigilante extends Usuario {
-   private Vigilante vigilante ;
+
+    private Vigilante vigilante;
     private IConsultaContrato consultaContrato;
+
     @Override
     public int GetMenu() {
-        return Menu.mostrar("1-MostrarContrato", "Error.Reintente", 1, 1, 3);
-    }
-    
-    public static Usuario crearUsuario(String u, String p) {
-       Usuario user = new UsuarioVigilante();
-       user.setPass(p);
-       user.setUser(u);
-       return user;
+        return Menu.mostrar("1-MostrarContrato", "Error.Reintente", 1, 1, 3);       
     }
 
-    /**
-     * @return the vigilante
-     */
-    public Vigilante getVigilante() {
+    @Override
+    public void accionar() {
+      this.setConsultaContrato(new ConsultarContratosVigilante(vigilante));
+        switch (this.GetMenu()) {
+            case 1:
+             for(Contrato c: this.getContratos())
+             {
+                 c.getInfoContrato();             
+             }
+        }
+    }
+
+    public static Usuario nuevoUsuario(String u, String p) {
+        UsuarioVigilante user = new UsuarioVigilante();
+        user.setPass(p);
+        user.setUser(u);
+        return user;
+    }
+
+    public Vigilante getVigilanteAsociado() {
         return vigilante;
     }
 
-    /**
-     * @param vigilante the vigilante to set
-     */
-    public void setVigilante(Vigilante vigilante) {
-        this.vigilante = vigilante;
+    public void setVigilanteAsociado(Vigilante v) {
+        this.vigilante = v;
     }
-    
-        @Override
+
+    @Override
     public void getInfoGeneral() {
         System.out.println("\nVigilante:");
-            System.out.println(vigilante.getInfoVigilante());        
+        System.out.println(vigilante.getInfoVigilante());
     }
 
     public void setConsultaContrato(IConsultaContrato con) {
@@ -46,6 +52,5 @@ public class UsuarioVigilante extends Usuario {
     public List<Contrato> getContratos() {
         return this.consultaContrato.getContratos();
     }
-
 
 }

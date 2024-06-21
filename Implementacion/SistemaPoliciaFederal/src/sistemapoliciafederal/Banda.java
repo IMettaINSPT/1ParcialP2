@@ -26,7 +26,17 @@ public class Banda implements Serializable {
     }
 
     public void addMiembro(PersonaDetenida delincuente) {
-        this.delincuentes.add(delincuente);
+
+        if (this.delincuentes.stream().anyMatch(p -> (p.getCodigo() == null ? delincuente.getCodigo() == null : p.getCodigo().equals(delincuente.getCodigo())))) {
+            EntradaSalida.mostrarError("El delincuente ya existe");
+
+        } else {
+            this.delincuentes.add(delincuente);
+        }
+    }
+
+    public boolean soyLaBanda(int nroBanda) {
+        return this.getNroBanda() == nroBanda;
     }
 
     public String getInfoBanda() {

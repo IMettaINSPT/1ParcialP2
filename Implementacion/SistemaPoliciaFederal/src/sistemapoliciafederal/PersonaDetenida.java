@@ -8,17 +8,22 @@ public class PersonaDetenida implements Serializable {
     private String codigo;
     private String nombreCompleto;
 
-    
-    public PersonaDetenida()
-    {
+    public PersonaDetenida() {
     }
-    
-    public PersonaDetenida(String codigo, String nombre)
-    {
+
+    public PersonaDetenida(String codigo, String nombre) {
         this.codigo = codigo;
         this.nombreCompleto = nombre;
     }
-    
+
+    public boolean soyElDelincuente(String codigo) {
+        return this.getCodigo().equals(codigo);
+    }
+
+    public boolean soyElDelincuente(PersonaDetenida p) {
+        return this.soyElDelincuente(p.getCodigo());
+    }
+
     public String getCodigo() {
         return codigo;
     }
@@ -43,13 +48,12 @@ public class PersonaDetenida implements Serializable {
     }
 
     @Override
-    public boolean equals (Object obj) {
+    public boolean equals(Object obj) {
 
         if (obj instanceof PersonaDetenida) {
-           PersonaDetenida p = (PersonaDetenida) obj;
-           return p.getCodigo().equals(this.getCodigo());
-        }
-        else{
+            PersonaDetenida p = (PersonaDetenida) obj;
+            return p.getCodigo().equals(this.getCodigo());
+        } else {
             return false;
         }
     }
@@ -62,6 +66,5 @@ public class PersonaDetenida implements Serializable {
         hash = 79 * hash + Objects.hashCode(this.nombreCompleto);
         return hash;
     }
-
 
 }

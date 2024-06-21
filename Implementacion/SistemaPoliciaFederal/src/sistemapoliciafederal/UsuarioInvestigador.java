@@ -5,14 +5,11 @@
 package sistemapoliciafederal;
 
 import java.util.List;
+import java.util.Objects;
 
-/**
- *
- * @author IMetta
- */
 public class UsuarioInvestigador extends Usuario implements IUsuarioConsultante {
 
-    private final SistemaState sistemaState;
+    private SistemaState sistemaState;
     private IConsultaDelitos consultaDelitos;
     private IConsultaSucursal consultaSucursales;
     private IConsultaBanco consultaBanco;
@@ -20,7 +17,6 @@ public class UsuarioInvestigador extends Usuario implements IUsuarioConsultante 
     private IConsultaDelincuente consultaDelincuente;
 
     public UsuarioInvestigador(SistemaState sistemaState) {
-        this.sistemaState = sistemaState;
     }
 
     @Override
@@ -28,19 +24,23 @@ public class UsuarioInvestigador extends Usuario implements IUsuarioConsultante 
         return Menu.mostrar("1-MostrarBanco 2-MostrarSucursales 3-MostrarDelincuentes 4-MostrarJuicios 5-MostrarDelitos 6-MostrarContrato", "Error.Reintente", 1, 6, 3);
     }
 
-    public static Usuario crearUsuario(String u, String p, SistemaState sist) {
-        Usuario user = new UsuarioInvestigador(sist);
-        user.setPass(p);
-        user.setUser(u);
-        return user;
+    @Override
+    public void accionar() {
+        int subMenu;
+        if (Objects.isNull(sistemaState)) {
+            EntradaSalida.mostrarError("No existe informacion en el sistema");
+        }
+
+        switch (this.GetMenu()) {
+
+        }
     }
 
     @Override
     public void getInfoGeneral() {
         // Imprimir la información de todas las listas en la base de datos.
         System.out.println("Bancos:");
-            System.out.println(this.getBanco().getInfoBanco());
-        
+        System.out.println(this.getBanco().getInfoBanco());
 
         System.out.println("\nDelitos:");
         for (IDelito delito : this.getDelitos()) {
@@ -107,7 +107,7 @@ public class UsuarioInvestigador extends Usuario implements IUsuarioConsultante 
     public List<Contrato> getContratos() {
         return this.consultaContrato.getContratos();
     }
-       
+
     @Override
     public void setConsultaDelincuente(IConsultaDelincuente con) {
         this.consultaDelincuente = con;
@@ -117,4 +117,17 @@ public class UsuarioInvestigador extends Usuario implements IUsuarioConsultante 
     public List<PersonaDetenida> getDelincuentes() {
         return this.consultaDelincuente.getDelincuentes();
     }
+    @Override
+    public void setSistemaState(SistemaState sistemaState) {
+        this.sistemaState = sistemaState;
+    }
+    
+    public static Usuario nuevoUsuario(String u, String p, SistemaState sist) {
+        UsuarioInvestigador user = new UsuarioInvestigador(sist);
+        user.setPass(p);
+        user.setUser(u);
+        user.setSistemaState(sist);
+        return user;
+    }
+
 }

@@ -15,7 +15,13 @@ public class Banco implements Serializable {
         sucursales = new ArrayList<>();
     }
 
-    public void AddSucursal(Sucursal suc) {
+    public boolean soyElBanco(String codigo) {
+        return (this.getCodigoBanco().equals(codigo));
+    }
+
+    public void addSucursal(String codigo, String domicilio, int nroEmpleados) {
+        //composicion, la sucursal se crea a traves del banco
+        Sucursal suc = new Sucursal(codigo, domicilio, nroEmpleados);
         this.sucursales.add(suc);
     }
 

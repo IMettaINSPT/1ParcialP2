@@ -1,6 +1,7 @@
 package sistemapoliciafederal;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class Vigilante implements Serializable {
 
@@ -15,7 +16,7 @@ public class Vigilante implements Serializable {
         this.usaArna = usaArma;
         this.contrato = contrato;
     }
-    
+
     public Vigilante(String codigo, int edad, boolean usaArma) {
         this.codigo = codigo;
         this.edad = edad;
@@ -53,17 +54,19 @@ public class Vigilante implements Serializable {
     public void setContrato(Contrato contrato) {
         this.contrato = contrato;
     }
-    
+
+    public boolean soyElVigilante(String cod) {
+        return (this.getCodigo().equals(cod));
+    }
 
     public String getInfoVigilante() {
-      StringBuilder sb = new StringBuilder();
-      sb.append("Codigo vigilante ").append(this.codigo);
-      sb.append("Edad").append(this.edad);
-      sb.append("Usa arma: ").append(this.usaArna);
-      sb.append("Datos del contrato;").append(this.contrato.getInfoContrato());
-      
-      return sb.toString();
+        StringBuilder sb = new StringBuilder();
+        sb.append("Codigo vigilante ").append(this.codigo);
+        sb.append("Edad").append(this.edad);
+        sb.append("Usa arma: ").append(this.usaArna);
+        sb.append("Datos del contrato;").append(this.contrato.getInfoContrato());
+
+        return sb.toString();
     }
-    
 
 }
