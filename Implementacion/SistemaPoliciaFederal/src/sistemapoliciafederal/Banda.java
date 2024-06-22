@@ -1,35 +1,52 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package sistemapoliciafederal;
 
-/**
- *
- * @author IMetta
- */
-public class Banda {
-    private String nombre;
-    private String actividad;
-    
-    public Banda(String nombre, String actividad) {
-        this.nombre = nombre;
-        this.actividad = actividad;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Banda implements Serializable {
+
+    private int numeroBanda;
+    private List<PersonaDetenida> delincuentes;
+    private int numeroMiembros;
+
+    public Banda(int numeroBanda) {
+        this.numeroBanda = numeroBanda;
+        this.delincuentes = new ArrayList<>();
+        this.numeroMiembros = 0;
     }
-    
-    public String getNombre() {
-        return nombre;
+
+    public int getNumeroBanda() {
+        return numeroBanda;
     }
-    
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+
+    public List<PersonaDetenida> getDelincuentes() {
+        return delincuentes;
     }
-    
-    public String getActividad() {
-        return actividad;
+
+    public void addDelincuente(PersonaDetenida delincuente) {
+        this.delincuentes.add(delincuente);
+        this.numeroMiembros++;
     }
-    
-    public void setActividad(String actividad) {
-        this.actividad = actividad;
+
+    public String getInfoBanda() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Nro Banda ").append(this.numeroBanda);
+        for (PersonaDetenida delincuente : this.delincuentes) {
+            sb.append("\nDelincuente miembro: ").append(delincuente.getInfoPersonaDetenida());
+        }
+        return sb.toString();
+    }
+
+    public int getNumeroMiembros() {
+        return numeroMiembros;
+    }
+
+    public void mostrarInformacion() {
+        System.out.println("Banda: " + numeroBanda + ", Miembros: " + numeroMiembros);
+    }
+
+    Iterable<PersonaDetenida> getMiembros() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

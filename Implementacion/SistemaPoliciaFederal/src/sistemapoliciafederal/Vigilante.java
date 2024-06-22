@@ -1,39 +1,71 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package sistemapoliciafederal;
 
-/**
- *
- * @author IMetta
- */
-public class Vigilante {
-    private String nombre;
-    private int id;
+import java.io.Serializable;
 
-    public Vigilante(String nombre, int id) {
-        this.nombre = nombre;
-        this.id = id;
+public class Vigilante implements Serializable {
+
+    private String codigo;
+    private int edad;
+    private boolean usaArna;
+    private Contrato contrato;
+
+    public Vigilante(String codigo, int edad, boolean usaArma, Contrato contrato) {
+        this.codigo = codigo;
+        this.edad = edad;
+        this.usaArna = usaArma;
+        this.contrato = contrato;
+    }
+    
+    public Vigilante(String codigo, int edad, boolean usaArma) {
+        this.codigo = codigo;
+        this.edad = edad;
+        this.usaArna = usaArma;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getCodigo() {
+        return codigo;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
 
-    public int getId() {
-        return id;
+    public int getEdad() {
+        return edad;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setEdad(int edad) {
+        this.edad = edad;
     }
 
-    public void patrullar() {
-        System.out.println("Vigilante " + nombre + " está activo trabajando.");
+    public boolean isUsaArna() {
+        return usaArna;
     }
+
+    public void setUsaArna(boolean usaArna) {
+        this.usaArna = usaArna;
+    }
+
+    public Contrato getContrato() {
+        return contrato;
+    }
+
+    public void setContrato(Contrato contrato) {
+        this.contrato = contrato;
+    }
+
+    public String getInfoVigilante() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Codigo vigilante: ").append(this.codigo).append(", ");
+        sb.append("Edad: ").append(this.edad).append(", ");
+        sb.append("Usa arma: ").append(this.usaArna).append(", ");
+        if (contrato != null) {
+            sb.append("Datos del contrato: ").append(this.contrato.getInfoContrato());
+        } else {
+            sb.append("Sin contrato");
+        }
+        return sb.toString();
+    }
+
 }
+

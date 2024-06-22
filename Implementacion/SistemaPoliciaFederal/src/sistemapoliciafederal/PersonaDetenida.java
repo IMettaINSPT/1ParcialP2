@@ -1,35 +1,92 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package sistemapoliciafederal;
 
-/**
- *
- * @author IMetta
- */
-public class PersonaDetenida {
-    private String nombre;
-    private String delito;
-    
-    public PersonaDetenida(String nombre, String delito) {
-        this.nombre = nombre;
-        this.delito = delito;
+import java.io.Serializable;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+
+public class PersonaDetenida implements Serializable {
+
+    private String codigo;
+    private String nombreCompleto;
+    private Banda banda;
+    private Map<Sucursal, Date> asaltos;
+
+    public PersonaDetenida(String codigo, String nombre) {
+        this.codigo = codigo;
+        this.nombreCompleto = nombre;
+        this.banda = null; // Inicializamos la banda como null por defecto
+        this.asaltos = new HashMap<>();
     }
-    
-    public String getNombre() {
-        return nombre;
+
+    public PersonaDetenida(String codigo, String nombre, Banda banda) {
+        this.codigo = codigo;
+        this.nombreCompleto = nombre;
+        this.banda = banda;
+        this.asaltos = new HashMap<>();
     }
-    
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+
+    public String getCodigo() {
+        return codigo;
     }
-    
-    public String getDelito() {
-        return delito;
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
-    
-    public void setDelito(String delito) {
-        this.delito = delito;
+
+    public String getNombreCompleto() {
+        return nombreCompleto;
+    }
+
+    public void setNombreCompleto(String nombreCompleto) {
+        this.nombreCompleto = nombreCompleto;
+    }
+
+    public Banda getBanda() {
+        return banda;
+    }
+
+    public void setBanda(Banda banda) {
+        this.banda = banda;
+    }
+
+    public void agregarAsalto(Sucursal sucursal, Date fecha) {
+        this.asaltos.put(sucursal, fecha);
+    }
+
+    public String getInfoPersonaDetenida() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Nombre completo: ").append(this.nombreCompleto).append(", ");
+        sb.append("Código: ").append(this.codigo);
+        if (banda != null) {
+            sb.append(", Banda: ").append(banda.getNumeroBanda());
+        }
+        return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof PersonaDetenida) {
+            PersonaDetenida p = (PersonaDetenida) obj;
+            return p.getCodigo().equals(this.getCodigo());
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 79 * hash + Objects.hashCode(this.codigo);
+        hash = 79 * hash + Objects.hashCode(this.nombreCompleto);
+        return hash;
+    }
+
+    public void mostrarInformacion() {
+        System.out.println("Persona Detenida: " + codigo + ", Nombre: " + nombreCompleto + ", Banda: " + (banda != null ? banda.getNumeroBanda() : "N/A"));
+        for (Map.Entry<Sucursal, Date> entry : asaltos.entrySet()) {
+            System.out.println("  Asalto a Sucursal: " + entry.getKey().getCodigoSucursal() + " en fecha: " + entry.getValue());
+        }
     }
 }

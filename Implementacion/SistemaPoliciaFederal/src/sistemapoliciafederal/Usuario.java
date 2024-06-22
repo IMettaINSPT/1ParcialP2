@@ -1,31 +1,24 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package sistemapoliciafederal;
 
-/**
- *
- * @author IMetta
- */
-public abstract class Usuario {
+import java.io.Serializable;
+import java.util.Objects;
 
-    private String user, pass;         
+public abstract class Usuario implements Serializable {
+
+    private String user, pass;
 
     protected Menu menu = new Menu();
 
-    public abstract int GetMenu();
-    
-    public boolean Login(String usuario, String contraseña) {
-        if (!(user.equals(usuario) || pass.equals(contraseña))) {
-            System.out.println("Algunos de los datos son incorrectos. Vuelva a ingresarlos");
-            return false;
-        }
-        return true;
+    // Constructor 
+    public Usuario(String username, String password) {
+        this.user = username;
+        this.pass = password;
     }
-    
-    public void Desloguearse() {
-        System.out.println("Gracias por haber utilizado el sistema de la policía Federal");
+
+    public abstract int GetMenu();
+
+    public boolean validarUsuarioContraseña(String usuario, String contraseña) {
+        return ((this.user.equals(usuario) && this.pass.equals(contraseña)));
     }
 
     public String getUser() {
@@ -43,4 +36,27 @@ public abstract class Usuario {
     public void setPass(String pass) {
         this.pass = pass;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+
+        if (obj instanceof Usuario) {
+            Usuario u = (Usuario) obj;
+            return u.getPass().equals(this.getPass()) && u.getUser().equals(this.getUser());
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 31 * hash + Objects.hashCode(this.user);
+        hash = 31 * hash + Objects.hashCode(this.pass);
+        return hash;
+    }
+
+    public abstract void getInfoGeneral();
+
+    public abstract void mostrarMenu();
 }

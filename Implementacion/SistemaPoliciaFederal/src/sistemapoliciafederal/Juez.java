@@ -1,39 +1,46 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package sistemapoliciafederal;
 
-/**
- *
- * @author IMetta
- */
-public class Juez {
-    private String nombre;
-    private int id;
-    
-    public Juez(String nombre, int id) {
-        this.nombre = nombre;
-        this.id = id;
+import java.io.Serializable;
+
+public class Juez implements IJuez, Serializable {
+
+    private String claveInternaJuzgado;
+    private String nombreCompleto;
+    private int añosServicio;
+
+
+    // Constructor 
+    public Juez(String clave, String nombre, int añosServicio) {
+        this.claveInternaJuzgado = clave;
+        this.nombreCompleto = nombre;
+        this.añosServicio = añosServicio;
     }
-    
-    public String getNombre() {
-        return nombre;
+
+    @Override
+    public void setClaveJuzgado(String clave) {
+        this.claveInternaJuzgado = clave;
     }
-    
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+
+    @Override
+    public void setNombreCompleto(String nom) {
+        this.nombreCompleto = nom;
     }
-    
-    public int getId() {
-        return id;
+
+    @Override
+    public void setAñosServicio(int años) {
+        this.añosServicio = años;
     }
-    
-    public void setId(int id) {
-        this.id = id;
+
+    @Override
+    public String getInfoJuez() {
+        StringBuilder datos = new StringBuilder();
+        datos.append("Clave interna juzgado: ").append(this.claveInternaJuzgado).append(", ");
+        datos.append("Nombre completo: ").append(this.nombreCompleto).append(", ");
+        datos.append("Años servicio: ").append(this.añosServicio);
+        return datos.toString();
     }
-    
-    public void juzgar() {
-        System.out.println("Juez " + nombre + " está juzgando un caso.");
+
+    public void mostrarInformacion() {
+        System.out.println("Juez: " + claveInternaJuzgado + ", Nombre: " + nombreCompleto + ", Años de Servicio: " + añosServicio);
     }
 }
