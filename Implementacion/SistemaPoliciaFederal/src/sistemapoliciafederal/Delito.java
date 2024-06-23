@@ -18,9 +18,9 @@ public class Delito implements IDelito, Serializable {
     }
 
     public boolean soyElDelito(Date fechaDelito, PersonaDetenida delincuente, boolean condena) {
-        
-        return ((this.getConCondena() == condena) 
-                && this.getDelincuente().soyElDelincuente(delincuente) 
+
+        return ((this.getConCondena() == condena)
+                && this.getDelincuente().soyElDelincuente(delincuente)
                 && this.getFechaDelito().equals(fechaDelito));
     }
 

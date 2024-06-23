@@ -47,6 +47,11 @@ public class PersonaDetenida implements Serializable {
         return sb.toString();
     }
 
+    public boolean soyDelincuente(PersonaDetenida delincuente) {
+        return this.getCodigo().equals(delincuente.getCodigo());
+
+    }
+
     @Override
     public boolean equals(Object obj) {
 

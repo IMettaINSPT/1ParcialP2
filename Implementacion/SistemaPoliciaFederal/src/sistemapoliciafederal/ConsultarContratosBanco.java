@@ -5,6 +5,7 @@ import java.util.*;
 public class ConsultarContratosBanco implements IConsultaContrato {
 
     private final Banco banco;
+
     public ConsultarContratosBanco(Banco banco) {
         this.banco = banco;
     }

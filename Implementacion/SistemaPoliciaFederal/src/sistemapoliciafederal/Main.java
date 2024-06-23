@@ -9,9 +9,9 @@ public class Main {
         c.InitSistema();
         try {
             //ACA VA EL LLAMADO A CADA METODO DEL CONTROL PARA HACER ITERATIVO EL SISTEMA
-           //c.dummyTest();            
+            //c.dummyTest();            
             c.dummyDeserializar();
-        } catch (IOException| ClassNotFoundException  e) {
+        } catch (IOException | ClassNotFoundException e) {
             EntradaSalida.mostrarString(e.getMessage());
         }
     }

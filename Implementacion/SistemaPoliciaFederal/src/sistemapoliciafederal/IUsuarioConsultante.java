@@ -23,4 +23,7 @@ public interface IUsuarioConsultante {
     public void setConsultaDelincuente(IConsultaDelincuente con);
 
     public List<PersonaDetenida> getDelincuentes();
+
+    public void setSistemaState(SistemaState s);
+
 }

@@ -19,8 +19,9 @@ public class SistemaState implements Serializable {
     private List<Banda> bandas;
     private List<Usuario> usuarios;
     private List<PersonaDetenida> delincuentes;
+    private static SistemaState instancia;
 
-    public SistemaState() {
+    private SistemaState() {
         juicios = new ArrayList<>();
         jueces = new ArrayList<>();
         vigilantes = new ArrayList<>();
@@ -29,6 +30,15 @@ public class SistemaState implements Serializable {
         bandas = new ArrayList<>();
         usuarios = new ArrayList<>();
         delincuentes = new ArrayList<>();
+    }
+
+    public static SistemaState newSistemaState() {
+
+        if (Objects.isNull(instancia)) {
+            instancia = new SistemaState();
+
+        }
+        return instancia;
     }
 
     public SistemaState deSerializar(String a) throws IOException, ClassNotFoundException {
@@ -63,12 +73,11 @@ public class SistemaState implements Serializable {
     public List<Vigilante> getVigilantesSinContrato() {
         Set<Vigilante> vigilantesOcupados = new HashSet<>();
         for (Banco bco : this.getBancos()) {
-            for(Sucursal s: bco.getSucursales())
-            {
-            vigilantesOcupados.addAll((Set)s.getContratos());
+            for (Sucursal s : bco.getSucursales()) {
+                vigilantesOcupados.addAll((Set) s.getContratos());
             }
         }
-        
+
         List<Vigilante> vigilantesLibres = this.getVigilantes();
         vigilantesLibres.removeAll(vigilantesOcupados);
         return vigilantesLibres;
@@ -196,6 +205,185 @@ public class SistemaState implements Serializable {
 
     public void addDelincuente(PersonaDetenida delincuente) {
         this.delincuentes.add(delincuente);
+    }
+
+    public Vigilante obtenerVigilanteLibre() {
+        Vigilante v = null;
+        String codigo = EntradaSalida.leerString("Ingrese el codigo del vigilante a buscar");
+
+        if (codigo.isEmpty()) {
+            EntradaSalida.mostrarError("El codigo del vigilante no puede ser vacio");
+            return v;
+        }
+        for (Vigilante vig : this.getVigilantesSinContrato()) {
+            if (vig.soyElVigilante(codigo)) {
+                return vig;
+            }
+        }
+        EntradaSalida.mostrarError("No se encuentra el vigilante para el codigo ingresado");
+        return v;
+    }
+
+    public Vigilante obtenerVigilante() {
+        Vigilante v = null;
+        String codigo = EntradaSalida.leerString("Ingrese el codigo del vigilante a buscar");
+
+        if (codigo.isEmpty()) {
+            EntradaSalida.mostrarError("El codigo del vigilante no puede ser vacio");
+            return v;
+        }
+        for (Vigilante vig : this.getVigilantes()) {
+            if (vig.soyElVigilante(codigo)) {
+                return vig;
+            }
+        }
+        EntradaSalida.mostrarError("No se encuentra el vigilante para el codigo ingresado");
+        return v;
+    }
+
+    public IDelito obtenerDelito() {
+        Delito d = null;
+        Date fechaDelito = EntradaSalida.leerDate("Ingrese la fecha del delito a buscar");
+        if (Objects.isNull(fechaDelito)) {
+            EntradaSalida.mostrarError("La fecha del delito no es correcta");
+            return d;
+        }
+        PersonaDetenida personaD = obtenerPersonaDetenida();
+        if (Objects.isNull(personaD)) {
+            EntradaSalida.mostrarError("La persona detenida no existe");
+            return d;
+        }
+        boolean condena = EntradaSalida.leerBoolean("¿El delito es con condena?");
+
+        for (IDelito dd : this.getDelitos()) {
+            if (((Delito) dd).soyElDelito(fechaDelito, personaD, condena)) {
+                return ((Delito) dd);
+            }
+        }
+
+        return d;
+    }
+
+    public Contrato obtenerContrato() {
+        Contrato contrato = null;
+        boolean datosValidos;
+        do {
+            datosValidos = true;
+            Date fechaContrato = EntradaSalida.leerDate("Ingrese la fecha del contrato");
+            if (Objects.isNull(fechaContrato)) {
+                EntradaSalida.mostrarError("Fecha incorrecta");
+                datosValidos = false;
+            }
+            Sucursal suc = this.obtenerSucursal();
+            if (Objects.isNull(suc)) {
+                EntradaSalida.mostrarError("La sucursal del banco no existe");
+                datosValidos = false;
+            }
+            boolean esConArma = EntradaSalida.leerBoolean("¿Contrato con arma?");
+
+            if (datosValidos) {
+                for (Contrato c : suc.getContratos()) {
+                    if (c.soyElContrato(fechaContrato, esConArma)) {
+                        return c;
+                    }
+                }
+                EntradaSalida.mostrarError("No se encuentra un contrato para los datos seleccionados. Reintente!");
+                datosValidos = false;
+
+            } else {
+                EntradaSalida.mostrarError("Los datos ingresados son invalidos. Reingrese los mismos");
+
+            }
+        } while (!datosValidos);
+        return contrato;
+
+    }
+
+    public IJuez obtenerJuez() {
+        IJuez juez = null;
+        String codigoInternaJuzgado = EntradaSalida.leerString("Ingrese la clave interna del juzgado");
+        for (IJuez j : this.getJueces()) {
+            if (((Juez) j).soyElJuez(codigoInternaJuzgado)) {
+                return j;
+            }
+        }
+        EntradaSalida.mostrarError("El codigo ingresado no pertenece a un juez");
+        return juez;
+    }
+
+    public PersonaDetenida obtenerPersonaDetenida() {
+        PersonaDetenida p = null;
+        String codigoPersona = EntradaSalida.leerString("Ingrese el codigo del delincuente");
+        for (PersonaDetenida pd : this.getDelincuentes()) {
+            if (pd.soyElDelincuente(codigoPersona)) {
+                return pd;
+            }
+        }
+        EntradaSalida.mostrarError("El codigo ingresado no pertenece a un delincuente");
+        return p;
+    }
+
+    public List<Sucursal> obtenerSucursales() {
+        Banco banco = this.obtenerBanco();
+        if (Objects.isNull(banco)) {
+            EntradaSalida.mostrarError("El banco no existe");
+            return null;
+        }
+        return banco.getSucursales();
+
+    }
+
+    public Sucursal obtenerSucursal() {
+        Sucursal sucursal = null;
+        Banco banco = this.obtenerBanco();
+        if (Objects.isNull(banco)) {
+            EntradaSalida.mostrarError("El banco no existe");
+            return null;
+        }
+        String codigo = EntradaSalida.leerString("Ingrese el codigo de la sucursal en la cual sera contratado");
+        if (codigo.isEmpty()) {
+            EntradaSalida.mostrarError("El codigo  no puede ser vacio");
+            return sucursal;
+        }
+        for (Sucursal suc : banco.getSucursales()) {
+            if (suc.soyLaSucursal(codigo)) {
+                return suc;
+            }
+        }
+        EntradaSalida.mostrarError("No se encuentra la sucursal para el codigo ingresado");
+        return sucursal;
+    }
+
+    public Banco obtenerBanco() {
+        Banco bco = null;
+        String codigo = EntradaSalida.leerString("Ingrese el codigo del banco a buscar");
+        if (codigo.isEmpty()) {
+            EntradaSalida.mostrarError("El codigo del banco no puede ser vacio");
+            return bco;
+        }
+        for (Banco banco : this.getBancos()) {
+            if (banco.soyElBanco(codigo)) {
+                return banco;
+            }
+        }
+        EntradaSalida.mostrarError("No se encuentra el banco para el codigo ingresado");
+        return bco;
+    }
+
+    public Banda obtenerBanda() {
+        int nroBanda = EntradaSalida.leerEntero("Ingrese el nro de la banda");
+        if (nroBanda <= 0) {
+            EntradaSalida.mostrarError("El nro de banda no puede ser 0");
+            return null;
+        }
+        for (Banda b : this.getBandas()) {
+            if (b.soyLaBanda(nroBanda)) {
+                return b;
+            }
+        }
+        EntradaSalida.mostrarError("No se encontro ninguna banda");
+        return null;
+
     }
 
 }

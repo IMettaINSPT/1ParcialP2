@@ -7,11 +7,11 @@ import java.util.*;
 public class Control {
 
     private SistemaState sistemaState;
-    private Usuario usurioActual;
+    private Usuario usuarioActual;
 
     public Control() {
-        usurioActual = null;
-        sistemaState = new SistemaState();
+        usuarioActual = null;
+        sistemaState = SistemaState.newSistemaState(); //SINGLETON
     }
 
     public void InitSistema() {
@@ -29,7 +29,7 @@ public class Control {
                 sistAux.addUsuario(this.sistemaState.getUsuarios());
             }
             this.sistemaState = sistAux;
-        } catch (IOException |ClassNotFoundException ex) {
+        } catch (IOException | ClassNotFoundException ex) {
             EntradaSalida.mostrarError("No hay datos para restaurar");
         }
     }
@@ -37,10 +37,27 @@ public class Control {
     public boolean Login() {
         String user = EntradaSalida.leerString("Ingrese su usuario");
         String pass = EntradaSalida.leerPassword("Ingrese su contraseña");
-        for (Usuario u : sistemaState.getUsuarios()) {
+        for (Usuario u : this.sistemaState.getUsuarios()) {
             if (u.validarUsuarioContraseña(user, pass)) {
                 EntradaSalida.mostrarString("Bienvenido al sistema de policia federal : " + user);
-                this.usurioActual = u;
+
+                //Solo a los usuario admin e investigador le inyecto el sistema state con todos los datos 
+                if (u instanceof UsuarioAdmin) {
+                    UsuarioAdmin ud = ((UsuarioAdmin) u);
+                    ud.setSistemaState(this.sistemaState);
+                    this.usuarioActual = ud;
+                    return true;
+                }
+
+                if (u instanceof UsuarioInvestigador) {
+                    UsuarioInvestigador ud = ((UsuarioInvestigador) u);
+                    ud.setSistemaState(this.sistemaState);
+                    this.usuarioActual = ud;
+                    return true;
+
+                }
+                this.usuarioActual = u;
+
                 return true;
             }
             EntradaSalida.mostrarString("Alguno de los datos ingresados son incorrectos");
@@ -49,7 +66,7 @@ public class Control {
     }
 
     public void realizarAccionUsuario() {
-        this.usurioActual.accionar();
+        this.usuarioActual.accionar(); //POLIMORFISMO!!
     }
 
     public List<Usuario> GetUsuariosSistema() {
@@ -59,10 +76,10 @@ public class Control {
     public void Desloguearse() {
         EntradaSalida.mostrarString("Gracias por haber utilizado el sistema de la policia Federal");
         //cuando me deslogeo guardo el estado del sistema
-        if (this.usurioActual instanceof UsuarioAdmin) {
-            ((UsuarioAdmin) this.usurioActual).serializar("UsuarioAdmin.bin");
+        if (this.usuarioActual instanceof UsuarioAdmin) {
+            ((UsuarioAdmin) this.usuarioActual).serializar("UsuarioAdmin.bin");
         }
-        this.usurioActual = null;
+        this.usuarioActual = null;
     }
 
     public void dummyDeserializar() throws IOException, ClassNotFoundException {

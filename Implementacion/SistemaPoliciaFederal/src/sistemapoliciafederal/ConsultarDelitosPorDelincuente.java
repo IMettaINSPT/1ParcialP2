@@ -14,18 +14,17 @@ import java.util.stream.Collectors;
 public class ConsultarDelitosPorDelincuente implements IConsultaDelitos {
 
     private final PersonaDetenida delincuente;
-    private final List<Delito> delitos;
-    
-    public ConsultarDelitosPorDelincuente(List<Delito> delitos, PersonaDetenida delincuente)
-    {
+    private final List<IDelito> delitos;
+
+    public ConsultarDelitosPorDelincuente(List<IDelito> delitos, PersonaDetenida delincuente) {
         this.delincuente = delincuente;
-        this.delitos = delitos;    
+        this.delitos = delitos;
     }
-    
+
     @Override
     public List<IDelito> getDelitos() {
 
-        return this.delitos.stream().filter(d-> d.getDelincuente().equals(delincuente))
+        return this.delitos.stream().filter(d -> d.getDelincuente().soyDelincuente(delincuente))
                 .collect(Collectors.toList());
 
     }

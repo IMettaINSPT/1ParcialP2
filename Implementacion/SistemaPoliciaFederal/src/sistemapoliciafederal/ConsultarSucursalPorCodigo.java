@@ -3,12 +3,12 @@ package sistemapoliciafederal;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ConsultarSucursalesPorCodigo implements IConsultaSucursal {
+public class ConsultarSucursalPorCodigo implements IConsultaSucursal {
 
     private final List<Sucursal> sucursales;
     private final String codigo;
 
-    public ConsultarSucursalesPorCodigo(List<Sucursal> sucursales, String codigo) {
+    public ConsultarSucursalPorCodigo(List<Sucursal> sucursales, String codigo) {
         this.codigo = codigo;
         this.sucursales = sucursales;
     }

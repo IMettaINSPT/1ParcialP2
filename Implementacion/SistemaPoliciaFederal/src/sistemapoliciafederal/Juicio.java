@@ -47,11 +47,9 @@ public class Juicio implements Serializable {
         return juezActuante;
     }
 
-
     public Date getFechaJuicio() {
         return fechaJuicio;
     }
-
 
     public IDelito getDelito() {
         return delito;

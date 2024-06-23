@@ -9,18 +9,17 @@ public class UsuarioVigilante extends Usuario {
 
     @Override
     public int GetMenu() {
-        return Menu.mostrar("1-MostrarContrato", "Error.Reintente", 1, 1, 3);       
+        return Menu.mostrar("1-MostrarContrato", "Error.Reintente", 1, 1, 3);
     }
 
     @Override
     public void accionar() {
-      this.setConsultaContrato(new ConsultarContratosVigilante(vigilante));
+        this.setConsultaContrato(new ConsultarContratosVigilante(vigilante));
         switch (this.GetMenu()) {
             case 1:
-             for(Contrato c: this.getContratos())
-             {
-                 c.getInfoContrato();             
-             }
+                for (Contrato c : this.getContratos()) {
+                    c.getInfoContrato();
+                }
         }
     }
 

@@ -49,14 +49,9 @@ public abstract class Usuario implements Serializable {
         hash = 31 * hash + Objects.hashCode(this.pass);
         return hash;
     }
-    
 
     public abstract void getInfoGeneral();
 
     public abstract void accionar();
-
-    void setSistemaState(SistemaState sist) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 
 }

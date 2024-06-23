@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ConsultarBancoPorCodigo implements IConsultaBanco {
+
     private final List<Banco> bancos;
     private final String codigo;
 
@@ -14,8 +15,8 @@ public class ConsultarBancoPorCodigo implements IConsultaBanco {
 
     @Override
     public Banco getBanco() {
-         return this.bancos.stream().filter(d-> d.getCodigoBanco().equals(this.codigo))
-                 .collect(Collectors.toList()).get(0);
-    }    
-    
+        return this.bancos.stream().filter(d -> d.getCodigoBanco().equals(this.codigo))
+                .collect(Collectors.toList()).get(0);
+    }
+
 }
