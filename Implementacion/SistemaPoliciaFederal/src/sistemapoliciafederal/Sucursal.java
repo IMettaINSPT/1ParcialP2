@@ -29,15 +29,15 @@ public class Sucursal implements Serializable {
 
     public String getInfoSucursal() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Codigo sucursal : ").append(this.codigo);
-        sb.append("\n Domicilio : ").append(this.domicilio);
-        sb.append("\n Cantidad de empleados : ").append(this.nroEmpleados);
-        sb.append("Delitos :");
+        sb.append("Informacion sucursal ").append(this.codigo).append(":\n\n");
+        sb.append("Codigo sucursal : ").append(this.codigo).append("\n");
+        sb.append("Domicilio : ").append(this.domicilio).append("\n");
+        sb.append("Cantidad de empleados : ").append(this.nroEmpleados).append("\n");
         for (Delito del : this.delitos) {
-            sb.append("\n delito: ").append(del.getInfoCompletaDelito());
+            sb.append(del.getInfoCompletaDelito());
         }
         for (Contrato con : this.contratos) {
-            sb.append("\n contrato: ").append(con.getInfoContrato());
+            sb.append(con.getInfoContrato());
         }
         return sb.toString();
     }

@@ -68,10 +68,10 @@ public class Delito implements IDelito, Serializable {
     public String getInfoCompletaDelito() {
         StringBuilder sb = new StringBuilder();
         DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
-
-        sb.append("Fecha del delito:").append(dateFormat.format(fechaDelito));
-        sb.append("Persona detenida:").append(delincuente.toString());
-        sb.append("Con Condena:").append(this.condenado);
+        sb.append("Informacion Delito:").append("\n\n");
+        sb.append("Fecha del delito:").append(dateFormat.format(fechaDelito)).append("\n");
+        sb.append("Persona detenida:").append(delincuente.toString()).append("\n");
+        sb.append("Con Condena:").append(this.condenado).append("\n");
 
         return sb.toString();
     }

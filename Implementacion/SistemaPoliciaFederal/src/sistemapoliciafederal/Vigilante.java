@@ -61,11 +61,12 @@ public class Vigilante implements Serializable {
 
     public String getInfoVigilante() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Codigo vigilante ").append(this.codigo);
-        sb.append("Edad").append(this.edad);
-        sb.append("Usa arma: ").append(this.usaArna);
-        sb.append("Datos del contrato;").append(this.contrato.getInfoContrato());
-
+        sb.append("Codigo vigilante ").append(this.codigo).append("\n");
+        sb.append("Edad").append(this.edad).append("\n");
+        sb.append("Usa arma: ").append(this.usaArna).append("\n");
+        if (Objects.nonNull(this.contrato)) {
+            sb.append("Datos del contrato;").append(this.contrato.getInfoContrato());
+        }
         return sb.toString();
     }
 

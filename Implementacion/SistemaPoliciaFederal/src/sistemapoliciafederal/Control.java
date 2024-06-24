@@ -1,7 +1,6 @@
 package sistemapoliciafederal;
 
 import java.io.IOException;
-import java.time.*;
 import java.util.*;
 
 public class Control {
@@ -69,14 +68,14 @@ public class Control {
         EntradaSalida.mostrarString("Gracias por haber utilizado el sistema de la policia Federal");
         //cuando me deslogeo guardo el estado del sistema
         if (this.usuarioActual instanceof UsuarioAdmin) {
-            ((UsuarioAdmin) this.usuarioActual).serializar("UsuarioAdmin.bin");
+            ((UsuarioAdmin) this.usuarioActual).serializar("PoliciaFederal.dat");
         }
         this.usuarioActual = null;
     }
 
     public void dummyDeserializar() throws IOException, ClassNotFoundException {
 
-        sistemaState = sistemaState.deSerializar("UsuarioAdmin.bin");
+        sistemaState = sistemaState.deSerializar("PoliciaFederal.dat");
     }
 
     public void dummyTest() throws IOException {

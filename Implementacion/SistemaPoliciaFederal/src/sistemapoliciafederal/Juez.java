@@ -45,9 +45,10 @@ public class Juez implements IJuez, Serializable {
     public String getInfoJuez() {
 
         StringBuilder datos = new StringBuilder();
-        datos.append("Clave interna juzgado:").append(this.claveInternaJuzgado);
-        datos.append("Nombre completo:").append(this.nombreCompleto);
-        datos.append("Años servicio:").append(this.añosServicio);
+        datos.append("Informacion Juez:").append("\n\n");
+        datos.append("Clave interna juzgado:").append(this.claveInternaJuzgado).append("\n");
+        datos.append("Nombre completo:").append(this.nombreCompleto).append("\n");
+        datos.append("Años servicio:").append(this.añosServicio).append("\n");
 
         return datos.toString();
     }

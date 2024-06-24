@@ -19,7 +19,7 @@ public class UsuarioAdmin extends Usuario implements IUsuarioConsultante {
 
     @Override
     public int GetMenu() {
-        return Menu.mostrar("1-MostrarBanco\n2-MostrarSucursales\n3-MostrarDelincuentes\n4-MostrarJuicios\n5-MostrarDelitos\n6-MostrarContrato\n7-Crear Usuario\n8-Cargar Banco\n9-Cargar Sucursal\n10-Cargar Juicio\n11-Carga Banda\n12-Cargar Delincuente\n13-Cargar Vigilante\n14-Cargar Delito\n15-Cargar Contrato\n16-Cargar Juez\n17-Guardar Sistema\n18-Agregar delincuente a banda\n19-Mostrar informacion sistema", "Error.Reintente", 1, 19, 3);
+        return Menu.mostrar("1-MostrarBanco\n2-MostrarSucursales\n3-MostrarDelincuentes\n4-MostrarJuicios\n5-MostrarDelitos\n6-MostrarContrato\n7-Crear Usuario\n8-Cargar Banco\n9-Cargar Sucursal\n10-Cargar Juicio\n11-Carga Banda\n12-Cargar Delincuente\n13-Cargar Vigilante\n14-Cargar Delito\n15-Cargar Contrato\n16-Cargar Juez\n17-Guardar Sistema\n18-Agregar delincuente a banda\n19-Mostrar informacion sistema\n20-Salir", "Error.Reintente", 1, 20, 3);
     }
 
     @Override
@@ -32,7 +32,10 @@ public class UsuarioAdmin extends Usuario implements IUsuarioConsultante {
             boolean continuarOperando;
 
             do {
-                switch (this.GetMenu()) {
+                int opcionMenu = this.GetMenu();
+                continuarOperando = true;
+
+                switch (opcionMenu) {
                     case 1:
                         String domicilio;
                         String codigo;
@@ -41,33 +44,36 @@ public class UsuarioAdmin extends Usuario implements IUsuarioConsultante {
                             break;
 
                         }
-                        subMenu = Menu.mostrar("1-Mostrar banco por codigo 2-Mostrar banco por domicilio", "Error.Reintente", 1, 2, 3);
+                        subMenu = Menu.mostrar("1-Mostrar banco por codigo\n2-Mostrar banco por domicilio\n3-Salir", "Error.Reintente", 1, 3, 3);
 
                         if (subMenu == -1) {
                             EntradaSalida.mostrarError("Ingreso una opcion invalida");
                             break;
 
                         } else {
-                            if (subMenu == 1) {
-                                codigo = EntradaSalida.leerString("Ingrese el codigo del banco a buscar");
-                                if (codigo.isEmpty()) {
-                                    EntradaSalida.mostrarError("Debe ingresar un codigo valido");
-                                }
-                                this.setConsultaBanco(new ConsultarBancoPorCodigo(this.sistemaState.getBancos(), codigo));
+                            switch (subMenu) {
+                                case 1:
+                                    codigo = EntradaSalida.leerString("Ingrese el codigo del banco a buscar");
+                                    if (codigo.isEmpty()) {
+                                        EntradaSalida.mostrarError("Debe ingresar un codigo valido");
+                                    }
+                                    this.setConsultaBanco(new ConsultarBancoPorCodigo(this.sistemaState.getBancos(), codigo));
+                                case 2:
+                                    domicilio = EntradaSalida.leerString("Ingrese el domicilio del banco a buscar");
+                                    if (domicilio.isEmpty()) {
+                                        EntradaSalida.mostrarError("Debe ingresar un domicilio valido");
+                                    }
+                                    this.setConsultaBanco(new ConsultarBancoPorDomicilio(this.sistemaState.getBancos(), domicilio));
 
-                            } else {
-                                domicilio = EntradaSalida.leerString("Ingrese el domicilio del banco a buscar");
-                                if (domicilio.isEmpty()) {
-                                    EntradaSalida.mostrarError("Debe ingresar un domicilio valido");
-                                }
-                                this.setConsultaBanco(new ConsultarBancoPorDomicilio(this.sistemaState.getBancos(), domicilio));
-                            }
-
-                            Banco bco = this.getBanco();
-                            if (Objects.isNull(bco)) {
-                                EntradaSalida.mostrarError("No existe el banco con los parametros seleccionados");
-                            } else {
-                                EntradaSalida.mostrarString(bco.getInfoBanco());
+                                    Banco bco = this.getBanco();
+                                    if (Objects.isNull(bco)) {
+                                        EntradaSalida.mostrarError("No existe el banco con los parametros seleccionados");
+                                    } else {
+                                        EntradaSalida.mostrarString(bco.getInfoBanco());
+                                    }
+                                case 3:
+                                    continuarOperando = false;
+                                    break;
                             }
                         }
                         break;
@@ -82,21 +88,25 @@ public class UsuarioAdmin extends Usuario implements IUsuarioConsultante {
                             break;
 
                         }
-                        subMenu = Menu.mostrar("1-Mostrar Sucursales por Banco, 2-Mostrar Sucursal por Codigo", "Error.Reintente", 1, 2, 3);
+                        subMenu = Menu.mostrar("1-Mostrar Sucursales por Banco\n2-Mostrar Sucursal por Codigo\n3-Salir", "Error.Reintente", 1, 3, 3);
 
                         if (subMenu == -1) {
                             EntradaSalida.mostrarError("Ingreso una opcion invalida");
 
                         } else {
-                            if (subMenu == 1) {
-                                this.setConsultaSucursales(new ConsultarSucursalesPorBanco(bco));
-                            } else {
-                                codigoSucursal = EntradaSalida.leerString("Ingrese el codigo de la sucursal a buscar");
-                                if (codigoSucursal.isEmpty()) {
-                                    EntradaSalida.mostrarError("Debe ingresar un codigo de sucursal valido");
+                            switch (subMenu) {
+                                case 1:
+                                    this.setConsultaSucursales(new ConsultarSucursalesPorBanco(bco));
+                                case 2:
+                                    codigoSucursal = EntradaSalida.leerString("Ingrese el codigo de la sucursal a buscar");
+                                    if (codigoSucursal.isEmpty()) {
+                                        EntradaSalida.mostrarError("Debe ingresar un codigo de sucursal valido");
+                                        break;
+                                    }
+                                    this.setConsultaSucursales(new ConsultarSucursalPorCodigo(bco.getSucursales(), codigoSucursal));
+                                case 3:
+                                    continuarOperando = false;
                                     break;
-                                }
-                                this.setConsultaSucursales(new ConsultarSucursalPorCodigo(bco.getSucursales(), codigoSucursal));
                             }
 
                             List<Sucursal> sucursales = this.getSucursales();
@@ -116,7 +126,7 @@ public class UsuarioAdmin extends Usuario implements IUsuarioConsultante {
                         if (!this.sistemaState.getDelincuentes().isEmpty()) {
                             EntradaSalida.mostrarError("Debe existir al menos un delincuente");
                         }
-                        subMenu = Menu.mostrar("1-Mostrar Delincuente por Nombre, 2-Mostrar Delincuente por Codigo, 3-Mostrar Delincuente por Sucursal", "Error.Reintente", 1, 3, 3);
+                        subMenu = Menu.mostrar("1-Mostrar Delincuente por Nombre\n2-Mostrar Delincuente por Codigo\n3-Mostrar Delincuente por Sucursal\n4-Salir", "Error.Reintente", 1, 4, 3);
 
                         if (subMenu == -1) {
                             EntradaSalida.mostrarError("Ingreso una opcion invalida");
@@ -145,6 +155,9 @@ public class UsuarioAdmin extends Usuario implements IUsuarioConsultante {
                                 case 3:
                                     Sucursal suc = this.sistemaState.obtenerSucursal();
                                     this.setConsultaDelincuente(new ConsultarDelincuentesPorSucursal(suc));
+                                case 4:
+                                    continuarOperando = false;
+                                    break;
                             }
 
                             List<PersonaDetenida> delincuentes = this.getDelincuentes();
@@ -160,27 +173,23 @@ public class UsuarioAdmin extends Usuario implements IUsuarioConsultante {
                         }
                         break;
                     case 4:
-                        if (this.sistemaState.getJuicios().isEmpty()) {
-                            EntradaSalida.mostrarError("Debe existir al menos un Juicio");
-                            break;
-                        }
+
                         List<Juicio> juicios = this.sistemaState.getJuicios();
                         if (juicios.isEmpty()) {
                             EntradaSalida.mostrarError("No hay juicios registrados");
                             break;
-
-                        } else {
-                            for (Juicio juicio : juicios) {
-                                EntradaSalida.mostrarString(juicio.getInfoJuicio());
-                            }
                         }
+                        for (Juicio juicio : juicios) {
+                            EntradaSalida.mostrarString(juicio.getInfoJuicio());
+                        }
+
                         break;
                     case 5:
                         if (this.sistemaState.getDelitos().isEmpty()) {
                             EntradaSalida.mostrarError("Debe existir al menos un delito");
                             break;
                         }
-                        subMenu = Menu.mostrar("1-Mostrar Delitos con Condena, 2-Mostrar Delitos por Banda, 3-Mostrar Delitos por Delincuente", "Error.Reintente", 1, 3, 3);
+                        subMenu = Menu.mostrar("1-Mostrar Delitos con Condena\n2-Mostrar Delitos por Banda\n3-Mostrar Delitos por Delincuente\n4-Salir", "Error.Reintente", 1, 4, 3);
 
                         if (subMenu == -1) {
                             EntradaSalida.mostrarError("Ingreso una opcion invalida");
@@ -207,6 +216,9 @@ public class UsuarioAdmin extends Usuario implements IUsuarioConsultante {
                                     }
                                     this.setConsultaDelitos(new ConsultarDelitosPorDelincuente(this.sistemaState.getDelitos(), unDelincuente));
                                     break;
+                                case 4:
+                                    continuarOperando = false;
+                                    break;
                             }
 
                             List<IDelito> delitos = this.getDelitos();
@@ -221,7 +233,7 @@ public class UsuarioAdmin extends Usuario implements IUsuarioConsultante {
                         break;
                     case 6:
 
-                        subMenu = Menu.mostrar("1-Mostrar Contratos por Banco, 2-Mostrar Contratos por Sucursal, 3-Mostrar Contratos por Vigilante", "Error.Reintente", 1, 3, 3);
+                        subMenu = Menu.mostrar("1-Mostrar Contratos por Banco\n2-Mostrar Contratos por Sucursal\n3-Mostrar Contratos por Vigilante\n4-Salir", "Error.Reintente", 1, 4, 3);
 
                         if (subMenu == -1) {
                             EntradaSalida.mostrarError("Ingreso una opcion invalida");
@@ -257,6 +269,9 @@ public class UsuarioAdmin extends Usuario implements IUsuarioConsultante {
                                     }
                                     this.setConsultaContrato(new ConsultarContratosVigilante(unVigilante));
                                     break;
+                                case 4:
+                                    continuarOperando = false;
+                                    break;
                             }
 
                             List<Contrato> contratos = this.getContratos();
@@ -279,9 +294,25 @@ public class UsuarioAdmin extends Usuario implements IUsuarioConsultante {
                         }
                         break;
                     case 8:
+
                         String codigoBanco = EntradaSalida.leerString("Ingrese el codigo del banco");
                         if (codigoBanco.isEmpty()) {
                             EntradaSalida.mostrarError("El codigo de banco no puede estar vacio");
+                            break;
+                        }
+                        continuarOperando = EntradaSalida.leerBoolean("¿Desea salir?");
+
+                        if (continuarOperando) {
+                            break;
+                        }
+                        Banco baux = this.sistemaState.obtenerBanco(codigoBanco);
+                        if (Objects.nonNull(baux)) {
+                            EntradaSalida.mostrarError("El codigo del banco ya se encuentra asociado a otro ya cargado en el sistema");
+                            break;
+                        }
+                        continuarOperando = EntradaSalida.leerBoolean("¿Desea salir?");
+
+                        if (continuarOperando) {
                             break;
                         }
                         String domicilioBanco = EntradaSalida.leerString("Ingrese el domicilio del banco");
@@ -289,9 +320,14 @@ public class UsuarioAdmin extends Usuario implements IUsuarioConsultante {
                             EntradaSalida.mostrarError("El domicilio no puede estar vacio");
                             break;
                         }
+                        continuarOperando = EntradaSalida.leerBoolean("¿Desea salir?");
+
+                        if (continuarOperando) {
+                            break;
+                        }
                         bco = new Banco(codigoBanco, domicilioBanco);
                         if (Objects.isNull(bco)) {
-                            EntradaSalida.mostrarError("Ocurrio un error cargando el banco ");
+                            EntradaSalida.mostrarError("No se puede obtener el banco ");
                             break;
                         }
                         this.sistemaState.addBanco(bco);
@@ -299,37 +335,80 @@ public class UsuarioAdmin extends Usuario implements IUsuarioConsultante {
                     case 9:
                         Banco unBanco = this.sistemaState.obtenerBanco();
                         if (Objects.isNull(unBanco)) {
-                            codigoSucursal = EntradaSalida.leerString("Ingrese el codigo de la sucursal a asociar al banco");
-                            if (codigoSucursal.isEmpty()) {
-                                EntradaSalida.mostrarError("El codigo de la sucursal no puede estar vacio");
-                                break;
-                            }
-                            String domicilioSucursal = EntradaSalida.leerString("Ingrese el domicilio de la sucursal a asociar al banco");
-                            if (domicilioSucursal.isEmpty()) {
-                                EntradaSalida.mostrarError("El domicilio de la sucursal no puede estar vacio");
-                                break;
-                            }
-                            int cantEmpleados = EntradaSalida.leerEntero("Ingrese el domicilio de la sucursal a asociar al banco");
-                            if (cantEmpleados <= 0) {
-                                EntradaSalida.mostrarError("El nro de empleados no puede ser 0");
-                                break;
-                            }
-                            unBanco.addSucursal(codigoSucursal, domicilioSucursal, cantEmpleados);
-                            if (Objects.isNull(unBanco)) {
-                                EntradaSalida.mostrarError("Ocurrio un error cargando la sucursal del baco");
-                                break;
-                            }
-                            this.sistemaState.actualizarBanco(unBanco);
+                            EntradaSalida.mostrarError("Ocurrio un error cargando el banco ");
+                            break;
                         }
+                        continuarOperando = EntradaSalida.leerBoolean("¿Desea salir?");
+
+                        if (continuarOperando) {
+                            break;
+                        }
+                        codigoSucursal = EntradaSalida.leerString("Ingrese el codigo de la sucursal a asociar al banco");
+                        if (codigoSucursal.isEmpty()) {
+                            EntradaSalida.mostrarError("El codigo de la sucursal no puede estar vacio");
+                            break;
+                        }
+                        continuarOperando = EntradaSalida.leerBoolean("¿Desea salir?");
+
+                        if (continuarOperando) {
+                            break;
+                        }
+                        Sucursal saux = this.sistemaState.obtenerSucursal(codigoSucursal, unBanco);
+                        if (Objects.nonNull(saux)) {
+                            EntradaSalida.mostrarError("El codigo de la sucursal del banco ya se encuentra asociado a otra ya cargado en el sistema");
+                            break;
+                        }
+                        continuarOperando = EntradaSalida.leerBoolean("¿Desea salir?");
+
+                        if (continuarOperando) {
+                            break;
+                        }
+                        String domicilioSucursal = EntradaSalida.leerString("Ingrese el domicilio de la sucursal a asociar al banco");
+                        if (domicilioSucursal.isEmpty()) {
+                            EntradaSalida.mostrarError("El domicilio de la sucursal no puede estar vacio");
+                            break;
+                        }
+                        continuarOperando = EntradaSalida.leerBoolean("¿Desea salir?");
+
+                        if (continuarOperando) {
+                            break;
+                        }
+                        int cantEmpleados = EntradaSalida.leerEntero("Ingrese la cantidad de empleados de la sucursal");
+                        if (cantEmpleados <= 0) {
+                            EntradaSalida.mostrarError("El nro de empleados no puede ser 0");
+                            break;
+                        }
+                        continuarOperando = EntradaSalida.leerBoolean("¿Desea salir?");
+
+                        if (continuarOperando) {
+                            break;
+                        }
+                        unBanco.addSucursal(codigoSucursal, domicilioSucursal, cantEmpleados);
+                        if (Objects.isNull(unBanco)) {
+                            EntradaSalida.mostrarError("Ocurrio un error cargando la sucursal del baco");
+                            break;
+                        }
+                        this.sistemaState.actualizarBanco(unBanco);
+
                         break;
                     case 10:
                         Date fechaJuicio = EntradaSalida.leerDate("Ingrese fecha del juicio");
                         IDelito delito = this.sistemaState.obtenerDelito();
                         Date fechaInicioCondena = EntradaSalida.leerDate("Ingrese fecha inicio condena");
                         Date fechaFinCondena = EntradaSalida.leerDate("Ingrese fecha fin condea");
+                        continuarOperando = EntradaSalida.leerBoolean("¿Desea salir?");
+
+                        if (continuarOperando) {
+                            break;
+                        }
                         IJuez juez = this.sistemaState.obtenerJuez();
                         if (Objects.isNull(delito)) {
                             EntradaSalida.mostrarError("El delito ingresado no existe");
+                            break;
+                        }
+                        continuarOperando = EntradaSalida.leerBoolean("¿Desea salir?");
+
+                        if (continuarOperando) {
                             break;
                         }
                         if (Objects.isNull(fechaJuicio)) {
@@ -353,6 +432,11 @@ public class UsuarioAdmin extends Usuario implements IUsuarioConsultante {
                             break;
                         }
 
+                        continuarOperando = EntradaSalida.leerBoolean("¿Desea salir?");
+
+                        if (continuarOperando) {
+                            break;
+                        }
                         Banda banda = new Banda(codigoBanda);
                         if (Objects.isNull(banda)) {
                             EntradaSalida.mostrarError("Ocurrio un error cargando la banda");
@@ -381,9 +465,19 @@ public class UsuarioAdmin extends Usuario implements IUsuarioConsultante {
                             EntradaSalida.mostrarError("El codigo del delincuete no puede estar vacio");
                             break;
                         }
+                        continuarOperando = EntradaSalida.leerBoolean("¿Desea salir?");
+
+                        if (continuarOperando) {
+                            break;
+                        }
                         String nombreDelicuente = EntradaSalida.leerString("Ingrese el nombre del delincuente a buscar");
                         if (nombreDelicuente.isEmpty()) {
                             EntradaSalida.mostrarError("El nombre del delincuente no puede estar vacio");
+                            break;
+                        }
+                        continuarOperando = EntradaSalida.leerBoolean("¿Desea salir?");
+
+                        if (continuarOperando) {
                             break;
                         }
                         PersonaDetenida delincuente = new PersonaDetenida(codigoDelincuente, nombreDelicuente);
@@ -405,16 +499,38 @@ public class UsuarioAdmin extends Usuario implements IUsuarioConsultante {
                             EntradaSalida.mostrarError("El codigo no puede estar vacio");
                             break;
                         }
-                        boolean esConArma = EntradaSalida.leerBoolean("¿Contrato con arma?");
-                        Contrato contrato = this.sistemaState.obtenerContrato();
+                        Vigilante vaux = this.sistemaState.obtenerVigilante(codVig);
+                        if (Objects.nonNull(vaux)) {
+                            EntradaSalida.mostrarError("El codigo de vigilante ya se encuentra asociado a otro ya cargado en el sistema");
+                            break;
+                        }
+                        continuarOperando = EntradaSalida.leerBoolean("¿Desea salir?");
+
+                        if (continuarOperando) {
+                            break;
+                        }
+                        boolean esConArma = EntradaSalida.leerBoolean("¿Utiliza arma el vigilante?");
+                        boolean conContrato = EntradaSalida.leerBoolean("¿Se le asocia un contrato?");
+                        continuarOperando = EntradaSalida.leerBoolean("¿Desea salir?");
+
+                        if (continuarOperando) {
+                            break;
+                        }
+                        Contrato contrato = null;
+                        if (conContrato) {
+                            contrato = this.sistemaState.obtenerContratoLibre();
+                            if (Objects.isNull(contrato)) {
+                                EntradaSalida.mostrarError("No se encontro un contrato para asociar");
+                                break;
+                            }
+                        }
+
                         int edad = EntradaSalida.leerEntero("Ingrese la edad");
                         if (edad <= 0) {
                             EntradaSalida.mostrarError("La edad no puede ser 0");
                             break;
                         }
-                        if (Objects.isNull(contrato)) {
-                            break;
-                        }
+
                         Vigilante vig = new Vigilante(codVig, edad, esConArma, contrato);
                         if (Objects.isNull(vig)) {
                             EntradaSalida.mostrarError("Ocurrio un error cargado el vigilante");
@@ -431,12 +547,27 @@ public class UsuarioAdmin extends Usuario implements IUsuarioConsultante {
                                 EntradaSalida.mostrarError("La fecha del delito no es correcta");
                                 break;
                             }
+                            continuarOperando = EntradaSalida.leerBoolean("¿Desea salir?");
+
+                            if (continuarOperando) {
+                                break;
+                            }
                             PersonaDetenida personaD = this.sistemaState.obtenerPersonaDetenida();
                             if (Objects.isNull(personaD)) {
                                 EntradaSalida.mostrarError("La persona detenida no existe");
                                 break;
                             }
+                            continuarOperando = EntradaSalida.leerBoolean("¿Desea salir?");
+
+                            if (continuarOperando) {
+                                break;
+                            }
                             boolean huboCondena = EntradaSalida.leerBoolean("¿Hubo condena?");
+                            continuarOperando = EntradaSalida.leerBoolean("¿Desea salir?");
+
+                            if (continuarOperando) {
+                                break;
+                            }
                             Delito d = new Delito(fechaDelito, personaD, huboCondena);
                             if (Objects.isNull(d)) {
                                 EntradaSalida.mostrarError("Hubo un error cargado el delito");
@@ -453,9 +584,19 @@ public class UsuarioAdmin extends Usuario implements IUsuarioConsultante {
                             EntradaSalida.mostrarError("Fecha incorrecta");
                             break;
                         }
+                        continuarOperando = EntradaSalida.leerBoolean("¿Desea salir?");
+
+                        if (continuarOperando) {
+                            break;
+                        }
                         Sucursal sucBcoCont = this.sistemaState.obtenerSucursal();
                         if (Objects.isNull(sucBcoCont)) {
                             EntradaSalida.mostrarError("La sucursal del banco no existe");
+                            break;
+                        }
+                        continuarOperando = EntradaSalida.leerBoolean("¿Desea salir?");
+
+                        if (continuarOperando) {
                             break;
                         }
                         Vigilante vigCon = this.sistemaState.obtenerVigilanteLibre();
@@ -470,6 +611,16 @@ public class UsuarioAdmin extends Usuario implements IUsuarioConsultante {
                         String claveInternaJuzgado = EntradaSalida.leerString("Ingrese la clave interna del juzgado");
                         if (claveInternaJuzgado.isEmpty()) {
                             EntradaSalida.mostrarError("La clave interna del juzgado no puede ser vacia");
+                            break;
+                        }
+                        continuarOperando = EntradaSalida.leerBoolean("¿Desea salir?");
+
+                        if (continuarOperando) {
+                            break;
+                        }
+                        IJuez jaux = this.sistemaState.obtenerJuez(claveInternaJuzgado);
+                        if (Objects.nonNull(jaux)) {
+                            EntradaSalida.mostrarError("La clave interna del juzgado ya se encuentra asociada a otro juez ya cargado en el sistema");
                             break;
                         }
                         String nombreJuez = EntradaSalida.leerString("Ingrese el nombre del juez");
@@ -514,10 +665,14 @@ public class UsuarioAdmin extends Usuario implements IUsuarioConsultante {
                     case 19:
                         this.getInfoGeneral();
                         break;
+                    case 20:
+                        continuarOperando = false;
                 }
-                continuarOperando = EntradaSalida.leerBoolean("¿Desea continuar operando?");
-            } while (continuarOperando);
+                if (continuarOperando) {
+                    continuarOperando = EntradaSalida.leerBoolean("¿Desea continuar operando?");
+                }
 
+            } while (continuarOperando);
         } catch (IOException ex) {
             EntradaSalida.mostrarError(ex.getMessage());
         }
@@ -541,7 +696,7 @@ public class UsuarioAdmin extends Usuario implements IUsuarioConsultante {
             String usuario = "";
             String pass = "";
             switch (tipoUsuario) {
-                 case 1:
+                case 1:
                     user = UsuarioAdmin.nuevoUsuario(usuario, pass, sistemaState);
                     break;
                 case 2:
@@ -577,27 +732,32 @@ public class UsuarioAdmin extends Usuario implements IUsuarioConsultante {
             EntradaSalida.mostrarString(banco.getInfoBanco());
         }
 
-        EntradaSalida.mostrarString("\nDelitos:");
+        EntradaSalida.mostrarString("Delitos:");
         for (IDelito delito : sistemaState.getDelitos()) {
             EntradaSalida.mostrarString(delito.getInfoCompletaDelito());
         }
 
-        EntradaSalida.mostrarString("\nJuicios:");
+        EntradaSalida.mostrarString("Juicios:");
         for (Juicio juicio : sistemaState.getJuicios()) {
             EntradaSalida.mostrarString(juicio.getInfoJuicio());
         }
 
-        EntradaSalida.mostrarString("\nVigilantes:");
+        EntradaSalida.mostrarString("Delincuentes:");
+        for (PersonaDetenida delincuente : sistemaState.getDelincuentes()) {
+            EntradaSalida.mostrarString(delincuente.getInfoPersonaDetenida());
+        }
+
+        EntradaSalida.mostrarString("Vigilantes:");
         for (Vigilante vigilante : sistemaState.getVigilantes()) {
             EntradaSalida.mostrarString(vigilante.getInfoVigilante());
         }
 
-        EntradaSalida.mostrarString("\nJueces:");
+        EntradaSalida.mostrarString("Jueces:");
         for (Juez juez : sistemaState.getJueces()) {
             EntradaSalida.mostrarString(juez.getInfoJuez());
         }
 
-        EntradaSalida.mostrarString("\nBandas:");
+        EntradaSalida.mostrarString("Bandas:");
         for (Banda banda : sistemaState.getBandas()) {
             EntradaSalida.mostrarString(banda.getInfoBanda());
         }

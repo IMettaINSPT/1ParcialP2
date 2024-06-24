@@ -19,21 +19,28 @@ public class EntradaSalida {
     }
 
     public static Date leerDate(String texto) {
-        try {
-            mostrarString(texto);
-            Scanner stringScanner = new Scanner(System.in);
+        Scanner stringScanner = new Scanner(System.in);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        sdf.setLenient(false);  // Ensure strict date parsing
+        Date fecha = null;
+        boolean fechaValida = false;
+
+        while (!fechaValida) {
+            mostrarString(texto + " (Formato: dd/MM/yyyy):");
             String fechaComoTexto = stringScanner.nextLine();
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-            Date fecha = sdf.parse(fechaComoTexto);
-            return fecha;
-        } catch (ParseException ex) {
-            EntradaSalida.mostrarString("Error obteniendo la fecha");
-            return null;
+
+            try {
+                fecha = sdf.parse(fechaComoTexto);
+                fechaValida = true;  // Salir del bucle si la fecha es válida
+            } catch (ParseException ex) {
+                mostrarString("Error obteniendo la fecha. Asegúrese de que la fecha está en el formato 'dd/MM/yyyy'. Inténtelo de nuevo.");
+            }
         }
+        return fecha;
     }
 
     public static int leerEntero(String texto) {
-        mostrarString(texto + "\n");
+        mostrarString(texto);
         Scanner stringScanner = new Scanner(System.in);
         int msj;
         while (true) {
@@ -55,7 +62,7 @@ public class EntradaSalida {
 
         do {
             mostrarString(texto);
-            mostrarString("Ingrese\nSI o NO");
+            mostrarString("Ingrese SI o NO");
             msj = stringScanner.nextLine().trim().toUpperCase();
 
             switch (msj) {

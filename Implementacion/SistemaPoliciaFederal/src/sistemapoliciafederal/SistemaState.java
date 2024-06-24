@@ -223,7 +223,7 @@ public class SistemaState implements Serializable {
         EntradaSalida.mostrarError("No se encuentra el vigilante para el codigo ingresado");
         return v;
     }
-
+    
     public Vigilante obtenerVigilante() {
         Vigilante v = null;
         String codigo = EntradaSalida.leerString("Ingrese el codigo del vigilante a buscar");
@@ -238,6 +238,16 @@ public class SistemaState implements Serializable {
             }
         }
         EntradaSalida.mostrarError("No se encuentra el vigilante para el codigo ingresado");
+        return v;
+    }
+
+    public Vigilante obtenerVigilante(String codigo) {
+        Vigilante v = null;
+        for (Vigilante vig : this.getVigilantes()) {
+            if (vig.soyElVigilante(codigo)) {
+                return vig;
+            }
+        }
         return v;
     }
 
@@ -263,6 +273,60 @@ public class SistemaState implements Serializable {
 
         return d;
     }
+
+    public List<Contrato> obtenerContratoSinVigilante() {
+        boolean datosValidos;
+        datosValidos = true;       
+        Sucursal suc = this.obtenerSucursal();
+        if (Objects.isNull(suc)) {
+            EntradaSalida.mostrarError("La sucursal del banco no existe");
+            datosValidos = false;
+        }
+        List<Contrato> contratoLibres = suc.getContratos();
+
+        if (datosValidos) {
+            for (Contrato c : suc.getContratos()) {
+                //si el contrato pertenece a algun vigilante que me lo agregue a la coleccion de contratos usados
+                if (this.getVigilantes().stream().allMatch(v -> v.getContrato().getFechaContrato().equals(c.getFechaContrato()))) {
+                    contratoLibres.remove(c);
+                }
+            }
+        }
+        return contratoLibres;
+    }
+    
+    
+     public Contrato obtenerContratoLibre() {
+        Contrato contrato = null;
+        boolean datosValidos;
+        do {
+            datosValidos = true;
+            Date fechaContrato = EntradaSalida.leerDate("Ingrese la fecha del contrato");
+            if (Objects.isNull(fechaContrato)) {
+                EntradaSalida.mostrarError("Fecha incorrecta");
+                datosValidos = false;
+            }
+
+            boolean esConArma = EntradaSalida.leerBoolean("¿Contrato con arma?");
+
+            if (datosValidos) {
+                for (Contrato c : this.obtenerContratoSinVigilante() ) {
+                    if (c.soyElContrato(fechaContrato, esConArma)) {
+                        return c;
+                    }
+                }
+                EntradaSalida.mostrarError("No se encuentra un contrato para los datos seleccionados. Reintente!");
+                datosValidos = false;
+
+            } else {
+                EntradaSalida.mostrarError("Los datos ingresados son invalidos. Reingrese los mismos");
+
+            }
+        } while (!datosValidos);
+        return contrato;
+
+    }
+    
 
     public Contrato obtenerContrato() {
         Contrato contrato = null;
@@ -310,6 +374,16 @@ public class SistemaState implements Serializable {
         EntradaSalida.mostrarError("El codigo ingresado no pertenece a un juez");
         return juez;
     }
+    
+     public IJuez obtenerJuez(String codigoInternaJuzgado) {
+        IJuez juez = null;
+        for (IJuez j : this.getJueces()) {
+            if (((Juez) j).soyElJuez(codigoInternaJuzgado)) {
+                return j;
+            }
+        }
+        return juez;
+    }
 
     public PersonaDetenida obtenerPersonaDetenida() {
         PersonaDetenida p = null;
@@ -332,6 +406,16 @@ public class SistemaState implements Serializable {
         return banco.getSucursales();
 
     }
+    
+    public Sucursal obtenerSucursal(String codigoSucursal, Banco banco) {
+        Sucursal sucursal = null;
+        for (Sucursal suc : banco.getSucursales()) {
+            if (suc.soyLaSucursal(codigoSucursal)) {
+                return suc;
+            }
+        }
+        return sucursal;
+    }
 
     public Sucursal obtenerSucursal() {
         Sucursal sucursal = null;
@@ -353,6 +437,17 @@ public class SistemaState implements Serializable {
         EntradaSalida.mostrarError("No se encuentra la sucursal para el codigo ingresado");
         return sucursal;
     }
+    
+    public Banco obtenerBanco(String codigo) {
+        Banco bco = null;
+       
+        for (Banco banco : this.getBancos()) {
+            if (banco.soyElBanco(codigo)) {
+                return banco;
+            }
+        }
+        return bco;
+    }
 
     public Banco obtenerBanco() {
         Banco bco = null;
@@ -371,7 +466,7 @@ public class SistemaState implements Serializable {
     }
 
     public Banda obtenerBanda() {
-        int nroBanda = EntradaSalida.leerEntero("Ingrese el nro de la banda");
+        int nroBanda = EntradaSalida.leerEntero("Ingrese el nro de la banda a buscar");
         if (nroBanda <= 0) {
             EntradaSalida.mostrarError("El nro de banda no puede ser 0");
             return null;
