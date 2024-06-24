@@ -1,9 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package sistemapoliciafederal;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -11,7 +9,7 @@ import java.util.stream.Collectors;
  *
  * @author IMetta
  */
-public class ConsultarDelitosPorDelincuente implements IConsultaDelitos {
+public class ConsultarDelitosPorDelincuente implements IConsultaDelitos ,Serializable{
 
     private final PersonaDetenida delincuente;
     private final List<IDelito> delitos;

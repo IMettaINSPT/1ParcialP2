@@ -1,12 +1,14 @@
 package sistemapoliciafederal;
 
+import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class ConsultarBancoPorDomicilio implements IConsultaBanco {
+public class ConsultarBancoPorDomicilio implements IConsultaBanco, Serializable {
 
-    private List<Banco> bancos;
-    private String domicilio;
+    private final List<Banco> bancos;
+    private final String domicilio;
 
     public ConsultarBancoPorDomicilio(List<Banco> bancos, String domicilio) {
         this.bancos = bancos;
@@ -15,8 +17,13 @@ public class ConsultarBancoPorDomicilio implements IConsultaBanco {
 
     @Override
     public Banco getBanco() {
-        return this.bancos.stream().filter(d -> d.getDomicilioCentral().equals(this.domicilio))
-                .collect(Collectors.toList()).get(0);
+        List<Banco> lista = this.bancos.stream().filter(d -> d.getDomicilioCentral().equals(this.domicilio))
+                .collect(Collectors.toList());
+        if (Objects.nonNull(lista) && !lista.isEmpty()) {
+            return lista.get(0);
+        }
+        return null;
+
     }
 
 }

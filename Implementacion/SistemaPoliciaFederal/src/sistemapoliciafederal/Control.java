@@ -14,21 +14,10 @@ public class Control {
         sistemaState = SistemaState.newSistemaState(); //SINGLETON
     }
 
-    public void InitSistema() {
-        try {
-            sistemaState = sistemaState.deSerializar("UsuarioAdmin.bin");
-        } catch (IOException | ClassNotFoundException ex) {
-            EntradaSalida.mostrarError("Debe existir al menos un usuario admin");
-        }
-    }
-
     public void RestaurarEstadoSistema() {
         try {
-            SistemaState sistAux = sistemaState.deSerializar("PoliciaFederal.bin");
-            if (Objects.nonNull(this.sistemaState)) {
-                sistAux.addUsuario(this.sistemaState.getUsuarios());
-            }
-            this.sistemaState = sistAux;
+            this.sistemaState = sistemaState.deSerializar("PoliciaFederal.dat");
+
         } catch (IOException | ClassNotFoundException ex) {
             EntradaSalida.mostrarError("No hay datos para restaurar");
         }
@@ -61,7 +50,10 @@ public class Control {
                 return true;
             }
             EntradaSalida.mostrarString("Alguno de los datos ingresados son incorrectos");
+
         }
+        EntradaSalida.mostrarString("Alguno de los datos ingresados son incorrectos");
+
         return false;
     }
 
@@ -96,9 +88,9 @@ public class Control {
         // List<Banda> bandas = new ArrayList<>();
         List<Usuario> usuarios = new ArrayList<>();
 
-        Date input = new Date();
-        Instant instant = input.toInstant();
-        Date hoy = Date.from(instant);
+//        Date input = new Date();
+//        Instant instant = input.toInstant();
+//        Date hoy = Date.from(instant);
 
         //   PersonaDetenida d1 = new PersonaDetenida("111", "Juan 1");
         //  PersonaDetenida d2 = new PersonaDetenida("222", "Juan 2");
@@ -165,7 +157,8 @@ public class Control {
 //        b1.addMiembro(d3);
 //        Banda b2 = new Banda(345);
 //        b2.addMiembro(d4);
-        usuarios.add(UsuarioAdmin.nuevoUsuario("ADMIN", "ADMIN", sistemaState));
+SistemaState sist = SistemaState.newSistemaState();
+        usuarios.add(UsuarioAdmin.nuevoUsuario("ADMIN", "ADMIN", sist));
 //        usuarios.add(UsuarioAdmin.crearUsuario("bb", "bb", sistemaState));
 //        usuarios.add(UsuarioInvestigador.crearUsuario("cc", "cc", sistemaState));
 //        usuarios.add(UsuarioVigilante.crearUsuario("dd", "dd"));
@@ -206,7 +199,7 @@ public class Control {
 //        sistemaState.setBandas(bandas);
         sistemaState.setUsuarios(usuarios);
 
-        sistemaState.serializar("UsuarioAdmin.bin");
+        sistemaState.serializar("PoliciaFederal.dat");
 
     }
 

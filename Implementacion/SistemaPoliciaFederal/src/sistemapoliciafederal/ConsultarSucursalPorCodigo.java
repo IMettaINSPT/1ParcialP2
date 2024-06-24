@@ -1,9 +1,10 @@
 package sistemapoliciafederal;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ConsultarSucursalPorCodigo implements IConsultaSucursal {
+public class ConsultarSucursalPorCodigo implements IConsultaSucursal,Serializable {
 
     private final List<Sucursal> sucursales;
     private final String codigo;

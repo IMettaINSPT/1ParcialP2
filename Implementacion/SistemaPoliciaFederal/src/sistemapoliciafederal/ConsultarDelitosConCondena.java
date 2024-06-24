@@ -1,9 +1,10 @@
 package sistemapoliciafederal;
 
+import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class ConsultarDelitosConCondena implements IConsultaDelitos {
+public class ConsultarDelitosConCondena implements IConsultaDelitos ,Serializable{
 
     private final List<IDelito> delitos;
 

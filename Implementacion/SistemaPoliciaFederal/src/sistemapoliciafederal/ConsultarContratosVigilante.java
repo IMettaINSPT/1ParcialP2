@@ -1,8 +1,9 @@
 package sistemapoliciafederal;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class ConsultarContratosVigilante implements IConsultaContrato {
+public class ConsultarContratosVigilante implements IConsultaContrato,Serializable {
 
     private final Vigilante vigilante;
 

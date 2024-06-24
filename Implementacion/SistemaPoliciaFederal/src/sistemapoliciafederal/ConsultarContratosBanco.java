@@ -1,8 +1,9 @@
 package sistemapoliciafederal;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class ConsultarContratosBanco implements IConsultaContrato {
+public class ConsultarContratosBanco implements IConsultaContrato,Serializable {
 
     private final Banco banco;
 
