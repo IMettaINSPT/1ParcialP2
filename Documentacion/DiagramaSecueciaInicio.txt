@@ -1,0 +1,28 @@
+@startuml
+
+hide circle
+skinparam classAttributeIconSize 0
+
+
+participant Main
+participant Control
+participant SistemaState
+participant Usuario
+participant UsuarioAdmin
+participant UsuarioInvestigador
+participant UsuarioVigilante
+participant Banco
+
+
+Main->Control:new()
+Control -> SistemaState: newSistemaState()
+SistemaState --> Control : sistemaState
+Main->Control: restaurar()
+Control->SistemaState:deSerializar(path)
+SistemaState --> Control : sistemaState
+Main->Control :Login()
+Control->Usuario:validar()
+
+
+
+@enduml

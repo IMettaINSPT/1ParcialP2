@@ -1,0 +1,57 @@
+                                                     ,-------------------------------------------------.       ,------------------------------.   ,--------------------------------.
+                                                     |ConsultarDelitosPorBanda                         |       |ConsultarSucursalxBco         |   |ConsultarSucursalxCodigo        |
+                                                     |-------------------------------------------------|       |------------------------------|   |--------------------------------|
+                                                     |+consultarDelitosPorBanda(Banda, PersonaDetenida)|       |+consultarSucursalxBco(String)|   |+consultarSucursalxCodigo(Banco)|
+                                                     |+getDelitos()                                    |       |+getSucursales()              |   |+getSucursales()                |
+                                                     `-------------------------------------------------'       `------------------------------'   `--------------------------------'
+                                                                              |                                                                                                     
+                                                                              |                                                                                                     
+                                                             ,---------------------------------.                      ,-----------------------.                                     
+                                                             |IConsultaDelitos                 |                      |IConsultaSucursal      |                                     
+                                                             |---------------------------------|                      |-----------------------|                                     
+                                                             |-personaDetenida: PersonaDetenida|                      |-codigoSucursal: String|                                     
+                                                             |-banda: Banda                    |                      |-banco : Banco         |                                     
+                                                             |-conCondena : bool               |                      |+getSucursales()       |                                     
+                                                             |+getDelitos()                    |                      `-----------------------'                                     
+                                                             `---------------------------------'                                   |                                                
+                                                                              |                                                    |                                                
+                                                                              |                            ,---------------------------------------------.                          
+                                                                              |                            |IUsuarioConsultante                          |                          
+                                                                              |                            |---------------------------------------------|                          
+                                                                              |                            |-consultaBanco IConsultaBanco                |                          
+                                                                              |                            |-consultaSucursal IConsultaSucursal          |                          
+                                                                              |                            |-consultaDelincuente IConsultaDelincuente    |                          
+                                                                              |                            |-consultaJuicio IConsultaJuicio              |                          
+                                                                              |                            |-consultaDelitos IConsultaDelitos            |                          
+,------------------------------------------------.  ,--------------------------------------------------.   |-consultaContratos IConsultaContratos        |                          
+|ConsultarDelitosPorDelincuente                  |  |ConsultarDelitosConCondena                        |   |+setConsultaBanco(IConsultaBanco)            |                          
+|------------------------------------------------|  |--------------------------------------------------|   |+setConsultaSucursales(IConsultaSucursal)    |                          
+|+consultarDelitosPorDelincuente(PersonaDetenida)|  |+ consultarDelitosConCondena(bool,PersonaDetenida)|   |+setConsultaDelincuente(IConsultaDelincuente)|                          
+|+getDelitos()                                   |  |+getDelitos()                                     |   |+setConsultaJuicio(IConsultaJuicio)          |                          
+`------------------------------------------------'  `--------------------------------------------------'   |+setConsultaDelitos(IConsultaDelitos)        |                          
+                                                                                                           |+setConsultaContratos(IConsultaContratos)    |                          
+                                                                                                           |+getBanco()                                  |                          
+                                                                                                           |+getSucursales()                             |                          
+                                                                                                           |+getDelincuente()                            |                          
+                                                                                                           |+getJuicio()                                 |                          
+                                                                                                           |+getDelitos()                                |                          
+                                                                                                           |+getContratos()                              |                          
+                                                                                                           `---------------------------------------------'                          
+                                                                                                                                                                                    
+                                                                                                                                                                                    
+                                                                                 ,-------------------------------------------.                                                      
+                                                                                 |ConsultarJuicioPorJuez                     |                                                      
+                                                                                 |-------------------------------------------|                                                      
+                                                                                 |+ consultarJuicioPorDelito(IJuez,date,date)|                                                      
+                                                                                 |+getJuicio()  : Juicio                     |                                                      
+                                                                                 `-------------------------------------------'                                                      
+                                                                                                                                                                                    
+                                                                                                         ,----------------------.                                                   
+                                                                                                         |IConsultaJuicio       |   ,--------------------------------------------.  
+                                                                                                         |----------------------|   |ConsultarJuicioPorDelito                    |  
+                                                                                                         |-Juez: IJuez          |   |--------------------------------------------|  
+                                                                                                         |-FechaDesde: Date     |---|+ consultarJuicioPorDelito(Delito,date,date)|  
+                                                                                                         |-FechaHasta: Date     |   |+getJuicio() : Juicio                       |  
+                                                                                                         |-Delito : IDelito     |   `--------------------------------------------'  
+                                                                                                         |+getJuicio()  : Juicio|                                                   
+                                                                                                         `----------------------'                                                   

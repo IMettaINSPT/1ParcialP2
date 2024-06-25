@@ -39,10 +39,11 @@ public class Banco implements Serializable {
 
     public String getInfoBanco() {
         StringBuilder sb = new StringBuilder();
+        sb.append("Informacion Banco\n");
         sb.append("Codigo Banco : ").append(this.codigoBanco).append("\n");
         sb.append("Domicilio central : ").append(this.domicilioCentral).append("\n");
         for (Sucursal s : this.sucursales) {
-            sb.append("\nSucursal :").append("\n").append(s.getInfoSucursal());
+            sb.append("\nSucursal banco:").append("\n").append(s.getInfoSucursal());
         }
         return sb.toString();
     }

@@ -35,7 +35,7 @@ public class UsuarioInvestigador extends Usuario implements IUsuarioConsultante 
                 case 1:
                     String domicilio;
                     String codigo;
-                    if (this.sistemaState.getBancos().size() <= 0) {
+                    if (this.sistemaState.getBancosSistema().size() <= 0) {
                         EntradaSalida.mostrarError("Debe existir al menos un banco");
                         break;
 
@@ -52,14 +52,14 @@ public class UsuarioInvestigador extends Usuario implements IUsuarioConsultante 
                             if (codigo.isEmpty()) {
                                 EntradaSalida.mostrarError("Debe ingresar un codigo valido");
                             }
-                            this.setConsultaBanco(new ConsultarBancoPorCodigo(this.sistemaState.getBancos(), codigo));
+                            this.setConsultaBanco(new ConsultarBancoPorCodigo(this.sistemaState.getBancosSistema(), codigo));
 
                         } else {
                             domicilio = EntradaSalida.leerString("Ingrese el domicilio del banco a buscar");
                             if (domicilio.isEmpty()) {
                                 EntradaSalida.mostrarError("Debe ingresar un domicilio valido");
                             }
-                            this.setConsultaBanco(new ConsultarBancoPorDomicilio(this.sistemaState.getBancos(), domicilio));
+                            this.setConsultaBanco(new ConsultarBancoPorDomicilio(this.sistemaState.getBancosSistema(), domicilio));
                         }
 
                         Banco bco = this.getBanco();
@@ -73,7 +73,7 @@ public class UsuarioInvestigador extends Usuario implements IUsuarioConsultante 
 
                     String codigoSucursal;
 
-                    Banco bco = this.sistemaState.obtenerBanco();
+                    Banco bco = this.sistemaState.obtenerBancoSistema();
 
                     if (Objects.isNull(bco)) {
                         EntradaSalida.mostrarError("Debe ingresar un banco valido");
@@ -110,7 +110,7 @@ public class UsuarioInvestigador extends Usuario implements IUsuarioConsultante 
                     }
                 case 3:
 
-                    if (!this.sistemaState.getDelincuentes().isEmpty()) {
+                    if (!this.sistemaState.getDelincuentesSistema().isEmpty()) {
                         EntradaSalida.mostrarError("Debe existir al menos un delincuente");
                     }
                     subMenu = Menu.mostrar("1-Mostrar Delincuente por Nombre, 2-Mostrar Delincuente por Codigo, 3-Mostrar Delincuente por Sucursal", "Error.Reintente", 1, 3, 3);
@@ -127,7 +127,7 @@ public class UsuarioInvestigador extends Usuario implements IUsuarioConsultante 
                                     EntradaSalida.mostrarError("Debe ingresar un nombre valido");
                                     break;
                                 }
-                                this.setConsultaDelincuente(new ConsultarDelincuentePorNombre(this.sistemaState.getDelincuentes(), nombre));
+                                this.setConsultaDelincuente(new ConsultarDelincuentePorNombre(this.sistemaState.getDelincuentesSistema(), nombre));
 
                             case 2:
                                 String codigoDelincuente = EntradaSalida.leerString("Ingrese el codigo del delincuente a buscar");
@@ -135,10 +135,10 @@ public class UsuarioInvestigador extends Usuario implements IUsuarioConsultante 
                                     EntradaSalida.mostrarError("Debe ingresar un Codigo de Delincuente valido");
                                     break;
                                 }
-                                this.setConsultaDelincuente(new ConsultarDelincuentesPorCodigo(this.sistemaState.getDelincuentes(), codigoDelincuente));
+                                this.setConsultaDelincuente(new ConsultarDelincuentesPorCodigo(this.sistemaState.getDelincuentesSistema(), codigoDelincuente));
 
                             case 3:
-                                Sucursal suc = this.sistemaState.obtenerSucursal();
+                                Sucursal suc = this.sistemaState.obtenerSucursalSistema();
                                 this.setConsultaDelincuente(new ConsultarDelincuentesPorSucursal(suc));
                         }
 
@@ -154,11 +154,11 @@ public class UsuarioInvestigador extends Usuario implements IUsuarioConsultante 
                         break;
                     }
                 case 4:
-                    if (this.sistemaState.getJuicios().isEmpty()) {
+                    if (this.sistemaState.getJuiciosSistema().isEmpty()) {
                         EntradaSalida.mostrarError("Debe existir al menos un Juicio");
                         break;
                     }
-                    List<Juicio> juicios = this.sistemaState.getJuicios();
+                    List<Juicio> juicios = this.sistemaState.getJuiciosSistema();
                     if (juicios.isEmpty()) {
                         EntradaSalida.mostrarError("No hay juicios registrados");
                         break;
@@ -170,7 +170,7 @@ public class UsuarioInvestigador extends Usuario implements IUsuarioConsultante 
                     }
                     break;
                 case 5:
-                    if (this.sistemaState.getDelitos().isEmpty()) {
+                    if (this.sistemaState.getDelitosSistema().isEmpty()) {
                         EntradaSalida.mostrarError("Debe existir al menos un delito");
                         break;
                     }
@@ -183,22 +183,22 @@ public class UsuarioInvestigador extends Usuario implements IUsuarioConsultante 
                     } else {
                         switch (subMenu) {
                             case 1:
-                                this.setConsultaDelitos(new ConsultarDelitosConCondena(this.sistemaState.getDelitos()));
+                                this.setConsultaDelitos(new ConsultarDelitosConCondena(this.sistemaState.getDelitosSistema()));
                                 break;
                             case 2:
-                                Banda b = this.sistemaState.obtenerBanda();
+                                Banda b = this.sistemaState.obtenerBandaSistema();
                                 if (Objects.isNull(b)) {
                                     break;
                                 }
-                                this.setConsultaDelitos(new ConsultarDelitosPorBanda(this.sistemaState.getDelitos(), b));
+                                this.setConsultaDelitos(new ConsultarDelitosPorBanda(this.sistemaState.getDelitosSistema(), b));
                                 break;
 
                             case 3:
-                                PersonaDetenida unDelincuente = this.sistemaState.obtenerPersonaDetenida();
+                                PersonaDetenida unDelincuente = this.sistemaState.obtenerPersonaDetenidaSistema();
                                 if (Objects.isNull(unDelincuente)) {
                                     break;
                                 }
-                                this.setConsultaDelitos(new ConsultarDelitosPorDelincuente(this.sistemaState.getDelitos(), unDelincuente));
+                                this.setConsultaDelitos(new ConsultarDelitosPorDelincuente(this.sistemaState.getDelitosSistema(), unDelincuente));
                                 break;
                         }
 
@@ -224,7 +224,7 @@ public class UsuarioInvestigador extends Usuario implements IUsuarioConsultante 
                         switch (subMenu) {
 
                             case 1:
-                                bco = this.sistemaState.obtenerBanco();
+                                bco = this.sistemaState.obtenerBancoSistema();
                                 if (Objects.isNull(bco)) {
                                     break;
                                 }
@@ -232,7 +232,7 @@ public class UsuarioInvestigador extends Usuario implements IUsuarioConsultante 
                                 break;
 
                             case 2:
-                                Sucursal unaSucursal = this.sistemaState.obtenerSucursal();
+                                Sucursal unaSucursal = this.sistemaState.obtenerSucursalSistema();
                                 if (Objects.isNull(unaSucursal)) {
                                     break;
                                 }
@@ -244,7 +244,7 @@ public class UsuarioInvestigador extends Usuario implements IUsuarioConsultante 
                                 break;
 
                             case 3:
-                                Vigilante unVigilante = this.sistemaState.obtenerVigilante();
+                                Vigilante unVigilante = this.sistemaState.obtenerVigilanteSistema();
                                 if (Objects.isNull(unVigilante)) {
                                     EntradaSalida.mostrarError("Debe ingresar un Vigilante valido");
                                     break;
@@ -286,22 +286,22 @@ public class UsuarioInvestigador extends Usuario implements IUsuarioConsultante 
         }
 
         System.out.println("\nJuicios:");
-        for (Juicio juicio : sistemaState.getJuicios()) {
+        for (Juicio juicio : sistemaState.getJuiciosSistema()) {
             System.out.println(juicio.getInfoJuicio());
         }
 
         System.out.println("\nVigilantes:");
-        for (Vigilante vigilante : sistemaState.getVigilantes()) {
+        for (Vigilante vigilante : sistemaState.getVigilantesSistema()) {
             System.out.println(vigilante.getInfoVigilante());
         }
 
         System.out.println("\nJueces:");
-        for (Juez juez : sistemaState.getJueces()) {
+        for (Juez juez : sistemaState.getJuecesSistema()) {
             System.out.println(juez.getInfoJuez());
         }
 
         System.out.println("\nBandas:");
-        for (Banda banda : sistemaState.getBandas()) {
+        for (Banda banda : sistemaState.getBandasSistema()) {
             System.out.println(banda);
         }
     }

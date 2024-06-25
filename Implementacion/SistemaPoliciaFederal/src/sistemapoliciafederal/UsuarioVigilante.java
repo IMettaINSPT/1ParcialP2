@@ -18,7 +18,7 @@ public class UsuarioVigilante extends Usuario {
         switch (this.GetMenu()) {
             case 1:
                 for (Contrato c : this.getContratos()) {
-                    c.getInfoContrato();
+                   EntradaSalida.mostrarString(c.getInfoContrato());
                 }
         }
     }

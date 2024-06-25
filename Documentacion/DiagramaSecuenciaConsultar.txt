@@ -1,0 +1,28 @@
+@startuml
+
+hide circle
+skinparam classAttributeIconSize 0
+
+
+participant Control
+participant SistemaState
+participant Usuario
+participant UsuarioAdmin
+participant UsuarioInvestigador
+participant UsuarioVigilante
+participant Banco
+
+
+Usuario-->Control: esUsuarioValido
+Control->Usuario:accionar
+Usuario-->UsuarioAdmin:accionar()
+UsuarioAdmin ->Banco: newBanco()
+UsuarioAdmin ->sistemaState: obtenerBanco()
+activate ConsultarBancoPorCodigo
+UsuarioAdmin ->ConsultarBancoPorCodigo: new ()
+UsuarioAdmin -->ConsultarBancoPorCodigo: getBancos()
+deactivate  ConsultarBancoPorCodigo
+Usuario-->UsuarioInvestigador:accionar()
+Usuario-->UsuarioVigilante:accionar()
+
+@enduml

@@ -67,7 +67,7 @@ public class Delito implements IDelito, Serializable {
         StringBuilder sb = new StringBuilder();
         sb.append("Informacion Delito:").append("\n\n");
         sb.append("Fecha del delito:").append(EntradaSalida.mostrarDate(fechaDelito)).append("\n");
-        sb.append("Persona detenida:").append(delincuente.toString()).append("\n");
+        sb.append("Persona detenida:").append(delincuente.getInfoPersonaDetenida()).append("\n");
         sb.append("Con Condena:").append(this.condenado).append("\n");
 
         return sb.toString();

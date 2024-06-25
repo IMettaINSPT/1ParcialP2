@@ -1,0 +1,47 @@
+                                       ,--------------------.                                                                                                         
+                                       |IConsultaBanco      |                                                                                                         
+                                       |--------------------|                                                                                                         
+                                       |-codigoBanco: String|                                                                                                         
+                                       |+getBanco()         |                                                                                                         
+                                       `--------------------'                                                                                                         
+                                                  |                                                                                                                   
+                                                  |                                                                                                                   
+                                                  |                ,---------------------------------------------.                                                    
+                                                  |                |IUsuarioConsultante                          |                                                    
+                                                  |                |---------------------------------------------|                                                    
+                                                  |                |-consultaBanco IConsultaBanco                |                                                    
+                                                  |                |-consultaSucursal IConsultaSucursal          |                                                    
+                                                  |                |-consultaDelincuente IConsultaDelincuente    |                                                    
+                                                  |                |-consultaJuicio IConsultaJuicio              |                                                    
+                                                  |                |-consultaDelitos IConsultaDelitos            |                                                    
+,--------------------------------.  ,--------------------------.   |-consultaContratos IConsultaContratos        |                ,------------------------------.    
+|ConsultarBancoPorCodigo         |  |ConsultarBancoDomicilio   |   |+setConsultaBanco(IConsultaBanco)            |                |ConsultarContratosSucursal    |    
+|--------------------------------|  |--------------------------|   |+setConsultaSucursales(IConsultaSucursal)    |                |------------------------------|    
+|+consultarBancoPorCodigo(String)|  |+consultarBancoDomicilio()|   |+setConsultaDelincuente(IConsultaDelincuente)|                |+ consultarContratos(Sucursal)|    
+|+getBanco()                     |  |+getBanco()               |   |+setConsultaJuicio(IConsultaJuicio)          |                |+getContratos()               |    
+`--------------------------------'  `--------------------------'   |+setConsultaDelitos(IConsultaDelitos)        |                `------------------------------'    
+                                                                   |+setConsultaContratos(IConsultaContratos)    |                                |                   
+                                                                   |+getBanco()                                  |                                |                   
+                                                                   |+getSucursales()                             |                                |                   
+                                                                   |+getDelincuente()                            |                                |                   
+                                                                   |+getJuicio()                                 |                                |                   
+                                                                   |+getDelitos()                                |                                |                   
+                                                                   |+getContratos()                              |                                |                   
+                                                                   `---------------------------------------------'                                |                   
+                                                                                                                                                  |                   
+                                                                 ,------------------------.                                      ,-------------------------------.    
+                                                                 |IConsultaDelincuente    |       ,---------------------------.  |IConsultaContratos             |    
+                                                                 |------------------------|       |ConsultarContratoBanco     |  |-------------------------------|    
+                                                                 |-codigo: String         |       |---------------------------|  |-vigilante: Vigilante          |    
+                                                                 |-sucursal: Sucursal     |       |+ consultarContratos(Banco)|--|-sucursal: Sucursal            |    
+                                                                 |-NombreCompleto : String|       |+getContratos()            |  |-banco : Banco                 |    
+                                                                 |+getDelincuente()       |       `---------------------------'  |+getContratos(): List<Contrato>|    
+                                                                 `------------------------'                                      `-------------------------------'    
+                                                                                                                                                                      
+                                                                                                                                                                      
+        ,---------------------------------------.   ,------------------------------------.  ,------------------------------------.   ,-------------------------------.
+        |ConsultarDelincuenteSucursal           |   |ConsultarDelincuentexCodigo         |  |ConsultarDelincuentexNombre         |   |ConsultarContratoVigilante     |
+        |---------------------------------------|   |------------------------------------|  |------------------------------------|   |-------------------------------|
+        |+consultarDelincuenteSucursal(Sucursal)|   |+consultarDelincuentexCodigo(String)|  |+consultarDelincuentexNombre(String)|   |+ consultarContratos(Vigilante)|
+        |+getDelincuente()                      |   |+getDelincuente()                   |  |+getDelincuente()                   |   |+getContratos()                |
+        `---------------------------------------'   `------------------------------------'  `------------------------------------'   `-------------------------------'

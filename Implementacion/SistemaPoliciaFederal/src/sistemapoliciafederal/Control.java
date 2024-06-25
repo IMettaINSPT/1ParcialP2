@@ -3,6 +3,7 @@ package sistemapoliciafederal;
 import java.io.IOException;
 import java.util.*;
 
+
 public class Control {
 
     private SistemaState sistemaState;
@@ -22,10 +23,10 @@ public class Control {
         }
     }
 
-    public boolean Login() {    
+    public boolean Login() {
         String user = EntradaSalida.leerString("Ingrese su usuario");
         String pass = EntradaSalida.leerPassword("Ingrese su contraseña");
-        for (Usuario u : this.sistemaState.getUsuarios()) {
+        for (Usuario u : this.sistemaState.getUsuariosSistema()) {
             if (u.validarUsuarioContraseña(user, pass)) {
                 EntradaSalida.mostrarString("Bienvenido al sistema de policia federal : " + user);
 
@@ -60,7 +61,7 @@ public class Control {
     }
 
     public List<Usuario> GetUsuariosSistema() {
-        return this.sistemaState.getUsuarios();
+        return this.sistemaState.getUsuariosSistema();
     }
 
     public void Desloguearse() {
@@ -70,6 +71,7 @@ public class Control {
             ((UsuarioAdmin) this.usuarioActual).serializar("PoliciaFederal.dat");
         }
         this.usuarioActual = null;
+
     }
 
     public void dummyDeserializar() throws IOException, ClassNotFoundException {
@@ -78,18 +80,12 @@ public class Control {
     }
 
     public void dummyTest() throws IOException {
-        //  List<Juicio> juicios = new ArrayList<>();
-        // List<Juez> jueces = new ArrayList<>();
-        //   List<Vigilante> vigilantes = new ArrayList<>();
-        //List<Banco> bancos = new ArrayList<>();
-        // List<IDelito> delitos = new ArrayList<>();
-        // List<Banda> bandas = new ArrayList<>();
+       
         List<Usuario> usuarios = new ArrayList<>();
 
 //        Date input = new Date();
 //        Instant instant = input.toInstant();
 //        Date hoy = Date.from(instant);
-
         //   PersonaDetenida d1 = new PersonaDetenida("111", "Juan 1");
         //  PersonaDetenida d2 = new PersonaDetenida("222", "Juan 2");
         //   PersonaDetenida d3 = new PersonaDetenida("333", "Juan 3");
@@ -155,7 +151,7 @@ public class Control {
 //        b1.addMiembro(d3);
 //        Banda b2 = new Banda(345);
 //        b2.addMiembro(d4);
-SistemaState sist = SistemaState.newSistemaState();
+        SistemaState sist = SistemaState.newSistemaState();
         usuarios.add(UsuarioAdmin.nuevoUsuario("ADMIN", "ADMIN", sist));
 //        usuarios.add(UsuarioAdmin.crearUsuario("bb", "bb", sistemaState));
 //        usuarios.add(UsuarioInvestigador.crearUsuario("cc", "cc", sistemaState));
@@ -189,13 +185,13 @@ SistemaState sist = SistemaState.newSistemaState();
 //        bandas.add(b2);
 //        bandas.add(b1);
 //
-//        sistemaState.setJuicios(juicios);
-//        sistemaState.setJueces(jueces);
-//        sistemaState.setVigilantes(vigilantes);
-//        sistemaState.setBancos(bancos);
-//        sistemaState.setDelitos(delitos);
-//        sistemaState.setBandas(bandas);
-        sistemaState.setUsuarios(usuarios);
+//        sistemaState.setJuiciosSistema(juicios);
+//        sistemaState.setJuecesSistema(jueces);
+//        sistemaState.setVigilantesSistema(vigilantes);
+//        sistemaState.setBancosSistema(bancos);
+//        sistemaState.setDelitosSistema(delitos);
+//        sistemaState.setBandasSistema(bandas);
+        sistemaState.setUsuariosSistema(usuarios);
 
         sistemaState.serializar("PoliciaFederal.dat");
 
