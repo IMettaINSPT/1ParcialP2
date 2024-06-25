@@ -3,7 +3,6 @@ package sistemapoliciafederal;
 import java.io.IOException;
 import java.util.*;
 
-
 public class Control {
 
     private SistemaState sistemaState;
@@ -24,33 +23,42 @@ public class Control {
     }
 
     public boolean Login() {
-        String user = EntradaSalida.leerString("Ingrese su usuario");
-        String pass = EntradaSalida.leerPassword("Ingrese su contraseña");
-        for (Usuario u : this.sistemaState.getUsuariosSistema()) {
-            if (u.validarUsuarioContraseña(user, pass)) {
-                EntradaSalida.mostrarString("Bienvenido al sistema de policia federal : " + user);
+        int cantidadDeReintentos = 3;
+        boolean sigue;
+        do {
+            String user = EntradaSalida.leerString("Ingrese su usuario");
+            String pass = EntradaSalida.leerPassword("Ingrese su contraseña");
+            for (Usuario u : this.sistemaState.getUsuariosSistema()) {
+                if (u.validarUsuarioContraseña(user, pass)) {
+                    EntradaSalida.mostrarString("Bienvenido al sistema de policia federal : " + user);
 
-                //Solo a los usuario admin e investigador le inyecto el sistema state con todos los datos 
-                if (u instanceof UsuarioAdmin) {
-                    UsuarioAdmin ud = ((UsuarioAdmin) u);
-                    ud.setSistemaState(this.sistemaState);
-                    this.usuarioActual = ud;
+                    //Solo a los usuario admin e investigador le inyecto el sistema state con todos los datos 
+                    if (u instanceof UsuarioAdmin) {
+                        UsuarioAdmin ud = ((UsuarioAdmin) u);
+                        ud.setSistemaState(this.sistemaState);
+                        this.usuarioActual = ud;
+                        return true;
+                    }
+
+                    if (u instanceof UsuarioInvestigador) {
+                        UsuarioInvestigador ud = ((UsuarioInvestigador) u);
+                        ud.setSistemaState(this.sistemaState);
+                        this.usuarioActual = ud;
+                        return true;
+
+                    }
+                    this.usuarioActual = u;
+
                     return true;
                 }
 
-                if (u instanceof UsuarioInvestigador) {
-                    UsuarioInvestigador ud = ((UsuarioInvestigador) u);
-                    ud.setSistemaState(this.sistemaState);
-                    this.usuarioActual = ud;
-                    return true;
-
-                }
-                this.usuarioActual = u;
-
-                return true;
             }
-
-        }
+            sigue = EntradaSalida.leerBoolean("Alguno de los datos ingresados son incorrectos. ¿Desea volver a intentar las busqueda? ");
+            if (sigue) {
+                EntradaSalida.mostrarString("Cantidad de intentos restantes para reintentar la busqueda:" + cantidadDeReintentos);
+                cantidadDeReintentos--;
+            }
+        } while (sigue && cantidadDeReintentos > 0);
         EntradaSalida.mostrarString("Alguno de los datos ingresados son incorrectos");
 
         return false;
@@ -80,7 +88,7 @@ public class Control {
     }
 
     public void dummyTest() throws IOException {
-       
+
         List<Usuario> usuarios = new ArrayList<>();
 
 //        Date input = new Date();

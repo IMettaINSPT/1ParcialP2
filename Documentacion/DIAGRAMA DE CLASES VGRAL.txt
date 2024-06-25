@@ -128,7 +128,7 @@ class Control{
    
 }
 Control "1" -> "1" Usuario : usuario
-Control <--Main
+Control <...Main
 Menu "   1 " <- "     1" Control: menu
 EntradaSalida <-Menu
 EntradaSalida <-Control

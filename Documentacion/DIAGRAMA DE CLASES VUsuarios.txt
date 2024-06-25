@@ -74,7 +74,7 @@ class Control{
 SistemaState "1"<-- "1" UsuarioAdmin :sistemaState
 SistemaState "1"<-- "1" UsuarioInv:sistemaState
 Control "1" -> "1" Usuario : usuario
-Control <-Main
+Control <...Main
 Menu "   1 " <- "     1" Control: menu
 EntradaSalida <-Menu
 EntradaSalida <-Control
