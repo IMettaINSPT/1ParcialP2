@@ -1,9 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package sistemapoliciafederal;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -21,82 +18,104 @@ public class UsuarioInvestigador extends Usuario implements IUsuarioConsultante 
 
     @Override
     public int GetMenu() {
-        return Menu.mostrar("1-MostrarBanco 2-MostrarSucursales 3-MostrarDelincuentes 4-MostrarJuicios 5-MostrarDelitos 6-MostrarContrato", "Error.Reintente", 1, 6, 3);
+        return Menu.mostrar("1-Mostrar Banco\n2-Mostrar Sucursales\n3-Mostrar Delincuentes\n4-Mostrar Juicios\n5-Mostrar Delitos\n6-Mostrar Contrato\n7-Mostrar vigilantes\n8-Mostrar informacion sistema\n9-Salir", "Error.Reintente", 1, 9, 3);
     }
-
+    
     @Override
     public void accionar() {
         int subMenu;
         if (Objects.isNull(sistemaState)) {
             EntradaSalida.mostrarError("No existe informacion en el sistema");
         }
-        try {
-            switch (this.GetMenu()) {
+
+        boolean continuarOperando;
+        do {
+            int opcionMenu = this.GetMenu();
+            continuarOperando = true;
+
+            switch (opcionMenu) {
                 case 1:
                     String domicilio;
                     String codigo;
-                    if (this.sistemaState.getBancosSistema().size() <= 0) {
+                    if (this.sistemaState.getBancosSistema().isEmpty()) {
                         EntradaSalida.mostrarError("Debe existir al menos un banco");
                         break;
 
                     }
-                    subMenu = Menu.mostrar("1-Mostrar banco por codigo 2-Mostrar banco por domicilio", "Error.Reintente", 1, 2, 3);
+                    subMenu = Menu.mostrar("1-Mostrar banco por codigo\n2-Mostrar banco por domicilio\n3-Salir", "Error.Reintente", 1, 3, 3);
 
                     if (subMenu == -1) {
                         EntradaSalida.mostrarError("Ingreso una opcion invalida");
                         break;
 
                     } else {
-                        if (subMenu == 1) {
-                            codigo = EntradaSalida.leerString("Ingrese el codigo del banco a buscar");
-                            if (codigo.isEmpty()) {
-                                EntradaSalida.mostrarError("Debe ingresar un codigo valido");
-                            }
-                            this.setConsultaBanco(new ConsultarBancoPorCodigo(this.sistemaState.getBancosSistema(), codigo));
+                        switch (subMenu) {
+                            case 1:
+                                codigo = EntradaSalida.leerString("Ingrese el codigo del banco a buscar");
+                                if (codigo.isEmpty()) {
+                                    EntradaSalida.mostrarError("Debe ingresar un codigo valido");
+                                }
+                                this.setConsultaBanco(new ConsultarBancoPorCodigo(this.sistemaState.getBancosSistema(), codigo));
+                                break;
+                            case 2:
+                                domicilio = EntradaSalida.leerString("Ingrese el domicilio del banco a buscar");
+                                if (domicilio.isEmpty()) {
+                                    EntradaSalida.mostrarError("Debe ingresar un domicilio valido");
+                                }
+                                this.setConsultaBanco(new ConsultarBancoPorDomicilio(this.sistemaState.getBancosSistema(), domicilio));
 
-                        } else {
-                            domicilio = EntradaSalida.leerString("Ingrese el domicilio del banco a buscar");
-                            if (domicilio.isEmpty()) {
-                                EntradaSalida.mostrarError("Debe ingresar un domicilio valido");
-                            }
-                            this.setConsultaBanco(new ConsultarBancoPorDomicilio(this.sistemaState.getBancosSistema(), domicilio));
-                        }
-
-                        Banco bco = this.getBanco();
-                        if (Objects.isNull(bco)) {
-                            EntradaSalida.mostrarError("No existe el banco con los parametros seleccionados");
-                        } else {
-                            EntradaSalida.mostrarString(bco.getInfoBanco());
+                                break;
+                            case 3:
+                                continuarOperando = false;
+                                break;
                         }
                     }
+                    if (!continuarOperando) {
+                        continuarOperando = true;
+                        break;
+                    }
+                    Banco unBanquito = this.getBanco();
+                    if (Objects.isNull(unBanquito)) {
+                        EntradaSalida.mostrarError("No existe el banco con los parametros seleccionados");
+                    } else {
+                        EntradaSalida.mostrarString(unBanquito.getInfoBanco());
+                    }
+                    break;
+
                 case 2:
-
                     String codigoSucursal;
-
                     Banco bco = this.sistemaState.obtenerBancoSistema();
 
                     if (Objects.isNull(bco)) {
                         EntradaSalida.mostrarError("Debe ingresar un banco valido");
                         break;
-
                     }
-                    subMenu = Menu.mostrar("1-Mostrar Sucursales por Banco, 2-Mostrar Sucursal por Codigo", "Error.Reintente", 1, 2, 3);
+                    subMenu = Menu.mostrar("1-Mostrar Sucursales por Banco\n2-Mostrar Sucursal por Codigo\n3-Salir", "Error.Reintente", 1, 3, 3);
 
                     if (subMenu == -1) {
                         EntradaSalida.mostrarError("Ingreso una opcion invalida");
 
                     } else {
-                        if (subMenu == 1) {
-                            this.setConsultaSucursales(new ConsultarSucursalesPorBanco(bco));
-                        } else {
-                            codigoSucursal = EntradaSalida.leerString("Ingrese el codigo de la sucursal a buscar");
-                            if (codigoSucursal.isEmpty()) {
-                                EntradaSalida.mostrarError("Debe ingresar un codigo de sucursal valido");
+                        switch (subMenu) {
+                            case 1:
+                                this.setConsultaSucursales(new ConsultarSucursalesPorBanco(bco));
                                 break;
-                            }
-                            this.setConsultaSucursales(new ConsultarSucursalPorCodigo(bco.getSucursales(), codigoSucursal));
+                            case 2:
+                                codigoSucursal = EntradaSalida.leerString("Ingrese el codigo de la sucursal a buscar");
+                                if (codigoSucursal.isEmpty()) {
+                                    EntradaSalida.mostrarError("Debe ingresar un codigo de sucursal valido");
+                                    break;
+                                }
+                                this.setConsultaSucursales(new ConsultarSucursalPorCodigo(bco.getSucursales(), codigoSucursal));
+                                break;
+                            case 3:
+                                continuarOperando = false;
+                                break;
                         }
-
+                        if (!continuarOperando) {
+                            continuarOperando = true;
+                            break;
+                        }
                         List<Sucursal> sucursales = this.getSucursales();
                         if (sucursales.isEmpty()) {
                             EntradaSalida.mostrarError("No existen sucursales con los parametros seleccionados");
@@ -108,12 +127,12 @@ public class UsuarioInvestigador extends Usuario implements IUsuarioConsultante 
                         }
                         break;
                     }
+                    break;
                 case 3:
-
                     if (!this.sistemaState.getDelincuentesSistema().isEmpty()) {
                         EntradaSalida.mostrarError("Debe existir al menos un delincuente");
                     }
-                    subMenu = Menu.mostrar("1-Mostrar Delincuente por Nombre, 2-Mostrar Delincuente por Codigo, 3-Mostrar Delincuente por Sucursal", "Error.Reintente", 1, 3, 3);
+                    subMenu = Menu.mostrar("1-Mostrar Delincuente por Nombre\n2-Mostrar Delincuente por Codigo\n3-Mostrar Delincuente por Sucursal\n4-Salir", "Error.Reintente", 1, 4, 3);
 
                     if (subMenu == -1) {
                         EntradaSalida.mostrarError("Ingreso una opcion invalida");
@@ -129,6 +148,7 @@ public class UsuarioInvestigador extends Usuario implements IUsuarioConsultante 
                                 }
                                 this.setConsultaDelincuente(new ConsultarDelincuentePorNombre(this.sistemaState.getDelincuentesSistema(), nombre));
 
+                                break;
                             case 2:
                                 String codigoDelincuente = EntradaSalida.leerString("Ingrese el codigo del delincuente a buscar");
                                 if (codigoDelincuente.isEmpty()) {
@@ -137,11 +157,19 @@ public class UsuarioInvestigador extends Usuario implements IUsuarioConsultante 
                                 }
                                 this.setConsultaDelincuente(new ConsultarDelincuentesPorCodigo(this.sistemaState.getDelincuentesSistema(), codigoDelincuente));
 
+                                break;
                             case 3:
                                 Sucursal suc = this.sistemaState.obtenerSucursalSistema();
                                 this.setConsultaDelincuente(new ConsultarDelincuentesPorSucursal(suc));
+                                break;
+                            case 4:
+                                continuarOperando = false;
+                                break;
                         }
-
+                        if (!continuarOperando) {
+                            continuarOperando = true;
+                            break;
+                        }
                         List<PersonaDetenida> delincuentes = this.getDelincuentes();
                         if (delincuentes.isEmpty()) {
                             EntradaSalida.mostrarError("No existe el delincuente con los parametros seleccionados");
@@ -153,20 +181,15 @@ public class UsuarioInvestigador extends Usuario implements IUsuarioConsultante 
                         }
                         break;
                     }
+                    break;
                 case 4:
-                    if (this.sistemaState.getJuiciosSistema().isEmpty()) {
-                        EntradaSalida.mostrarError("Debe existir al menos un Juicio");
-                        break;
-                    }
                     List<Juicio> juicios = this.sistemaState.getJuiciosSistema();
                     if (juicios.isEmpty()) {
                         EntradaSalida.mostrarError("No hay juicios registrados");
                         break;
-
-                    } else {
-                        for (Juicio juicio : juicios) {
-                            EntradaSalida.mostrarString(juicio.getInfoJuicio());
-                        }
+                    }
+                    for (Juicio juicio : juicios) {
+                        EntradaSalida.mostrarString(juicio.getInfoJuicio());
                     }
                     break;
                 case 5:
@@ -174,7 +197,7 @@ public class UsuarioInvestigador extends Usuario implements IUsuarioConsultante 
                         EntradaSalida.mostrarError("Debe existir al menos un delito");
                         break;
                     }
-                    subMenu = Menu.mostrar("1-Mostrar Delitos con Condena, 2-Mostrar Delitos por Banda, 3-Mostrar Delitos por Delincuente", "Error.Reintente", 1, 3, 3);
+                    subMenu = Menu.mostrar("1-Mostrar Delitos con Condena\n2-Mostrar Delitos por Banda\n3-Mostrar Delitos por Delincuente\n4-Salir", "Error.Reintente", 1, 4, 3);
 
                     if (subMenu == -1) {
                         EntradaSalida.mostrarError("Ingreso una opcion invalida");
@@ -185,14 +208,15 @@ public class UsuarioInvestigador extends Usuario implements IUsuarioConsultante 
                             case 1:
                                 this.setConsultaDelitos(new ConsultarDelitosConCondena(this.sistemaState.getDelitosSistema()));
                                 break;
+
                             case 2:
                                 Banda b = this.sistemaState.obtenerBandaSistema();
                                 if (Objects.isNull(b)) {
                                     break;
                                 }
                                 this.setConsultaDelitos(new ConsultarDelitosPorBanda(this.sistemaState.getDelitosSistema(), b));
-                                break;
 
+                                break;
                             case 3:
                                 PersonaDetenida unDelincuente = this.sistemaState.obtenerPersonaDetenidaSistema();
                                 if (Objects.isNull(unDelincuente)) {
@@ -200,8 +224,14 @@ public class UsuarioInvestigador extends Usuario implements IUsuarioConsultante 
                                 }
                                 this.setConsultaDelitos(new ConsultarDelitosPorDelincuente(this.sistemaState.getDelitosSistema(), unDelincuente));
                                 break;
+                            case 4:
+                                continuarOperando = false;
+                                break;
                         }
-
+                        if (!continuarOperando) {
+                            continuarOperando = true;
+                            break;
+                        }
                         List<IDelito> delitos = this.getDelitos();
                         if (delitos.isEmpty()) {
                             EntradaSalida.mostrarError("No existen delitos con los parámetros seleccionados");
@@ -213,9 +243,7 @@ public class UsuarioInvestigador extends Usuario implements IUsuarioConsultante 
                     }
                     break;
                 case 6:
-
-                    subMenu = Menu.mostrar("1-Mostrar Contratos por Banco, 2-Mostrar Contratos por Sucursal, 3-Mostrar Contratos por Vigilante", "Error.Reintente", 1, 3, 3);
-
+                    subMenu = Menu.mostrar("1-Mostrar Contratos por Banco\n2-Mostrar Contratos por Sucursal\n3-Mostrar Contratos por Vigilante\n4-Salir", "Error.Reintente", 1, 4, 3);
                     if (subMenu == -1) {
                         EntradaSalida.mostrarError("Ingreso una opcion invalida");
                         break;
@@ -230,7 +258,6 @@ public class UsuarioInvestigador extends Usuario implements IUsuarioConsultante 
                                 }
                                 this.setConsultaContrato(new ConsultarContratosBanco(bco));
                                 break;
-
                             case 2:
                                 Sucursal unaSucursal = this.sistemaState.obtenerSucursalSistema();
                                 if (Objects.isNull(unaSucursal)) {
@@ -251,8 +278,14 @@ public class UsuarioInvestigador extends Usuario implements IUsuarioConsultante 
                                 }
                                 this.setConsultaContrato(new ConsultarContratosVigilante(unVigilante));
                                 break;
+                            case 4:
+                                continuarOperando = false;
+                                break;
                         }
-
+                        if (!continuarOperando) {
+                            continuarOperando = true;
+                            break;
+                        }
                         List<Contrato> contratos = this.getContratos();
                         if (contratos.isEmpty()) {
                             EntradaSalida.mostrarError("No existen contratos con los parámetros seleccionados");
@@ -264,45 +297,74 @@ public class UsuarioInvestigador extends Usuario implements IUsuarioConsultante 
                         }
                     }
                     break;
-
-                default:
-                    EntradaSalida.mostrarError("La opcion ingresada es incorrecta");
+                case 7:
+                    subMenu = Menu.mostrar("1-Mostrar Vigilantes sistema\n2-Salir", "Error.Reintente", 1, 3, 3);
+                    List<Vigilante> vigilantesList = new ArrayList<>();
+                    switch (subMenu) {
+                        case 1:
+                            vigilantesList = this.sistemaState.getVigilantesSistema();
+                            break;
+                        case 2:
+                            continuarOperando = false;
+                            break;
+                    }
+                    if (!continuarOperando) {
+                        break;
+                    }
+                    for (Vigilante v : vigilantesList) {
+                        EntradaSalida.mostrarString(v.getInfoVigilante());
+                    }
+                    break;
+                case 8:
+                    this.getInfoGeneral();
+                    break;
+                case 9:
+                    continuarOperando = false;
                     break;
             }
-        } catch (Exception ex) {
-            EntradaSalida.mostrarError(ex.getMessage());
-        }
+            if (continuarOperando) {
+                continuarOperando = EntradaSalida.leerBoolean("¿Desea continuar operando?");
+            }
+        } while (continuarOperando);
+
     }
 
     @Override
     public void getInfoGeneral() {
-        // Imprimir la información de todas las listas en la base de datos.
-        System.out.println("Bancos:");
-        System.out.println(this.getBanco().getInfoBanco());
-
-        System.out.println("\nDelitos:");
-        for (IDelito delito : this.getDelitos()) {
-            System.out.println(delito.getInfoCompletaDelito());
+       // Imprimir la información de todas las listas en la base de datos.
+        EntradaSalida.mostrarString("Bancos:");
+        for (Banco banco : sistemaState.getBancosSistema()) {
+            EntradaSalida.mostrarString(banco.getInfoBanco());
         }
 
-        System.out.println("\nJuicios:");
+        EntradaSalida.mostrarString("\nDelitos:");
+        for (IDelito delito : sistemaState.getDelitosSistema()) {
+            EntradaSalida.mostrarString(delito.getInfoCompletaDelito());
+        }
+
+        EntradaSalida.mostrarString("\nDelincuentes:");
+        for (PersonaDetenida delincuente : sistemaState.getDelincuentesSistema()) {
+            EntradaSalida.mostrarString(delincuente.getInfoPersonaDetenida());
+        }
+
+        EntradaSalida.mostrarString("\nJuicios:");
         for (Juicio juicio : sistemaState.getJuiciosSistema()) {
-            System.out.println(juicio.getInfoJuicio());
+            EntradaSalida.mostrarString(juicio.getInfoJuicio());
         }
 
-        System.out.println("\nVigilantes:");
+        EntradaSalida.mostrarString("\nVigilantes:");
         for (Vigilante vigilante : sistemaState.getVigilantesSistema()) {
-            System.out.println(vigilante.getInfoVigilante());
+            EntradaSalida.mostrarString(vigilante.getInfoVigilante());
         }
 
-        System.out.println("\nJueces:");
+        EntradaSalida.mostrarString("\nJueces:");
         for (Juez juez : sistemaState.getJuecesSistema()) {
-            System.out.println(juez.getInfoJuez());
+            EntradaSalida.mostrarString(juez.getInfoJuez());
         }
 
-        System.out.println("\nBandas:");
+        EntradaSalida.mostrarString("\nBandas:");
         for (Banda banda : sistemaState.getBandasSistema()) {
-            System.out.println(banda);
+            EntradaSalida.mostrarString(banda.getInfoBanda());
         }
     }
 
