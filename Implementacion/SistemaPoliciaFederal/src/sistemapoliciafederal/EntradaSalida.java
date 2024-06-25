@@ -2,6 +2,7 @@ package sistemapoliciafederal;
 
 import java.text.*;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class EntradaSalida {
@@ -93,5 +94,13 @@ public class EntradaSalida {
 
     public static String leerPassword(String texto) {
         return leerString(texto);
+    }
+
+    public static String mostrarDate(Date fecha) {
+
+        Locale loc = new Locale("en", "US");
+        DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.DEFAULT, loc);
+
+        return dateFormat.format(fecha);
     }
 }

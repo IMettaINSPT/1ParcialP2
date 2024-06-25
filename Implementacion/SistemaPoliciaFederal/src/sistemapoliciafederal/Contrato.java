@@ -41,9 +41,7 @@ public class Contrato implements Serializable {
 
     public String getInfoContrato() {
         StringBuilder sb = new StringBuilder();
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
-
-        sb.append("Fecha contrato: ").append(dateFormat.format(this.fechaContrato)).append("\n");
+        sb.append("Fecha contrato: ").append(EntradaSalida.mostrarDate(this.fechaContrato)).append("\n");
         sb.append("¿El contrato es con arma?: ").append(this.conArma).append("\n");
         return sb.toString();
     }

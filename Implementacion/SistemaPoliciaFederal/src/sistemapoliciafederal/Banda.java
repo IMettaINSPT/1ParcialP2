@@ -41,10 +41,11 @@ public class Banda implements Serializable {
 
     public String getInfoBanda() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Nro Banda ").append(this.nroBanda);
+        sb.append("Nro.Banda: ").append(this.nroBanda).append("\n");
         for (PersonaDetenida delincuente : this.delincuentes) {
-            sb.append("Delincuente miembro :").append(delincuente.getInfoPersonaDetenida());
+            sb.append("Delincuente miembro: ").append("\n").append(delincuente.getInfoPersonaDetenida());
         }
         return sb.toString();
     }
+
 }

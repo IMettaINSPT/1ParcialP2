@@ -42,10 +42,11 @@ public class PersonaDetenida implements Serializable {
 
     public String getInfoPersonaDetenida() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Nombre compleo: ").append(this.nombreCompleto);
-        sb.append("Codigo: ").append(this.codigo);
+        sb.append("Nombre completo: ").append(this.nombreCompleto).append("\n");
+        sb.append("Codigo: ").append(this.codigo).append("\n");
         return sb.toString();
     }
+
 
     public boolean soyDelincuente(PersonaDetenida delincuente) {
         return this.getCodigo().equals(delincuente.getCodigo());

@@ -42,7 +42,7 @@ public class Banco implements Serializable {
         sb.append("Codigo Banco : ").append(this.codigoBanco).append("\n");
         sb.append("Domicilio central : ").append(this.domicilioCentral).append("\n");
         for (Sucursal s : this.sucursales) {
-         sb.append(s.getInfoSucursal());
+            sb.append("\nSucursal :").append("\n").append(s.getInfoSucursal());
         }
         return sb.toString();
     }

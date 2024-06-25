@@ -72,11 +72,12 @@ public class Juicio implements Serializable {
     public String getInfoJuicio() {
         StringBuilder sb = new StringBuilder();
         DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
-        sb.append("Juez: ").append(this.juezActuante.getInfoJuez());
-        sb.append("Fecha Juicio: ").append(dateFormat.format(this.fechaJuicio));
-        sb.append("Delito: ").append(delito.getInfoCompletaDelito());
-        sb.append("Fecha inicio condena: ").append(dateFormat.format(this.fechaInicioCondena));
-        sb.append("Fecha fin condena: ").append(dateFormat.format(this.fechaFinCondena));
+        sb.append("\nJuez: ").append(this.juezActuante.getInfoJuez());
+        sb.append("\nFecha Juicio: ").append(dateFormat.format(this.fechaJuicio));
+        sb.append("\nDelito: ").append(delito.getInfoCompletaDelito());
+        sb.append("\nFecha inicio condena: ").append(dateFormat.format(this.fechaInicioCondena));
+        sb.append("\nFecha fin condena: ").append(dateFormat.format(this.fechaFinCondena));
         return sb.toString();
     }
+
 }

@@ -70,20 +70,6 @@ public class SistemaState implements Serializable {
         return vigilantes;
     }
 
-    public List<Vigilante> getVigilantesSinContrato() {
-        Set<Vigilante> vigilantesOcupados = new HashSet<>();
-        for (Banco bco : this.getBancos()) {
-            for (Sucursal s : bco.getSucursales()) {
-                vigilantesOcupados.addAll((Set) s.getContratos());
-            }
-        }
-
-        List<Vigilante> vigilantesLibres = this.getVigilantes();
-        vigilantesLibres.removeAll(vigilantesOcupados);
-        return vigilantesLibres;
-
-    }
-
     public List<Banco> getBancos() {
         return bancos;
     }
@@ -209,21 +195,16 @@ public class SistemaState implements Serializable {
 
     public Vigilante obtenerVigilanteLibre() {
         Vigilante v = null;
-        String codigo = EntradaSalida.leerString("Ingrese el codigo del vigilante a buscar");
 
-        if (codigo.isEmpty()) {
-            EntradaSalida.mostrarError("El codigo del vigilante no puede ser vacio");
-            return v;
-        }
-        for (Vigilante vig : this.getVigilantesSinContrato()) {
-            if (vig.soyElVigilante(codigo)) {
+        for (Vigilante vig : this.getVigilantes()) {
+            if (Objects.isNull(vig.getContrato())) {
                 return vig;
             }
         }
-        EntradaSalida.mostrarError("No se encuentra el vigilante para el codigo ingresado");
+        EntradaSalida.mostrarError("No se encuentra un vigilante libre");
         return v;
     }
-    
+
     public Vigilante obtenerVigilante() {
         Vigilante v = null;
         String codigo = EntradaSalida.leerString("Ingrese el codigo del vigilante a buscar");
@@ -276,7 +257,7 @@ public class SistemaState implements Serializable {
 
     public List<Contrato> obtenerContratoSinVigilante() {
         boolean datosValidos;
-        datosValidos = true;       
+        datosValidos = true;
         Sucursal suc = this.obtenerSucursal();
         if (Objects.isNull(suc)) {
             EntradaSalida.mostrarError("La sucursal del banco no existe");
@@ -294,9 +275,8 @@ public class SistemaState implements Serializable {
         }
         return contratoLibres;
     }
-    
-    
-     public Contrato obtenerContratoLibre() {
+
+    public Contrato obtenerContratoLibre() {
         Contrato contrato = null;
         boolean datosValidos;
         do {
@@ -310,7 +290,7 @@ public class SistemaState implements Serializable {
             boolean esConArma = EntradaSalida.leerBoolean("¿Contrato con arma?");
 
             if (datosValidos) {
-                for (Contrato c : this.obtenerContratoSinVigilante() ) {
+                for (Contrato c : this.obtenerContratoSinVigilante()) {
                     if (c.soyElContrato(fechaContrato, esConArma)) {
                         return c;
                     }
@@ -326,7 +306,6 @@ public class SistemaState implements Serializable {
         return contrato;
 
     }
-    
 
     public Contrato obtenerContrato() {
         Contrato contrato = null;
@@ -374,8 +353,8 @@ public class SistemaState implements Serializable {
         EntradaSalida.mostrarError("El codigo ingresado no pertenece a un juez");
         return juez;
     }
-    
-     public IJuez obtenerJuez(String codigoInternaJuzgado) {
+
+    public IJuez obtenerJuez(String codigoInternaJuzgado) {
         IJuez juez = null;
         for (IJuez j : this.getJueces()) {
             if (((Juez) j).soyElJuez(codigoInternaJuzgado)) {
@@ -406,7 +385,7 @@ public class SistemaState implements Serializable {
         return banco.getSucursales();
 
     }
-    
+
     public Sucursal obtenerSucursal(String codigoSucursal, Banco banco) {
         Sucursal sucursal = null;
         for (Sucursal suc : banco.getSucursales()) {
@@ -424,7 +403,7 @@ public class SistemaState implements Serializable {
             EntradaSalida.mostrarError("El banco no existe");
             return null;
         }
-        String codigo = EntradaSalida.leerString("Ingrese el codigo de la sucursal en la cual sera contratado");
+        String codigo = EntradaSalida.leerString("Ingrese el codigo de la sucursal.\n La sucursal debe estar cargada previamente en la opción del menú -Cargar Sucursal-");
         if (codigo.isEmpty()) {
             EntradaSalida.mostrarError("El codigo  no puede ser vacio");
             return sucursal;
@@ -437,10 +416,10 @@ public class SistemaState implements Serializable {
         EntradaSalida.mostrarError("No se encuentra la sucursal para el codigo ingresado");
         return sucursal;
     }
-    
+
     public Banco obtenerBanco(String codigo) {
         Banco bco = null;
-       
+
         for (Banco banco : this.getBancos()) {
             if (banco.soyElBanco(codigo)) {
                 return banco;
@@ -451,7 +430,7 @@ public class SistemaState implements Serializable {
 
     public Banco obtenerBanco() {
         Banco bco = null;
-        String codigo = EntradaSalida.leerString("Ingrese el codigo del banco a buscar");
+        String codigo = EntradaSalida.leerString("Ingrese el codigo del banco a buscar.\nEl banco debe estar cargado previamente en la opcion de menu -Cargar Banco-");
         if (codigo.isEmpty()) {
             EntradaSalida.mostrarError("El codigo del banco no puede ser vacio");
             return bco;
@@ -466,7 +445,7 @@ public class SistemaState implements Serializable {
     }
 
     public Banda obtenerBanda() {
-        int nroBanda = EntradaSalida.leerEntero("Ingrese el nro de la banda a buscar");
+        int nroBanda = EntradaSalida.leerEntero("Ingrese el nro de la banda\nLa banda ya debe estar cargada previamente en la Opcion del Menu -Cargar Banda-");
         if (nroBanda <= 0) {
             EntradaSalida.mostrarError("El nro de banda no puede ser 0");
             return null;
@@ -477,6 +456,17 @@ public class SistemaState implements Serializable {
             }
         }
         EntradaSalida.mostrarError("No se encontro ninguna banda");
+        return null;
+
+    }
+
+    public Banda obtenerBanda(int nroBanda) {
+
+        for (Banda b : this.getBandas()) {
+            if (b.soyLaBanda(nroBanda)) {
+                return b;
+            }
+        }
         return null;
 
     }

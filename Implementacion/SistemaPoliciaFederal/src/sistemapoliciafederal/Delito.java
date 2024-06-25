@@ -57,9 +57,7 @@ public class Delito implements IDelito, Serializable {
     @Override
     public String getInfoBasicaDelito() {
         StringBuilder sb = new StringBuilder();
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
-
-        sb.append("Fecha del delito:").append(dateFormat.format(fechaDelito));
+        sb.append("Fecha del delito:").append(EntradaSalida.mostrarDate(fechaDelito));
         sb.append("Con Condena:").append(this.condenado);
         return sb.toString();
     }
@@ -67,9 +65,8 @@ public class Delito implements IDelito, Serializable {
     @Override
     public String getInfoCompletaDelito() {
         StringBuilder sb = new StringBuilder();
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
         sb.append("Informacion Delito:").append("\n\n");
-        sb.append("Fecha del delito:").append(dateFormat.format(fechaDelito)).append("\n");
+        sb.append("Fecha del delito:").append(EntradaSalida.mostrarDate(fechaDelito)).append("\n");
         sb.append("Persona detenida:").append(delincuente.toString()).append("\n");
         sb.append("Con Condena:").append(this.condenado).append("\n");
 

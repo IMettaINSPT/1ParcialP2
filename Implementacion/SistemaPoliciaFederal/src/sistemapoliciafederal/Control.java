@@ -22,7 +22,7 @@ public class Control {
         }
     }
 
-    public boolean Login() {
+    public boolean Login() {    
         String user = EntradaSalida.leerString("Ingrese su usuario");
         String pass = EntradaSalida.leerPassword("Ingrese su contraseña");
         for (Usuario u : this.sistemaState.getUsuarios()) {
@@ -48,7 +48,6 @@ public class Control {
 
                 return true;
             }
-            EntradaSalida.mostrarString("Alguno de los datos ingresados son incorrectos");
 
         }
         EntradaSalida.mostrarString("Alguno de los datos ingresados son incorrectos");
